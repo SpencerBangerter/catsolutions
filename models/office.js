@@ -14,7 +14,7 @@ const officeSchema = new Schema({
 
 const employeeSchema = new Schema({
   name: { type: String, required: true },
-  office_id: { type: Schema.Types.ObjectId, ref: 'Office' },
+  // office_id: { type: Schema.Types.ObjectId, ref: 'Office' },
   address: { type: String, required: true },
   city: { type: String, required: true },
   state: { type: String, required: true },
@@ -24,15 +24,13 @@ const employeeSchema = new Schema({
 });
 
 const equipmentSchema = new Schema({
-  name: { type: String, required: true },
-  employee_id: { type: String, required: true },
   type: { type: String, required: true },
   model: { type: String, required: true },
   serialNum: { type: String, required: true },
   condition: { type: String, required: true },
-  purchaseDate: {},
-  dateIssued: {},
-  initialCost: {},
+  purchaseDate: { type: Date, default: Date.now },
+  dateIssued: { type: Date, default: Date.now },
+  initialCost: { type: String, required: true },
 });
 
 //HISTORICAL LOGS
@@ -43,7 +41,7 @@ const Office = mongoose.model("Office", officeSchema);
 const Employee = mongoose.model("Employee", employeeSchema);
 const Equipment = mongoose.model("Equipment", equipmentSchema);
 
-module.exports = Office, Employee, Equipment;
+module.exports = {Office, Employee, Equipment};
 
 
 // const personSchema = Schema({

@@ -1,3 +1,7 @@
+const Company = require('./office')
+
 module.exports = {
-  Office: require("./office")
+  Office: Company.Office,
+  Employee: Company.Employee,
+  Equipment: Company.Equipment,
 };
