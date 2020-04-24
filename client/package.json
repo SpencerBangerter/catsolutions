@@ -5,7 +5,9 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
     "react": "^16.6.3",
+    "react-bootstrap": "^1.0.1",
     "react-bootstrap-table-next": "^4.0.1",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.1.2",
