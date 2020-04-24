@@ -8,19 +8,18 @@ const officeSchema = new Schema({
   state: { type: String, required: true },
   zip: { type: String, required: true },
   managementContact: { type: String, required: true },
-  employees: [{ type: Schema.Types.ObjectId, ref: 'Employee' }]
-
+  managementContactPhone: { type: String, required: true },
+  employees: [{ type: Schema.Types.ObjectId, ref: "Employee" }],
 });
 
 const employeeSchema = new Schema({
   name: { type: String, required: true },
-  office_id: { type: Schema.Types.ObjectId, ref: 'Office' },
+  office_id: { type: Schema.Types.ObjectId, ref: "Office" },
   address: { type: String, required: true },
   city: { type: String, required: true },
   state: { type: String, required: true },
   zip: { type: String, required: true },
-  equipment: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
-
+  equipment: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
 });
 
 const equipmentSchema = new Schema({
@@ -35,10 +34,8 @@ const equipmentSchema = new Schema({
 
 //HISTORICAL LOGS
 
+const Office = mongoose.model("Office", officeSchema);
+const Employee = mongoose.model("Employee", employeeSchema);
+const Equipment = mongoose.model("Equipment", equipmentSchema);
 
-
-const Office = mongoose.model('Office', officeSchema);
-const Employee = mongoose.model('Employee', employeeSchema);
-const Equipment = mongoose.model('Equipment', equipmentSchema);
-
-module.exports = {Office, Employee, Equipment};
+module.exports = { Office, Employee, Equipment };

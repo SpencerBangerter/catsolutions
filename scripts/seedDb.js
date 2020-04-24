@@ -52,6 +52,7 @@ const officeSeed = {
   state: "UT",
   zip: "84095",
   managementContact: "Jonathan Bejarano",
+  managementContactPhone: "5555551234",
   employees: {},
 };
 
