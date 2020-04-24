@@ -9,12 +9,12 @@ export default {
   },
 
   insertOffice: function(officeData) {
-      console.log(officeData)
       return axios.post("/api/offices", officeData)
   },
 
 //Double check the functionallity on this one
   updateOffice: function(id, officeData) {
+      console.log(officeData, id)
       return axios.put("api/offices/" + id, officeData)
   },
 
