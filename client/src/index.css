@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.accordion>.card:first-of-type {
+  border-bottom: 1px solid lightgray;
+}
