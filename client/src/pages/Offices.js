@@ -4,6 +4,8 @@ import { Input, FormBtn } from "../components/Form";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -95,105 +97,124 @@ export default function Offices() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Offices</h1>
       {offices.length ? (
         offices.map((office) => (
           <Accordion key={office._id}>
-            <Card>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
+            <Card style={{ marginBottom: "10px", borderRadius: "5px"}}>
+              <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
                 {office.name}
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <form>
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="name"
-                      placeholder={office.name}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="address"
-                      placeholder={office.address}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="city"
-                      placeholder={office.city}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="state"
-                      placeholder={office.state}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="zip"
-                      placeholder={office.zip}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="managementContact"
-                      placeholder={office.managementContact}
-                      disabled={office._id === editState._id ? false : true}
-                    />
-                    <Input
-                      data-value={office._id}
-                      onChange={handleInputChangeUpdateOffice}
-                      name="managementContactPhone"
-                      placeholder={office.managementContactPhone}
-                      disabled={office._id === editState._id ? false : true}
-                    />
+                    <Row>
+                      <Input
+                        data-value={office._id}
+                        label="Office Name"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="name"
+                        placeholder={office.name}
+                        width={12}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                    </Row>
+                    <Row>
+                      <Input
+                        data-value={office._id}
+                        label="Address"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="address"
+                        placeholder={office.address}
+                        width={5}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                      <Input
+                        data-value={office._id}
+                        label="City"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="city"
+                        placeholder={office.city}
+                        width={3}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                      <Input
+                        data-value={office._id}
+                        label="State"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="state"
+                        placeholder={office.state}
+                        width={2}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                      <Input
+                        data-value={office._id}
+                        label="Zip"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="zip"
+                        placeholder={office.zip}
+                        width={2}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                    </Row>
+                    <Row>
+                      <Input
+                        data-value={office._id}
+                        label="Management Contact"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="managementContact"
+                        placeholder={office.managementContact}
+                        width={3}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                      <Input
+                        data-value={office._id}
+                        label="Management Contact Phone"
+                        onChange={handleInputChangeUpdateOffice}
+                        name="managementContactPhone"
+                        placeholder={office.managementContactPhone}
+                        width={3}
+                        disabled={office._id === editState._id ? false : true}
+                      />
+                    </Row>
+
+                    <Row>
+                      <div className="col">
+                      <Button onClick={() => switchEditState(office._id)}>
+                        {office._id === editState._id
+                          ? "Cancel Update"
+                          : "Update This Office"}
+                      </Button>
+                      {office._id === editState._id ? (
+                        <Button variant={"success"}
+                          onClick={() =>
+                            updateOffice(office._id, updatedOfficeObject)
+                          }
+                        >
+                          Save and Update
+                        </Button>
+                      ) : (
+                          ""
+                        )}
+                      {office._id === editState._id ? (
+                        ""
+                      ) : (
+                          <Button variant={"danger"} className={"float-right"} onClick={() => deleteOffice(office._id)}>
+                            Delete
+                          </Button>
+                        )}
+                        </div>
+                    </Row>
                   </form>
-                  <div>
-                    <Button onClick={() => switchEditState(office._id)}>
-                      {office._id === editState._id
-                        ? "Cancel Update"
-                        : "Update This Office"}
-                    </Button>
-                  </div>
-                  {office._id === editState._id ? (
-                    <div>
-                      <Button
-                        onClick={() =>
-                          updateOffice(office._id, updatedOfficeObject)
-                        }
-                      >
-                        Save and Update
-                      </Button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {office._id === editState._id ? (
-                    ""
-                  ) : (
-                    <div>
-                      <Button onClick={() => deleteOffice(office._id)}>
-                        Delete
-                      </Button>
-                    </div>
-                  )}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
         ))
       ) : (
-        <p>No Results</p>
-      )}
+          <p>No Results</p>
+        )}
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">

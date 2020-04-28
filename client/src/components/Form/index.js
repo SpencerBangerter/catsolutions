@@ -1,13 +1,17 @@
 import React from "react";
+import Col from "react-bootstrap/Col";
 
 // This file exports the Input, TextArea, and FormBtn components
 
 export function Input(props) {
   
   return (
+    <Col md={props.width}>
     <div className="form-group">
-      <input className="form-control"{...props}/>
+      <label for={props.name}>{props.label}</label>
+      <input className={`form-control`}{...props}/>
     </div>
+    </Col>
   );
 }
 
