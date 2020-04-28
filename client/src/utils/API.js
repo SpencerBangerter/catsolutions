@@ -35,5 +35,24 @@ export default {
 
   deleteEmployee: function (id) {
       return axios.delete("api/employees/" + id)
-  }
+  },
+
+  ///// Equipment APIs //////
+
+  getEquipment: function() {
+    return axios.get("/api/equipment");
+  },
+
+  insertEquipment: function(equipmentData) {
+      return axios.post("/api/equipment", equipmentData)
+  },
+
+  updateEquipment: function(id, equipmentData) {
+      return axios.put("api/equipment/" + id, equipmentData)
+  },
+
+  deleteEquipment: function (id) {
+      return axios.delete("api/equipment/" + id)
+  },
+
 };
