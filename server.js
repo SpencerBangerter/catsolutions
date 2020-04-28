@@ -27,4 +27,3 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/catsolutions", 
 app.listen(PORT, function() {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
-//Spencer Test
