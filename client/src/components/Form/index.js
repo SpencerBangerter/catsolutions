@@ -30,3 +30,17 @@ export function FormBtn(props) {
     </button>
   );
 }
+
+export function SelectOffice(props) {
+  return (
+    <div className="form-group">
+      <label for="selectOffice">{props.label}</label>
+      <select className="form-control" {...props} id="selectOffice">
+        {props.options.length ? props.options.map ((opt) =>
+          (<option  value={opt._id}>{opt.name}</option>))
+          : <option className="disabled">No Offices</option>
+        } 
+      </select>
+  </div>
+  );
+}

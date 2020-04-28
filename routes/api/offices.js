@@ -6,6 +6,9 @@ router.route("/")
   .get(officesController.findAll)
   .post(officesController.create);
 
+  router.route("/names")
+  .get(officesController.findNames);
+  
 // Matches with "/api/offices/:id"
 router
   .route("/:id")
