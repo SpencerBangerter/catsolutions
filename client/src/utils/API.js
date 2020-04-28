@@ -12,33 +12,28 @@ export default {
       return axios.post("/api/offices", officeData)
   },
 
-//Double check the functionallity on this one
   updateOffice: function(id, officeData) {
-      console.log(officeData, id)
       return axios.put("api/offices/" + id, officeData)
   },
 
   deleteOffice: function (id) {
       return axios.delete("api/offices/" + id)
+  },
+  
+  // Start Employees
+  getEmployees: function() {
+    return axios.get("/api/employees");
+  },
+
+  insertEmployee: function(employeeData) {
+      return axios.post("/api/employees", employeeData)
+  },
+
+  updateEmployee: function(id, employeeData) {
+      return axios.put("api/employees/" + id, employeeData)
+  },
+
+  deleteEmployee: function (id) {
+      return axios.delete("api/employees/" + id)
   }
 };
-
-// export default {
-//     // Gets all books
-//     getBooks: function() {
-//       return axios.get("/api/books");
-//     },
-//     // Gets the book with the given id
-//     getBook: function(id) {
-//       return axios.get("/api/books/" + id);
-//     },
-//     // Deletes the book with the given id
-//     deleteBook: function(id) {
-//       return axios.delete("/api/books/" + id);
-//     },
-//     // Saves a book to the database
-//     saveBook: function(bookData) {
-//       return axios.post("/api/books", bookData);
-//     }
-//   };
-  
