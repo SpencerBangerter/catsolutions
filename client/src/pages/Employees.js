@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Input, FormBtn } from "../components/Form";
+import { Input, FormBtn, SelectOffice } from "../components/Form";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [officeNameList, setOfficeNameList] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
 
@@ -18,12 +19,18 @@ export default function Employees() {
   });
   useEffect(() => {
     loadEmployees();
+    getOfficeNames();
   }, []);
 
   //Get employee
   function loadEmployees() {
     API.getEmployees()
       .then((res) => setEmployees(res.data))
+      .catch((err) => console.log(err));
+  }
+
+  function getOfficeNames() {
+      API.getOfficeNames().then((res) => setOfficeNameList(res.data))
       .catch((err) => console.log(err));
   }
 
@@ -52,6 +59,12 @@ export default function Employees() {
     const { name, value } = event.target;
     setUpdateEmployeeObject({ ...updatedEmployeeObject, [name]: value });
   }
+  
+  const handleSelectOfficeChange = (event) =>{
+    console.log(event.target.value);
+    setFormObject({ ...formObject,  office_id  : "" });
+  }
+
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
@@ -107,6 +120,16 @@ export default function Employees() {
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <form>
+                    <Row>
+                      <SelectOffice
+                        data-value={employee._id}
+                        label="Current Office"
+                        onChange={handleInputChangeUpdateEmployee}
+                        options={officeNameList}
+                        width={12}
+                        disabled={employee._id === editState._id ? false : true}
+                      />
+                    </Row>
                     <Row>
                       <Input
                         data-value={employee._id}
@@ -200,6 +223,16 @@ export default function Employees() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
+              
+                <SelectOffice
+                  label="Select Office"
+                  name="office_id"
+                  onChange={handleSelectOfficeChange}
+                  options={officeNameList}
+                  width={12}
+                 
+                />
+                
                 <Input
                   onChange={handleInputChange}
                   name="name"

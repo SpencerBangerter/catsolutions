@@ -8,7 +8,11 @@ export default {
     return axios.get("/api/offices");
   },
 
-  insertOffice: function(officeData) {
+  getOfficeNames: function() {
+    return axios.get("/api/offices/names");
+  },
+
+   insertOffice: function(officeData) {
       return axios.post("/api/offices", officeData)
   },
 
