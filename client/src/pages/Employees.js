@@ -61,8 +61,8 @@ export default function Employees() {
   }
   
   const handleSelectOfficeChange = (event) =>{
-    console.log(event.target.value);
-    setFormObject({ ...formObject,  office_id  : "" });
+    const office= {"_id" : event.target.value}
+    setFormObject({ ...formObject,  office_id  : office });
   }
 
 
@@ -99,7 +99,8 @@ export default function Employees() {
         address: formObject.address,
         city: formObject.city,
         state: formObject.state,
-        zip: formObject.zip
+        zip: formObject.zip,
+        office_id : formObject.office_id 
       })
         .then((res) => loadEmployees())
         .then(clearForm())
@@ -126,6 +127,7 @@ export default function Employees() {
                         label="Current Office"
                         onChange={handleInputChangeUpdateEmployee}
                         options={officeNameList}
+                        value={employee.office_id}
                         width={12}
                         disabled={employee._id === editState._id ? false : true}
                       />

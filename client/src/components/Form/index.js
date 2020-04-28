@@ -36,9 +36,10 @@ export function SelectOffice(props) {
     <div className="form-group">
       <label for="selectOffice">{props.label}</label>
       <select className="form-control" {...props} id="selectOffice">
+      <option value={0}>None</option>
         {props.options.length ? props.options.map ((opt) =>
           (<option  value={opt._id}>{opt.name}</option>))
-          : <option className="disabled">No Offices</option>
+          : <option >No Offices</option>
         } 
       </select>
   </div>
