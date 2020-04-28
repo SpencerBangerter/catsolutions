@@ -1,0 +1,25 @@
+.full{
+    min-height: calc(100vh - 55px);
+    margin: 0;
+    padding: 0;
+}
+
+.footer{
+    width: 100%;
+    text-align: center;
+    background: rgba(255, 255, 255, .85) !important;
+    color: black;
+    border-top: 6px solid black;
+    padding:10px;
+}
+.gitIcon{
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px
+}
+.linkedIcon{ 
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px
+
+}
