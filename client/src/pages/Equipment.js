@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import Loader from "../components/Loader/Loader";
 // import Col from "react-bootstrap/Col";
 
 export default function Equipment() {
@@ -73,14 +74,14 @@ export default function Equipment() {
   function handleFormSubmit(event) {
     event.preventDefault();
     if (
-        formObject.type &&
-        formObject.model &&
-        formObject.serialNum &&
-        formObject.condition &&
-        formObject.purchaseDate &&
-        formObject.dateIssued &&
-        formObject.initialCost
-   
+      formObject.type &&
+      formObject.model &&
+      formObject.serialNum &&
+      formObject.condition &&
+      formObject.purchaseDate &&
+      formObject.dateIssued &&
+      formObject.initialCost
+
     ) {
       API.insertEquipment({
         // equipment DATA HERE
@@ -88,8 +89,8 @@ export default function Equipment() {
         model: formObject.model,
         serialNum: formObject.serialNum,
         condition: formObject.condition,
-        purchaseDate: formObject.purchaseDate, 
-        dateIssued: formObject.dateIssued, 
+        purchaseDate: formObject.purchaseDate,
+        dateIssued: formObject.dateIssued,
         initialCost: formObject.initialCost,
       })
         .then((res) => loadEquipment())
@@ -104,7 +105,7 @@ export default function Equipment() {
       {equipment.length ? (
         equipment.map((equipment) => (
           <Accordion key={equipment._id}>
-            <Card style={{ marginBottom: "10px", borderRadius: "5px"}}>
+            <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
               <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
                 {equipment.type + " " + equipment.model}
               </Accordion.Toggle>
@@ -168,7 +169,7 @@ export default function Equipment() {
                         width={2}
                         disabled={equipment._id === editState._id ? false : true}
                       />
-                        <Input
+                      <Input
                         data-value={equipment._id}
                         label="Initial Cost"
                         onChange={handleInputChangeUpdateEquipment}
@@ -177,33 +178,33 @@ export default function Equipment() {
                         width={2}
                         disabled={equipment._id === editState._id ? false : true}
                       />
-                    </Row>                
+                    </Row>
                     <Row>
                       <div className="col">
-                      <Button onClick={() => switchEditState(equipment._id)}>
-                        {equipment._id === editState._id
-                          ? "Cancel Update"
-                          : "Update This Equipment"}
-                      </Button>
-                      {equipment._id === editState._id ? (
-                        <Button variant={"success"}
-                          onClick={() =>
-                            updateEquipment(equipment._id, updatedEquipmentObject)
-                          }
-                        >
-                          Save and Update
+                        <Button onClick={() => switchEditState(equipment._id)}>
+                          {equipment._id === editState._id
+                            ? "Cancel Update"
+                            : "Update This Equipment"}
                         </Button>
-                      ) : (
-                          ""
-                        )}
-                      {equipment._id === editState._id ? (
-                        ""
-                      ) : (
-                          <Button variant={"danger"} className={"float-right"} onClick={() => deleteEquipment(equipment._id)}>
-                            Delete
+                        {equipment._id === editState._id ? (
+                          <Button variant={"success"}
+                            onClick={() =>
+                              updateEquipment(equipment._id, updatedEquipmentObject)
+                            }
+                          >
+                            Save and Update
                           </Button>
-                        )}
-                        </div>
+                        ) : (
+                            ""
+                          )}
+                        {equipment._id === editState._id ? (
+                          ""
+                        ) : (
+                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteEquipment(equipment._id)}>
+                              Delete
+                            </Button>
+                          )}
+                      </div>
                     </Row>
                   </form>
                 </Card.Body>
@@ -212,7 +213,9 @@ export default function Equipment() {
           </Accordion>
         ))
       ) : (
-          <p>No Results</p>
+          <div>
+            <Loader />
+          </div>
         )}
       <Accordion>
         <Card>
@@ -247,18 +250,18 @@ export default function Equipment() {
                   onChange={handleInputChange}
                   name="purchaseDate"
                   placeholder="Purchase Date (required)"
-                /> 
+                />
                 <Input
                   onChange={handleInputChange}
                   name="dateIssued"
                   placeholder="Date Issued (required)"
-                /> 
+                />
                 <Input
                   onChange={handleInputChange}
                   name="initialCost"
                   placeholder="Initial Cost (required)"
-                /> 
-             {/*NEEDS TO ADD THE Equipment FIELD*/}
+                />
+                {/*NEEDS TO ADD THE Equipment FIELD*/}
                 <FormBtn
                   disabled={
                     !(

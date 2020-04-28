@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import Loader from "../components/Loader/Loader";
 // import Col from "react-bootstrap/Col";
 
 export default function Employees() {
@@ -30,7 +31,7 @@ export default function Employees() {
   }
 
   function getOfficeNames() {
-      API.getOfficeNames().then((res) => setOfficeNameList(res.data))
+    API.getOfficeNames().then((res) => setOfficeNameList(res.data))
       .catch((err) => console.log(err));
   }
 
@@ -59,10 +60,10 @@ export default function Employees() {
     const { name, value } = event.target;
     setUpdateEmployeeObject({ ...updatedEmployeeObject, [name]: value });
   }
-  
-  const handleSelectOfficeChange = (event) =>{
+
+  const handleSelectOfficeChange = (event) => {
     console.log(event.target.value);
-    setFormObject({ ...formObject,  office_id  : "" });
+    setFormObject({ ...formObject, office_id: "" });
   }
 
 
@@ -86,12 +87,12 @@ export default function Employees() {
   function handleFormSubmit(event) {
     event.preventDefault();
     if (
-        formObject.name &&
-        formObject.address &&
-        formObject.city &&
-        formObject.state &&
-        formObject.zip
-   
+      formObject.name &&
+      formObject.address &&
+      formObject.city &&
+      formObject.state &&
+      formObject.zip
+
     ) {
       API.insertEmployee({
         // employee DATA HERE
@@ -113,7 +114,7 @@ export default function Employees() {
       {employees.length ? (
         employees.map((employee) => (
           <Accordion key={employee._id}>
-            <Card style={{ marginBottom: "10px", borderRadius: "5px"}}>
+            <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
               <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
                 {employee.name}
               </Accordion.Toggle>
@@ -178,33 +179,33 @@ export default function Employees() {
                         width={2}
                         disabled={employee._id === editState._id ? false : true}
                       />
-                    </Row>                
+                    </Row>
                     <Row>
                       <div className="col">
-                      <Button onClick={() => switchEditState(employee._id)}>
-                        {employee._id === editState._id
-                          ? "Cancel Update"
-                          : "Update This Employee"}
-                      </Button>
-                      {employee._id === editState._id ? (
-                        <Button variant={"success"}
-                          onClick={() =>
-                            updateEmployee(employee._id, updatedEmployeeObject)
-                          }
-                        >
-                          Save and Update
+                        <Button onClick={() => switchEditState(employee._id)}>
+                          {employee._id === editState._id
+                            ? "Cancel Update"
+                            : "Update This Employee"}
                         </Button>
-                      ) : (
-                          ""
-                        )}
-                      {employee._id === editState._id ? (
-                        ""
-                      ) : (
-                          <Button variant={"danger"} className={"float-right"} onClick={() => deleteEmployee(employee._id)}>
-                            Delete
+                        {employee._id === editState._id ? (
+                          <Button variant={"success"}
+                            onClick={() =>
+                              updateEmployee(employee._id, updatedEmployeeObject)
+                            }
+                          >
+                            Save and Update
                           </Button>
-                        )}
-                        </div>
+                        ) : (
+                            ""
+                          )}
+                        {employee._id === editState._id ? (
+                          ""
+                        ) : (
+                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteEmployee(employee._id)}>
+                              Delete
+                            </Button>
+                          )}
+                      </div>
                     </Row>
                   </form>
                 </Card.Body>
@@ -213,7 +214,9 @@ export default function Employees() {
           </Accordion>
         ))
       ) : (
-          <p>No Results</p>
+          <div>
+           {}
+          </div>
         )}
       <Accordion>
         <Card>
@@ -223,16 +226,16 @@ export default function Employees() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
-              
+
                 <SelectOffice
                   label="Select Office"
                   name="office_id"
                   onChange={handleSelectOfficeChange}
                   options={officeNameList}
                   width={12}
-                 
+
                 />
-                
+
                 <Input
                   onChange={handleInputChange}
                   name="name"
@@ -258,8 +261,8 @@ export default function Employees() {
                   onChange={handleInputChange}
                   name="zip"
                   placeholder="Zip (required)"
-                /> 
-             {/*NEEDS TO ADD THE Employee FIELD*/}
+                />
+                {/*NEEDS TO ADD THE Employee FIELD*/}
                 <FormBtn
                   disabled={
                     !(
