@@ -5,7 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+// import Col from "react-bootstrap/Col";
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
