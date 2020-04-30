@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Loader from "../components/Loader/Loader";
 import Table from "../components/Table/Table"
+import "./office.css"
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
