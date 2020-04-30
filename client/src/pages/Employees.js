@@ -215,7 +215,7 @@ export default function Employees() {
         ))
       ) : (
           <div>
-           {}
+            <Loader />
           </div>
         )}
       <Accordion>
