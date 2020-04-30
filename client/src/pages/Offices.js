@@ -5,7 +5,8 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Loader from "../components/Loader/Loader";
+// import Col from "react-bootstrap/Col";
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -102,7 +103,7 @@ export default function Offices() {
       {offices.length ? (
         offices.map((office) => (
           <Accordion key={office._id}>
-            <Card style={{ marginBottom: "10px", borderRadius: "5px"}}>
+            <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
               <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
                 {office.name}
               </Accordion.Toggle>
@@ -181,30 +182,30 @@ export default function Offices() {
 
                     <Row>
                       <div className="col">
-                      <Button onClick={() => switchEditState(office._id)}>
-                        {office._id === editState._id
-                          ? "Cancel Update"
-                          : "Update This Office"}
-                      </Button>
-                      {office._id === editState._id ? (
-                        <Button variant={"success"}
-                          onClick={() =>
-                            updateOffice(office._id, updatedOfficeObject)
-                          }
-                        >
-                          Save and Update
+                        <Button onClick={() => switchEditState(office._id)}>
+                          {office._id === editState._id
+                            ? "Cancel Update"
+                            : "Update This Office"}
                         </Button>
-                      ) : (
-                          ""
-                        )}
-                      {office._id === editState._id ? (
-                        ""
-                      ) : (
-                          <Button variant={"danger"} className={"float-right"} onClick={() => deleteOffice(office._id)}>
-                            Delete
+                        {office._id === editState._id ? (
+                          <Button variant={"success"}
+                            onClick={() =>
+                              updateOffice(office._id, updatedOfficeObject)
+                            }
+                          >
+                            Save and Update
                           </Button>
-                        )}
-                        </div>
+                        ) : (
+                            ""
+                          )}
+                        {office._id === editState._id ? (
+                          ""
+                        ) : (
+                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteOffice(office._id)}>
+                              Delete
+                            </Button>
+                          )}
+                      </div>
                     </Row>
                   </form>
                 </Card.Body>
@@ -213,7 +214,9 @@ export default function Offices() {
           </Accordion>
         ))
       ) : (
-          <p>No Results</p>
+          <div>
+            <Loader />
+          </div>
         )}
       <Accordion>
         <Card>
