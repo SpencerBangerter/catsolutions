@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Input, FormBtn, TextArea } from "../components/Form";
+import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -12,6 +12,9 @@ export default function Equipment() {
   const [equipment, setEquipment] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
+  const [employeeNameList, setEmployeeeNameList] = useState([]);
+
+
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -19,8 +22,16 @@ export default function Equipment() {
   });
   useEffect(() => {
     loadEquipment();
+    loadEmployeeNames();
   }, []);
 
+    //Get employee
+    function loadEmployeeNames() {
+      API.getEmployees()
+        .then((res) => setEmployeeeNameList(res.data))
+        .catch((err) => console.log(err));
+    }
+  
   //Get equipment
   function loadEquipment() {
     API.getEquipment()
@@ -54,6 +65,21 @@ export default function Equipment() {
     setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: value });
   }
 
+  const handleSelectEmployeeChange = (event, eq) => {
+    const employee = { _id: event.target.value };
+    setFormObject({ ...formObject, employee_id: employee });
+    setUpdateEquipmentObject({ ...updatedEquipmentObject, employee_id: employee });
+    if (eq) {
+    setEquipment(
+      equipment.map((item) => {
+        if (item._id === eq._id) {
+          return { ...item, employee_id: equipment._id };
+        }
+        return item;
+      })
+    );}
+  };
+
   function clearForm() {
     document.getElementById("create-course-form").reset();
   }
@@ -81,7 +107,6 @@ export default function Equipment() {
       formObject.purchaseDate &&
       formObject.dateIssued &&
       formObject.initialCost
-
     ) {
       API.insertEquipment({
         // equipment DATA HERE
@@ -91,6 +116,8 @@ export default function Equipment() {
         condition: formObject.condition,
         purchaseDate: formObject.purchaseDate,
         dateIssued: formObject.dateIssued,
+        employee_id: formObject.employee_id,
+
         initialCost: formObject.initialCost,
       })
         .then((res) => loadEquipment())
@@ -106,13 +133,25 @@ export default function Equipment() {
         equipment.map((equipment) => (
           <Accordion key={equipment._id}>
             <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
-              <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey="0"
+                style={{ background: "light-grey" }}
+              >
                 {equipment.type + " " + equipment.model}
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <form>
                     <Row>
+                    <SelectEmployee
+                        label="Assigned Employee"
+                        onChange={(e) => handleSelectEmployeeChange(e, equipment)}
+                        options={employeeNameList}
+                        value={equipment.employee_id}
+                        width={12}
+                        disabled={equipment._id === editState._id ? false : true}
+                      />
                       <Input
                         data-value={equipment._id}
                         label="Equipment Type"
@@ -120,7 +159,9 @@ export default function Equipment() {
                         name="type"
                         placeholder={equipment.type}
                         width={12}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                     </Row>
                     <Row>
@@ -131,7 +172,9 @@ export default function Equipment() {
                         name="model"
                         placeholder={equipment.model}
                         width={5}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -140,7 +183,9 @@ export default function Equipment() {
                         name="serialNum"
                         placeholder={equipment.serialNum}
                         width={3}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <TextArea
                         data-value={equipment._id}
@@ -148,8 +193,10 @@ export default function Equipment() {
                         onChange={handleInputChangeUpdateEquipment}
                         name="condition"
                         placeholder={equipment.condition}
-                        width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        width={12}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -158,7 +205,9 @@ export default function Equipment() {
                         name="purchaseDate"
                         placeholder={equipment.purchaseDate}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -167,7 +216,9 @@ export default function Equipment() {
                         name="dateIssued"
                         placeholder={equipment.dateIssued}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -176,7 +227,9 @@ export default function Equipment() {
                         name="initialCost"
                         placeholder={equipment.initialCost}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                     </Row>
                     <Row>
@@ -187,23 +240,31 @@ export default function Equipment() {
                             : "Update This Equipment"}
                         </Button>
                         {equipment._id === editState._id ? (
-                          <Button variant={"success"}
+                          <Button
+                            variant={"success"}
                             onClick={() =>
-                              updateEquipment(equipment._id, updatedEquipmentObject)
+                              updateEquipment(
+                                equipment._id,
+                                updatedEquipmentObject
+                              )
                             }
                           >
                             Save and Update
                           </Button>
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                         {equipment._id === editState._id ? (
                           ""
                         ) : (
-                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteEquipment(equipment._id)}>
-                              Delete
-                            </Button>
-                          )}
+                          <Button
+                            variant={"danger"}
+                            className={"float-right"}
+                            onClick={() => deleteEquipment(equipment._id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </Row>
                   </form>
@@ -213,10 +274,10 @@ export default function Equipment() {
           </Accordion>
         ))
       ) : (
-          <div>
-            <Loader />
-          </div>
-        )}
+        <div>
+          <Loader />
+        </div>
+      )}
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -225,6 +286,14 @@ export default function Equipment() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
+              <SelectEmployee
+                  label="Select Employee"
+                  name="employee_id"
+                  onChange={handleSelectEmployeeChange}
+                  options={employeeNameList}
+                  width={12}
+                />
+
                 <Input
                   onChange={handleInputChange}
                   name="type"

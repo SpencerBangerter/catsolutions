@@ -5,19 +5,22 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Loader from "../components/Loader/Loader";
-// import Col from "react-bootstrap/Col";
+import EmployeeTable from "../components/EmployeeTable/EmployeeTable"
+import "./office.css"
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedOfficeObject, setUpdateOfficeObject] = useState({});
-
+  const [employees, setEmployees] = useState([]);
   const [editState, setEditState] = useState({
     locked: true,
     _id: "",
   });
   useEffect(() => {
     loadOffices();
+    loadEmployees();
   }, []);
 
   //Get office
@@ -27,6 +30,13 @@ export default function Offices() {
       .catch((err) => console.log(err));
   }
 
+    //Get employee
+    function loadEmployees() {
+      API.getEmployees()
+        .then((res) => setEmployees(res.data))
+        .catch((err) => console.log(err));
+    }
+  
   //update office
   const updateOffice = (id, officeData) => {
     API.updateOffice(id, officeData)
@@ -104,7 +114,11 @@ export default function Offices() {
         offices.map((office) => (
           <Accordion key={office._id}>
             <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
-              <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey="0"
+                style={{ background: "light-grey" }}
+              >
                 {office.name}
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
@@ -188,7 +202,8 @@ export default function Offices() {
                             : "Update This Office"}
                         </Button>
                         {office._id === editState._id ? (
-                          <Button variant={"success"}
+                          <Button
+                            variant={"success"}
                             onClick={() =>
                               updateOffice(office._id, updatedOfficeObject)
                             }
@@ -196,28 +211,56 @@ export default function Offices() {
                             Save and Update
                           </Button>
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                         {office._id === editState._id ? (
                           ""
                         ) : (
-                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteOffice(office._id)}>
-                              Delete
-                            </Button>
-                          )}
+                          <Button
+                            variant={"danger"}
+                            className={"float-right"}
+                            onClick={() => deleteOffice(office._id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </Row>
                   </form>
+                  <br />
+                  <Row>
+                    <Col>
+                      <Accordion>
+                      <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
+                          <Card.Header>
+                            <Accordion.Toggle
+                              as={Card.Header}
+                              eventKey="0"
+                              style={{ background: "light-grey" }}
+                            >
+                              Show Employee List
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                            <EmployeeTable employees={employees.filter(employee=> employee.office_id === office._id)}/>
+
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
         ))
       ) : (
-          <div>
-            <Loader />
-          </div>
-        )}
+        <div>
+          <Loader />
+        </div>
+      )}
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">

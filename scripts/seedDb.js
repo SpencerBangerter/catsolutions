@@ -33,7 +33,6 @@ const employeeSeed = [
     city: "West Jordan",
     state: "UT",
     zip: "85097",
-    equipment: [],
   },
   {
     name: "Matthew Grimes",
@@ -41,7 +40,6 @@ const employeeSeed = [
     city: "Salt Lake City",
     state: "UT",
     zip: "84101",
-    equipment: [],
   },
 ];
 
