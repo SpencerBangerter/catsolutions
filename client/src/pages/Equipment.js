@@ -81,7 +81,6 @@ export default function Equipment() {
       formObject.purchaseDate &&
       formObject.dateIssued &&
       formObject.initialCost
-
     ) {
       API.insertEquipment({
         // equipment DATA HERE
@@ -106,7 +105,11 @@ export default function Equipment() {
         equipment.map((equipment) => (
           <Accordion key={equipment._id}>
             <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
-              <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey="0"
+                style={{ background: "light-grey" }}
+              >
                 {equipment.type + " " + equipment.model}
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
@@ -120,7 +123,9 @@ export default function Equipment() {
                         name="type"
                         placeholder={equipment.type}
                         width={12}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                     </Row>
                     <Row>
@@ -131,7 +136,9 @@ export default function Equipment() {
                         name="model"
                         placeholder={equipment.model}
                         width={5}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -140,7 +147,9 @@ export default function Equipment() {
                         name="serialNum"
                         placeholder={equipment.serialNum}
                         width={3}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <TextArea
                         data-value={equipment._id}
@@ -148,8 +157,10 @@ export default function Equipment() {
                         onChange={handleInputChangeUpdateEquipment}
                         name="condition"
                         placeholder={equipment.condition}
-                        width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        width={12}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -158,7 +169,9 @@ export default function Equipment() {
                         name="purchaseDate"
                         placeholder={equipment.purchaseDate}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -167,7 +180,9 @@ export default function Equipment() {
                         name="dateIssued"
                         placeholder={equipment.dateIssued}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -176,7 +191,9 @@ export default function Equipment() {
                         name="initialCost"
                         placeholder={equipment.initialCost}
                         width={2}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                     </Row>
                     <Row>
@@ -187,23 +204,31 @@ export default function Equipment() {
                             : "Update This Equipment"}
                         </Button>
                         {equipment._id === editState._id ? (
-                          <Button variant={"success"}
+                          <Button
+                            variant={"success"}
                             onClick={() =>
-                              updateEquipment(equipment._id, updatedEquipmentObject)
+                              updateEquipment(
+                                equipment._id,
+                                updatedEquipmentObject
+                              )
                             }
                           >
                             Save and Update
                           </Button>
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                         {equipment._id === editState._id ? (
                           ""
                         ) : (
-                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteEquipment(equipment._id)}>
-                              Delete
-                            </Button>
-                          )}
+                          <Button
+                            variant={"danger"}
+                            className={"float-right"}
+                            onClick={() => deleteEquipment(equipment._id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </Row>
                   </form>
@@ -213,10 +238,10 @@ export default function Equipment() {
           </Accordion>
         ))
       ) : (
-          <div>
-            <Loader />
-          </div>
-        )}
+        <div>
+          <Loader />
+        </div>
+      )}
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">

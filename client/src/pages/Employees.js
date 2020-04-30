@@ -62,10 +62,16 @@ export default function Employees() {
   }
 
   
-  const handleSelectOfficeChange = (event) =>{
+  const handleSelectOfficeChange = (event, employee) =>{
     const office= {"_id" : event.target.value}
     setFormObject({ ...formObject,  office_id  : office });
-
+    setUpdateEmployeeObject({ ...updatedEmployeeObject,  office_id  : office });
+    setEmployees(employees.map(item => {if (item._id === employee._id) {
+      return {...item, office_id : office._id}
+    }
+      return item
+    }))
+    console.log(updatedEmployeeObject)
   }
 
 
@@ -126,9 +132,8 @@ export default function Employees() {
                   <form>
                     <Row>
                       <SelectOffice
-                        data-value={employee._id}
                         label="Current Office"
-                        onChange={handleInputChangeUpdateEmployee}
+                        onChange={(e)=> handleSelectOfficeChange(e, employee)}
                         options={officeNameList}
                         value={employee.office_id}
                         width={12}
