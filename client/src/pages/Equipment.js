@@ -69,6 +69,7 @@ export default function Equipment() {
     const employee = { _id: event.target.value };
     setFormObject({ ...formObject, employee_id: employee });
     setUpdateEquipmentObject({ ...updatedEquipmentObject, employee_id: employee });
+    if (eq) {
     setEquipment(
       equipment.map((item) => {
         if (item._id === eq._id) {
@@ -76,7 +77,7 @@ export default function Equipment() {
         }
         return item;
       })
-    );
+    );}
   };
 
   function clearForm() {

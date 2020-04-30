@@ -77,14 +77,16 @@ export default function Employees() {
     const office = { _id: event.target.value };
     setFormObject({ ...formObject, office_id: office });
     setUpdateEmployeeObject({ ...updatedEmployeeObject, office_id: office });
-    setEmployees(
-      employees.map((item) => {
-        if (item._id === employee._id) {
-          return { ...item, office_id: office._id };
-        }
-        return item;
-      })
-    );
+    if (employee) {
+      setEmployees(
+        employees.map((item) => {
+          if (item._id === employee._id) {
+            return { ...item, office_id: office._id };
+          }
+          return item;
+        })
+      );
+    }
   };
 
   function clearForm() {

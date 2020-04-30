@@ -39,6 +39,7 @@ export function FormBtn(props) {
 
 export function SelectOffice(props) {
   return (
+    <Col>
     <div className="form-group">
       <label htmlFor="selectOffice">{props.label}</label>
       <select className="form-control" {...props} id="selectOffice">
@@ -54,11 +55,13 @@ export function SelectOffice(props) {
         )}
       </select>
     </div>
+    </Col>
   );
 }
 
 export function SelectEmployee(props) {
   return (
+    <Col>
     <div className="form-group">
       <label htmlFor="selectOffice">{props.label}</label>
       <select className="form-control" {...props} id="selectEmployee">
@@ -74,5 +77,6 @@ export function SelectEmployee(props) {
         )}
       </select>
     </div>
+    </Col>
   );
 }
