@@ -1,16 +1,25 @@
-import BootstrapTable from 'react-bootstrap-table-next';
+import React from "react";
+import Table from "react-bootstrap/Table";
 
-const products = [ ];
-const columns = [{
-  dataField: 'id',
-  text: 'Product ID'
-}, {
-  dataField: 'name',
-  text: 'Product Name'
-}, {
-  dataField: 'price',
-  text: 'Product Price'
-}];
-
-export default () =>
-  <BootstrapTable keyField='id' data={ products } columns={ columns } />
+export default function TableComponent(props) {
+  return (
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.employees.map((emp) => (
+          <tr key={emp._id}>
+            <td>{emp.name}</td>
+            <td>{emp.phone}</td>
+            <td>{emp.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+}

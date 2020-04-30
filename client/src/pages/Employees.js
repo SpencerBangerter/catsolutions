@@ -31,7 +31,8 @@ export default function Employees() {
   }
 
   function getOfficeNames() {
-    API.getOfficeNames().then((res) => setOfficeNameList(res.data))
+    API.getOfficeNames()
+      .then((res) => setOfficeNameList(res.data))
       .catch((err) => console.log(err));
   }
 
@@ -61,19 +62,19 @@ export default function Employees() {
     setUpdateEmployeeObject({ ...updatedEmployeeObject, [name]: value });
   }
 
-  
-  const handleSelectOfficeChange = (event, employee) =>{
-    const office= {"_id" : event.target.value}
-    setFormObject({ ...formObject,  office_id  : office });
-    setUpdateEmployeeObject({ ...updatedEmployeeObject,  office_id  : office });
-    setEmployees(employees.map(item => {if (item._id === employee._id) {
-      return {...item, office_id : office._id}
-    }
-      return item
-    }))
-    console.log(updatedEmployeeObject)
-  }
-
+  const handleSelectOfficeChange = (event, employee) => {
+    const office = { _id: event.target.value };
+    setFormObject({ ...formObject, office_id: office });
+    setUpdateEmployeeObject({ ...updatedEmployeeObject, office_id: office });
+    setEmployees(
+      employees.map((item) => {
+        if (item._id === employee._id) {
+          return { ...item, office_id: office._id };
+        }
+        return item;
+      })
+    );
+  };
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
@@ -99,8 +100,9 @@ export default function Employees() {
       formObject.address &&
       formObject.city &&
       formObject.state &&
-      formObject.zip
-
+      formObject.zip &&
+      formObject.phone &&
+      formObject.email
     ) {
       API.insertEmployee({
         // employee DATA HERE
@@ -109,7 +111,9 @@ export default function Employees() {
         city: formObject.city,
         state: formObject.state,
         zip: formObject.zip,
-        office_id : formObject.office_id 
+        office_id: formObject.office_id,
+        phone: formObject.phone,
+        email: formObject.email,
       })
         .then((res) => loadEmployees())
         .then(clearForm())
@@ -124,7 +128,11 @@ export default function Employees() {
         employees.map((employee) => (
           <Accordion key={employee._id}>
             <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
-              <Accordion.Toggle as={Card.Header} eventKey="0" style={{ background: "light-grey" }}>
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey="0"
+                style={{ background: "light-grey" }}
+              >
                 {employee.name}
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
@@ -133,7 +141,7 @@ export default function Employees() {
                     <Row>
                       <SelectOffice
                         label="Current Office"
-                        onChange={(e)=> handleSelectOfficeChange(e, employee)}
+                        onChange={(e) => handleSelectOfficeChange(e, employee)}
                         options={officeNameList}
                         value={employee.office_id}
                         width={12}
@@ -188,6 +196,24 @@ export default function Employees() {
                         width={2}
                         disabled={employee._id === editState._id ? false : true}
                       />
+                      <Input
+                        data-value={employee._id}
+                        label="Phone"
+                        onChange={handleInputChangeUpdateEmployee}
+                        name="phone"
+                        placeholder={employee.phone}
+                        width={2}
+                        disabled={employee._id === editState._id ? false : true}
+                      />
+                      <Input
+                        data-value={employee._id}
+                        label="Email"
+                        onChange={handleInputChangeUpdateEmployee}
+                        name="email"
+                        placeholder={employee.email}
+                        width={2}
+                        disabled={employee._id === editState._id ? false : true}
+                      />
                     </Row>
                     <Row>
                       <div className="col">
@@ -197,23 +223,31 @@ export default function Employees() {
                             : "Update This Employee"}
                         </Button>
                         {employee._id === editState._id ? (
-                          <Button variant={"success"}
+                          <Button
+                            variant={"success"}
                             onClick={() =>
-                              updateEmployee(employee._id, updatedEmployeeObject)
+                              updateEmployee(
+                                employee._id,
+                                updatedEmployeeObject
+                              )
                             }
                           >
                             Save and Update
                           </Button>
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                         {employee._id === editState._id ? (
                           ""
                         ) : (
-                            <Button variant={"danger"} className={"float-right"} onClick={() => deleteEmployee(employee._id)}>
-                              Delete
-                            </Button>
-                          )}
+                          <Button
+                            variant={"danger"}
+                            className={"float-right"}
+                            onClick={() => deleteEmployee(employee._id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </Row>
                   </form>
@@ -223,10 +257,8 @@ export default function Employees() {
           </Accordion>
         ))
       ) : (
-          <div>
-           {}
-          </div>
-        )}
+        <div>{}</div>
+      )}
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -235,14 +267,12 @@ export default function Employees() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
-
                 <SelectOffice
                   label="Select Office"
                   name="office_id"
                   onChange={handleSelectOfficeChange}
                   options={officeNameList}
                   width={12}
-
                 />
 
                 <Input
@@ -271,6 +301,17 @@ export default function Employees() {
                   name="zip"
                   placeholder="Zip (required)"
                 />
+                <Input
+                  onChange={handleInputChange}
+                  name="phone"
+                  placeholder="Phone (required)"
+                />
+                <Input
+                  onChange={handleInputChange}
+                  name="email"
+                  placeholder="Email (required)"
+                />
+
                 {/*NEEDS TO ADD THE Employee FIELD*/}
                 <FormBtn
                   disabled={
@@ -279,7 +320,9 @@ export default function Employees() {
                       formObject.address &&
                       formObject.city &&
                       formObject.state &&
-                      formObject.zip
+                      formObject.zip &&
+                      formObject.phone &&
+                      formObject.email
                     )
                   }
                   onClick={handleFormSubmit}

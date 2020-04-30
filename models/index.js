@@ -9,7 +9,6 @@ const officeSchema = new Schema({
   zip: { type: String, required: true },
   managementContact: { type: String, required: true },
   managementContactPhone: { type: String, required: true },
-  employees: [{ type: Schema.Types.ObjectId, ref: "Employee" }],
 });
 
 const employeeSchema = new Schema({
@@ -19,7 +18,8 @@ const employeeSchema = new Schema({
   city: { type: String, required: true },
   state: { type: String, required: true },
   zip: { type: String, required: true },
-  equipment: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
+  phone: { type: String, required: true },
+  email: { type: String, required: true },
 });
 
 const equipmentSchema = new Schema({
@@ -30,6 +30,8 @@ const equipmentSchema = new Schema({
   purchaseDate: { type: Date, default: Date.now },
   dateIssued: { type: Date, default: Date.now },
   initialCost: { type: String, required: true },
+  employee_id: { type: Schema.Types.ObjectId, ref: "Employee" },
+
 });
 
 //HISTORICAL LOGS
