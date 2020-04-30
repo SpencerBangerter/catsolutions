@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Loader from "../components/Loader/Loader";
-import Table from "../components/Table/Table"
+import EmployeeTable from "../components/EmployeeTable/EmployeeTable"
 import "./office.css"
 export default function Offices() {
   const [offices, setOffices] = useState([]);
@@ -230,7 +230,6 @@ export default function Offices() {
                   <br />
                   <Row>
                     <Col>
-                      {/* ADD EMPLOYEE PHONE NUMBER AND EMAILS TO DB*/}
                       <Accordion>
                       <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
                           <Card.Header>
@@ -244,7 +243,7 @@ export default function Offices() {
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>
-                            <Table employees={employees.filter(employee=> employee.office_id === office._id)}/>
+                            <EmployeeTable employees={employees.filter(employee=> employee.office_id === office._id)}/>
 
                             </Card.Body>
                           </Accordion.Collapse>

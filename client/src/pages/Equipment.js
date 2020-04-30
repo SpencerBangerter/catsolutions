@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Input, FormBtn, TextArea } from "../components/Form";
+import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -12,6 +12,9 @@ export default function Equipment() {
   const [equipment, setEquipment] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
+  const [employeeNameList, setEmployeeeNameList] = useState([]);
+
+
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -19,8 +22,16 @@ export default function Equipment() {
   });
   useEffect(() => {
     loadEquipment();
+    loadEmployeeNames();
   }, []);
 
+    //Get employee
+    function loadEmployeeNames() {
+      API.getEmployees()
+        .then((res) => setEmployeeeNameList(res.data))
+        .catch((err) => console.log(err));
+    }
+  
   //Get equipment
   function loadEquipment() {
     API.getEquipment()
@@ -53,6 +64,20 @@ export default function Equipment() {
     const { name, value } = event.target;
     setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: value });
   }
+
+  const handleSelectEmployeeChange = (event, eq) => {
+    const employee = { _id: event.target.value };
+    setFormObject({ ...formObject, employee_id: employee });
+    setUpdateEquipmentObject({ ...updatedEquipmentObject, employee_id: employee });
+    setEquipment(
+      equipment.map((item) => {
+        if (item._id === eq._id) {
+          return { ...item, employee_id: equipment._id };
+        }
+        return item;
+      })
+    );
+  };
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
@@ -90,6 +115,8 @@ export default function Equipment() {
         condition: formObject.condition,
         purchaseDate: formObject.purchaseDate,
         dateIssued: formObject.dateIssued,
+        employee_id: formObject.employee_id,
+
         initialCost: formObject.initialCost,
       })
         .then((res) => loadEquipment())
@@ -116,6 +143,14 @@ export default function Equipment() {
                 <Card.Body>
                   <form>
                     <Row>
+                    <SelectEmployee
+                        label="Assigned Employee"
+                        onChange={(e) => handleSelectEmployeeChange(e, equipment)}
+                        options={employeeNameList}
+                        value={equipment.employee_id}
+                        width={12}
+                        disabled={equipment._id === editState._id ? false : true}
+                      />
                       <Input
                         data-value={equipment._id}
                         label="Equipment Type"
@@ -250,6 +285,14 @@ export default function Equipment() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
+              <SelectEmployee
+                  label="Select Employee"
+                  name="employee_id"
+                  onChange={handleSelectEmployeeChange}
+                  options={employeeNameList}
+                  width={12}
+                />
+
                 <Input
                   onChange={handleInputChange}
                   name="type"

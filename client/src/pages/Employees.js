@@ -5,11 +5,14 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import EquipmentTable from "../components/EquipmentTable/EquipmentTable"
 import Loader from "../components/Loader/Loader";
-// import Col from "react-bootstrap/Col";
+import Col from "react-bootstrap/Col";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [equipment, setEquipment] = useState([]);
+
   const [officeNameList, setOfficeNameList] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
@@ -21,8 +24,16 @@ export default function Employees() {
   useEffect(() => {
     loadEmployees();
     getOfficeNames();
+    loadEquipment();
   }, []);
 
+    //Get equipment
+    function loadEquipment() {
+      API.getEquipment()
+        .then((res) => setEquipment(res.data))
+        .catch((err) => console.log(err));
+    }
+  
   //Get employee
   function loadEmployees() {
     API.getEmployees()
@@ -251,6 +262,30 @@ export default function Employees() {
                       </div>
                     </Row>
                   </form>
+                  <br />
+                  <Row>
+                    <Col>
+                      <Accordion>
+                      <Card style={{ marginBottom: "10px", borderRadius: "5px" }}>
+                          <Card.Header>
+                            <Accordion.Toggle
+                              as={Card.Header}
+                              eventKey="0"
+                              style={{ background: "light-grey" }}
+                            >
+                              Show Equipment List
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                            <EquipmentTable equipment={equipment.filter(eq=> eq.employee_id === employee._id)}/>
+
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
