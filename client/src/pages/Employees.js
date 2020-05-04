@@ -135,7 +135,7 @@ export default function Employees() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid mt-3">
       <h1>Employees</h1>
       {employees.length ? (
         employees.map((employee) => (

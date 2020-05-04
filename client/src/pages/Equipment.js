@@ -127,7 +127,7 @@ export default function Equipment() {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-3">
       <h1>Equipment</h1>
       {equipment.length ? (
         equipment.map((equipment) => (

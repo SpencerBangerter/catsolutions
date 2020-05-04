@@ -9,6 +9,7 @@ body {
 }
 
 .accordion>.card:first-of-type {
+  border: none;
   border-bottom: 1px solid lightgray;
 }
 

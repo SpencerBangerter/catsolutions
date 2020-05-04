@@ -1,0 +1,47 @@
+HTML {
+    background: white;
+}
+
+.page-header h1 {
+    margin-left: 20px;
+    font-family: 'Arvo', serif;
+    color: #202124;
+    padding-top: 10px;
+}
+
+.container {
+    padding: 0px;
+    margin-left: 60px;
+    padding-bottom: 300px !important;
+    overflow: hidden !important;
+}
+
+
+.page-header {
+    background: #F2F2F2;
+    border: 1px, solid #F2F2F2;
+    border-radius:  1px 1px 45px 1px
+
+}
+
+.page-headerText {
+    color: #1F2833 !important;
+    font-family: 'Arvo', serif;
+}
+
+.navbar {
+    background: #1F2833;
+    width: 100%;
+}
+
+.card-header {
+    background: white;
+}
+
+i.fas {
+    color: #1F2833;
+}
+
+.card-header:first-child {
+    border-radius: 0px !important;
+}

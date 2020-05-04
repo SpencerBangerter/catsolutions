@@ -1,0 +1,35 @@
+a {
+    color: #202124;
+    font-family: 'Arvo', serif;
+    font-size: .8em;
+    padding-bottom: 10px;;
+}
+
+a:hover {
+    color: #202124;
+    background: white;
+    border-radius: 4px;
+}
+
+a , .navLink:hover {
+    border-bottom: none !important;
+}
+
+.navbar {
+    padding-bottom: 0;
+}
+
+.navbar-nav {
+    background: white !important;
+    border-color: white !important;
+}
+
+.nav-link {
+    border-radius: 4px;
+}
+
+.active{
+    color: white !important;
+    border-color:  #00BDD3 !important; ;
+    background: #00BDD3 !important;
+}
