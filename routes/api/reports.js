@@ -5,4 +5,6 @@ const reportsController = require("../../controllers/reportsController");
 router.route("/offices")
   .get(reportsController.countOffice);
 
+  router.route("/equipment")
+  .get(reportsController.countEquipment);
 module.exports = router;

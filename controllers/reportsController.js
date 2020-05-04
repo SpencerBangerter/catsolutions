@@ -47,5 +47,31 @@ module.exports = {
                             });
                         });
             }).catch(err => res.status(422).json(err));
+    },
+
+    countEquipment : function (req, res) {
+        db.Equipment
+        .find(req.query)
+        .select({ _id: 1, initialCost: 1, employee_id: 1 })
+        .sort({ date: -1 })
+        .then(dbEquip => {               
+            let response = {
+                assignedCount : 0,
+                assignedValue : 0,
+                notAssignedCount : 0,
+                notAssignedValue : 0
+            }
+           dbEquip.forEach(equip => {
+                //TODO: check this later
+                if(equip.employee_id !== undefined) {
+                    response.assignedCount++;
+                    response.assignedValue += parseFloat(equip.initialCost);
+                } else {
+                    response.notAssignedCount++;
+                    response.notAssignedValue += parseFloat(equip.initialCost);
+                }
+            });
+            res.json(response);
+        }).catch(err => res.status(422).json(err));
     }
 };
