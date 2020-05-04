@@ -25,12 +25,12 @@ module.exports = {
                                         _id: dbOffices[i]._id,
                                         name: dbOffices[i].name,
                                         equipmentValue: 0,
-                                        numberEmployees: 0
+                                        employees: 0
                                     }                           
                                     dbEmployee.forEach(emp => {
                                         const empOfficeId = emp.office_id ? emp.office_id.toString() : "";
                                         if (office._id.toString() === empOfficeId) {
-                                            office.numberEmployees++;                                 
+                                            office.employees++;                                 
                                         }  
                                     }); 
 
