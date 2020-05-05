@@ -9,9 +9,11 @@
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-table-next": "^4.0.1",
+    "react-date-picker": "^8.0.1",
+    "react-datepicker": "^2.14.1",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^2.1.1"
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
