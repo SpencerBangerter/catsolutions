@@ -1,24 +1,21 @@
 import React from 'react'
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Row, Col } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
-import SideNavBar from "../components/SideNav/SideNav";
 import "./page.css";
 export default function HomePage() {
     return (
         <div>
-            <Navbar expand="lg" className="mr-5 pt-3">
-                <Navbar.Brand href="#home" className="ml-auto mr-5"> CAT-Solutions
-            </Navbar.Brand>
+            <Navbar className="mr-5 pt-3 shadow">
+                <Navbar.Brand className="ml-auto">
+                    <i className="fas fa-cat" style={{ color: "#ffffff", fontSize: "1.6em" }}></i>
+                </Navbar.Brand>
             </Navbar>
             <div className="container shadow-sm">
                 <Row>
-                    <Col className="ml-5">
-                        <hr />
+                    <Col>
                         <div className="page-header">
-                            <h1 className="ml-3">Home</h1>
+                            <h1 className=" mb-5 pb-3 page-headerText">Home</h1>
                         </div>
-                        <hr />
                     </Col>
                 </Row>
             </div>

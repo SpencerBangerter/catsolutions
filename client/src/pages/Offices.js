@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn } from "../components/Form";
-import {Card, Button, Row, Col, Navbar, Accordion} from "react-bootstrap";
+import { Card, Button, Row, Col, Navbar, Accordion } from "react-bootstrap";
 import Loader from "../components/Loader/Loader";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable"
 import "./page.css"
@@ -107,8 +107,8 @@ export default function Offices() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-        <i className="fas fa-cat" style={{color: "#ffffff", fontSize: "1.6em"}}></i>
-            </Navbar.Brand>
+          <i className="fas fa-cat" style={{ fontSize: "1.6em" }}></i>
+        </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
         <Row>
@@ -125,12 +125,19 @@ export default function Offices() {
                         as={Card.Header}
                         eventKey="0"
                       >
-                        <h6 style={{color: "#1F2833", fontFamily: "font-family: 'Arvo', serif;"}}>{office.name} <i className="fas fa-caret-down float-right mt-1"></i></h6>
+                        <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                          <i className="fas fa-building mr-3"></i>
+                          {office.name}
+                          <i className="fas fa-caret-down float-right mt-1"></i>
+                        </h6>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
                         <Card.Body>
                           <form>
                             <Row>
+                              {office._id === editState._id ? 
+                              <i className="fas fa-lock-open ml-3 mb-3 "></i> 
+                              : <i className="fas fa-lock ml-3 mb-3 "></i>}
                               <Input
                                 data-value={office._id}
                                 label="Office Name"
@@ -222,8 +229,8 @@ export default function Offices() {
                                   ""
                                 ) : (
                                     <Button
-                                      variant={"outline-danger"}
-                                      className={"float-right"}
+                                      variant="outline-danger"
+                                      className="float-right"
                                       onClick={() => deleteOffice(office._id)}
                                     >
                                       Delete
@@ -237,13 +244,16 @@ export default function Offices() {
                             <Col>
                               <Accordion>
                                 <Card >
-                                    <Accordion.Toggle
-                                      as={Card.Header}
-                                      eventKey="0"
-
-                                    >
+                                  <Accordion.Toggle
+                                    as={Card.Header}
+                                    eventKey="0"
+                                  >
+                                    <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                                      <i className="fas fa-list mr-3"></i>
                                       Show Employee List
-                            </Accordion.Toggle>
+                                      <i className="fas fa-caret-down float-right mt-1"></i>
+                                    </h6>
+                                  </Accordion.Toggle>
                                   <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                       <EmployeeTable employees={employees.filter(employee => employee.office_id === office._id)} />
@@ -268,7 +278,9 @@ export default function Offices() {
             <Accordion className="ml-2">
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6 style={{color: "#1F2833", fontFamily: "font-family: 'Arvo', serif;"}}>Create Office <i className="fas fa-plus float-right mt-1"><i className="fas fa-building float-right ml-1"></i></i></h6>
+                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                    Create Office <i className="fas fa-plus float-right mt-1"><i className="fas fa-building float-right ml-1"></i></i>
+                  </h6>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
