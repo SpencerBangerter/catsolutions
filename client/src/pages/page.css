@@ -45,3 +45,19 @@ i.fas {
 .card-header:first-child {
     border-radius: 0px !important;
 }
+
+.input .form-control {
+    border: none !important;
+}
+
+input {
+    border: none !important;
+}
+
+select {
+    border: none !important;
+}
+
+textarea {
+    border: none;
+}

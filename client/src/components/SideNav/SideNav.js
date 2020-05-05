@@ -16,10 +16,10 @@ export default function SideNavBar() {
                 <SideNav.Nav>
                     <NavItem eventKey="/catsolutions" active={location.pathname === "/catsolutions" ? true : false}>
                         <NavIcon>
-                            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em'}} />
+                            <i className="fa fa-fw fa-chart-bar" style={{ fontSize: '1.75em'}} />
                         </NavIcon>
                         <NavText>
-                            Home
+                            Dashboard
                     </NavText>
                     </NavItem>
                     <NavItem eventKey="/offices" active={location.pathname === "/offices" ? true : false}>

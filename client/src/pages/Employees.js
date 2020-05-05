@@ -9,8 +9,9 @@ import "./page.css";
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [equipment, setEquipment] = useState([]);
-
   const [officeNameList, setOfficeNameList] = useState([]);
+  const [toggleArrowState, setToggleArrowState] = useState("");
+  const [toggleArrowListState, setToggleArrowListState] = useState("");
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
 
@@ -131,11 +132,27 @@ export default function Employees() {
     }
   }
 
+  function toggleArrow(officeName) {
+    if (toggleArrowState[officeName] === false) {
+      setToggleArrowState({ ...toggleArrowState, [officeName]: true });
+    } else {
+      setToggleArrowState({ ...toggleArrowState, [officeName]: false });
+    }
+  }
+
+  function toggleArrowList(officeName) {
+    if (toggleArrowListState[officeName] === false) {
+      setToggleArrowListState({ ...toggleArrowListState, [officeName]: true });
+    } else {
+      setToggleArrowListState({ ...toggleArrowListState, [officeName]: false });
+    }
+  }
+
   return (
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat" style={{ fontSize: "1.6em" }}></i>
+          <i className="fas fa-cat mr-5" style={{ color: "#ffffff", fontSize: "1.6em" }}></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -151,10 +168,13 @@ export default function Employees() {
                     <Accordion.Toggle
                       as={Card.Header}
                       eventKey="0"
+                      onClick={() => { toggleArrow(employee.name) }}
                     > <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
                         <i className="fas fa-user mr-3"></i>
                         {employee.name}
-                        <i className="fas fa-caret-down float-right mt-1"></i>
+                        {toggleArrowState[employee.name] === false ?
+                          <i className="fas fa-caret-up float-right mt-1"></i> :
+                          <i className="fas fa-caret-down float-right mt-1"></i>}
                       </h6>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
@@ -284,11 +304,14 @@ export default function Employees() {
                                 <Accordion.Toggle
                                   as={Card.Header}
                                   eventKey="0"
+                                  onClick={() => { toggleArrowList(employee.name) }}
                                 >
                                   <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
                                     <i className="fas fa-list mr-3"></i>
                                       Show Equipment List
-                                    <i className="fas fa-caret-down float-right mt-1"></i>
+                                      {toggleArrowListState[employee.name] === false ?
+                                      <i className="fas fa-caret-up float-right mt-1"></i> :
+                                      <i className="fas fa-caret-down float-right mt-1"></i>}
                                   </h6>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">

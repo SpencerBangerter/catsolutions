@@ -10,6 +10,8 @@ export default function Offices() {
   const [formObject, setFormObject] = useState({});
   const [updatedOfficeObject, setUpdateOfficeObject] = useState({});
   const [employees, setEmployees] = useState([]);
+  const [toggleArrowState, setToggleArrowState] = useState("");
+  const [toggleArrowListState, setToggleArrowListState] = useState("");
   const [editState, setEditState] = useState({
     locked: true,
     _id: "",
@@ -75,6 +77,21 @@ export default function Offices() {
     }
   }
 
+  function toggleArrow(officeName) {
+    if (toggleArrowState[officeName] === false) {
+      setToggleArrowState({ ...toggleArrowState, [officeName]: true });
+    } else {
+      setToggleArrowState({ ...toggleArrowState, [officeName]: false });
+    }
+  }
+
+  function toggleArrowList(officeName) {
+    if (toggleArrowListState[officeName] === false) {
+      setToggleArrowListState({ ...toggleArrowListState, [officeName]: true });
+    } else {
+      setToggleArrowListState({ ...toggleArrowListState, [officeName]: false });
+    }
+  }
   //Add office when button click
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -107,7 +124,7 @@ export default function Offices() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat" style={{ fontSize: "1.6em" }}></i>
+          <i className="fas fa-cat mr-5" style={{ color: "#ffffff", fontSize: "1.6em" }}></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -122,22 +139,25 @@ export default function Offices() {
                   <Accordion key={office._id} className="ml-2 mb-1">
                     <Card>
                       <Accordion.Toggle
+                        onClick={() => { toggleArrow(office.name) }}
                         as={Card.Header}
                         eventKey="0"
                       >
                         <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
                           <i className="fas fa-building mr-3"></i>
                           {office.name}
-                          <i className="fas fa-caret-down float-right mt-1"></i>
+                          {toggleArrowState[office.name] === false ?
+                            <i className="fas fa-caret-up float-right mt-1"></i> :
+                            <i className="fas fa-caret-down float-right mt-1"></i>}
                         </h6>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
                         <Card.Body>
                           <form>
                             <Row>
-                              {office._id === editState._id ? 
-                              <i className="fas fa-lock-open ml-3 mb-3 "></i> 
-                              : <i className="fas fa-lock ml-3 mb-3 "></i>}
+                              {office._id === editState._id ?
+                                <i className="fas fa-lock-open ml-3 mb-3 "></i>
+                                : <i className="fas fa-lock ml-3 mb-3 "></i>}
                               <Input
                                 data-value={office._id}
                                 label="Office Name"
@@ -247,11 +267,14 @@ export default function Offices() {
                                   <Accordion.Toggle
                                     as={Card.Header}
                                     eventKey="0"
+                                    onClick={() => { toggleArrowList(office.name) }}
                                   >
                                     <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
                                       <i className="fas fa-list mr-3"></i>
                                       Show Employee List
-                                      <i className="fas fa-caret-down float-right mt-1"></i>
+                                      {toggleArrowListState[office.name] === false ?
+                                        <i className="fas fa-caret-up float-right mt-1"></i> :
+                                        <i className="fas fa-caret-down float-right mt-1"></i>}
                                     </h6>
                                   </Accordion.Toggle>
                                   <Accordion.Collapse eventKey="0">

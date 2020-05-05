@@ -127,7 +127,7 @@ export default function Equipment() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat" style={{ fontSize: "1.6em" }}></i>
+          <i className="fas fa-cat mr-5" style={{color: "#ffffff", fontSize: "1.6em" }}></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -155,8 +155,8 @@ export default function Equipment() {
                         <form>
                           <Row>
                             {equipment._id === editState._id ?
-                              <i className="fas fa-lock-open ml-3 mb-3 "></i>
-                              : <i className="fas fa-lock ml-3 mb-3 "></i>}
+                              <i className="fas fa-lock-open ml-3 "></i>
+                              : <i className="fas fa-lock ml-3 "></i>}
                             <SelectEmployee
                               label="Assigned Employee"
                               onChange={(e) => handleSelectEmployeeChange(e, equipment)}
