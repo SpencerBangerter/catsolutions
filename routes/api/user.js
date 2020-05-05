@@ -54,7 +54,6 @@ userRouter.post('/register', (req, res) => {
     })
   })
 
-  userRouter.post("/login", passport.authenticate("local", {session : false}), (req, res))
 
   userRouter.post(
 '/login',
@@ -78,6 +77,13 @@ userRouter.post('/register', (req, res) => {
     }
   )
 
+  userRouter.get(
+    '/home',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {    console.log(req.user)
+    }
+  )
+  
   userRouter.get(
     '/admin',
     passport.authenticate('jwt', { session: false }),
