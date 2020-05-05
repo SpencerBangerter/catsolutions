@@ -20,13 +20,14 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "browser-router": "^0.2.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
     "mini-create-react-context": "^0.4.0",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.11",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

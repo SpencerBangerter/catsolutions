@@ -5,7 +5,7 @@ const app = express();
 const routes = require('./routes')
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-
+const userRouter = require("./routes/api/user");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+app.use("user", userRouter); 
 app.use(routes);
 
 // Send every request to the React app
@@ -24,6 +25,7 @@ app.use(routes);
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 // });
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/catsolutions", { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 
 app.listen(PORT, function() {
