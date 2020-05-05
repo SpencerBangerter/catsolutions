@@ -6,15 +6,13 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Loader from "../components/Loader/Loader";
-// import Col from "react-bootstrap/Col";
+import PickDate from "../components/DatePicker/DatePicker";
 
 export default function Equipment() {
   const [equipment, setEquipment] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
   const [employeeNameList, setEmployeeeNameList] = useState([]);
-
-
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -25,13 +23,16 @@ export default function Equipment() {
     loadEmployeeNames();
   }, []);
 
-    //Get employee
-    function loadEmployeeNames() {
-      API.getEmployees()
-        .then((res) => setEmployeeeNameList(res.data))
-        .catch((err) => console.log(err));
-    }
-  
+  // function setPurchaseDate() {}
+
+  // function setIssuedDate() {}
+  //Get employee
+  function loadEmployeeNames() {
+    API.getEmployees()
+      .then((res) => setEmployeeeNameList(res.data))
+      .catch((err) => console.log(err));
+  }
+
   //Get equipment
   function loadEquipment() {
     API.getEquipment()
@@ -60,24 +61,35 @@ export default function Equipment() {
     setFormObject({ ...formObject, [name]: value });
   }
 
+  function handleDateChange(date, name) {
+    setFormObject({ ...formObject, [name]: date });
+  }
+
   function handleInputChangeUpdateEquipment(event) {
     const { name, value } = event.target;
     setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: value });
+  }
+  function handleInputChangeUpdateDatesEquipment(date, name) {
+    setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: date });
   }
 
   const handleSelectEmployeeChange = (event, eq) => {
     const employee = { _id: event.target.value };
     setFormObject({ ...formObject, employee_id: employee });
-    setUpdateEquipmentObject({ ...updatedEquipmentObject, employee_id: employee });
+    setUpdateEquipmentObject({
+      ...updatedEquipmentObject,
+      employee_id: employee,
+    });
     if (eq) {
-    setEquipment(
-      equipment.map((item) => {
-        if (item._id === eq._id) {
-          return { ...item, employee_id: equipment._id };
-        }
-        return item;
-      })
-    );}
+      setEquipment(
+        equipment.map((item) => {
+          if (item._id === eq._id) {
+            return { ...item, employee_id: equipment._id };
+          }
+          return item;
+        })
+      );
+    }
   };
 
   function clearForm() {
@@ -144,13 +156,17 @@ export default function Equipment() {
                 <Card.Body>
                   <form>
                     <Row>
-                    <SelectEmployee
+                      <SelectEmployee
                         label="Assigned Employee"
-                        onChange={(e) => handleSelectEmployeeChange(e, equipment)}
+                        onChange={(e) =>
+                          handleSelectEmployeeChange(e, equipment)
+                        }
                         options={employeeNameList}
                         value={equipment.employee_id}
                         width={12}
-                        disabled={equipment._id === editState._id ? false : true}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
                       <Input
                         data-value={equipment._id}
@@ -198,12 +214,48 @@ export default function Equipment() {
                           equipment._id === editState._id ? false : true
                         }
                       />
-                      <Input
+
+                      <PickDate
+                        data-value={equipment._id}
+                        label="Purchase Date"
+                        onChange={(date) =>
+                          handleInputChangeUpdateDatesEquipment(
+                            date,
+                            "purchaseDate"
+                          )
+                        }
+                        name="purchaseDate"
+                        width={2}
+                        value={!updatedEquipmentObject.purchaseDate ? new Date(equipment.purchaseDate) : updatedEquipmentObject.purchaseDate}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
+                      />
+
+                      <PickDate
+                        data-value={equipment._id}
+                        label="Date Issued"
+                        onChange={handleInputChangeUpdateEquipment}
+                        name="dateIssued"
+                        width={2}
+                        onChange={(date) =>
+                          handleInputChangeUpdateDatesEquipment(
+                            date,
+                            "dateIssued"
+                          )
+                        }
+                        value={!updatedEquipmentObject.dateIssued ? new Date(equipment.dateIssued) : updatedEquipmentObject.purchaseDate}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
+                      />
+
+                      {/* <Input
                         data-value={equipment._id}
                         label="Purchase Date"
                         onChange={handleInputChangeUpdateEquipment}
                         name="purchaseDate"
-                        placeholder={equipment.purchaseDate}
+                        placeholder={new Date(equipment.purchaseDate)}
                         width={2}
                         disabled={
                           equipment._id === editState._id ? false : true
@@ -219,7 +271,7 @@ export default function Equipment() {
                         disabled={
                           equipment._id === editState._id ? false : true
                         }
-                      />
+                      /> */}
                       <Input
                         data-value={equipment._id}
                         label="Initial Cost"
@@ -286,7 +338,7 @@ export default function Equipment() {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <form id="create-course-form">
-              <SelectEmployee
+                <SelectEmployee
                   label="Select Employee"
                   name="employee_id"
                   onChange={handleSelectEmployeeChange}
@@ -315,16 +367,29 @@ export default function Equipment() {
                   name="condition"
                   placeholder="Condition (required)"
                 />
-                <Input
+                <PickDate
+                  label="Purchase Date"
+                  onChange={(date) => handleDateChange(date, "purchaseDate")}
+                  name="purchaseDate"
+                  value={formObject.purchaseDate}
+                />
+
+                <PickDate
+                  label="Date Issued"
+                  onChange={(date) => handleDateChange(date, "dateIssued")}
+                  name="dateIssued"
+                  value={formObject.dateIssued}
+                />
+                {/* <Input
                   onChange={handleInputChange}
                   name="purchaseDate"
                   placeholder="Purchase Date (required)"
-                />
-                <Input
+                /> */}
+                {/* <Input
                   onChange={handleInputChange}
                   name="dateIssued"
                   placeholder="Date Issued (required)"
-                />
+                /> */}
                 <Input
                   onChange={handleInputChange}
                   name="initialCost"
