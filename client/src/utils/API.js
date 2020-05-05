@@ -59,4 +59,13 @@ export default {
       return axios.delete("api/equipment/" + id)
   },
 
+
+  getEquipmentCount: function() {
+    return axios.get("/api/reports/equipment");
+  },
+
+  getOfficesCount: function() {
+    return axios.get("/api/reports/offices");
+  }
+
 };
