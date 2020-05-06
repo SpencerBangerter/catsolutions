@@ -17,10 +17,10 @@ export function Input(props) {
 export function TextArea(props) {
   return (
     <Col md={props.width}>
-    <div className="form-group">
-      <label htmlFor={props.name}>{props.label}</label>
-      <textarea className="form-control" rows="10" {...props} />
-    </div>
+      <div className="form-group">
+        <label htmlFor={props.name}>{props.label}</label>
+        <textarea className="form-control" rows="10" {...props} />
+      </div>
     </Col>
   );
 }
@@ -40,21 +40,21 @@ export function FormBtn(props) {
 export function SelectOffice(props) {
   return (
     <Col>
-    <div className="form-group">
-      <label htmlFor="selectOffice">{props.label}</label>
-      <select className="form-control" {...props} id="selectOffice">
-        <option value={0}>None</option>
-        {props.options.length ? (
-          props.options.map((opt) => (
-            <option key={opt._id} value={opt._id}>
-              {opt.name}
-            </option>
-          ))
-        ) : (
-          <option className="disabled">No Offices</option>
-        )}
-      </select>
-    </div>
+      <div className="form-group">
+        <label htmlFor="selectOffice">{props.label}</label>
+        <select className="form-control" {...props} id="selectOffice">
+          <option value={0}>None</option>
+          {props.options.length ? (
+            props.options.map((opt) => (
+              <option key={opt._id} value={opt._id}>
+                {opt.name}
+              </option>
+            ))
+          ) : (
+              <option className="disabled">No Offices</option>
+            )}
+        </select>
+      </div>
     </Col>
   );
 }
@@ -62,21 +62,21 @@ export function SelectOffice(props) {
 export function SelectEmployee(props) {
   return (
     <Col>
-    <div className="form-group">
-      <label htmlFor="selectOffice">{props.label}</label>
-      <select className="form-control" {...props} id="selectEmployee">
-        <option value={0}>None</option>
-        {props.options.length ? (
-          props.options.map((opt) => (
-            <option key={opt._id} value={opt._id}>
-              {opt.name}
-            </option>
-          ))
-        ) : (
-          <option className="disabled">No Employees</option>
-        )}
-      </select>
-    </div>
+      <div className="form-group">
+        <label htmlFor="selectOffice">{props.label}</label>
+        <select className="form-control" {...props} id="selectEmployee">
+          <option value={0}>None</option>
+          {props.options.length ? (
+            props.options.map((opt) => (
+              <option key={opt._id} value={opt._id}>
+                {opt.name}
+              </option>
+            ))
+          ) : (
+              <option className="disabled">No Employees</option>
+            )}
+        </select>
+      </div>
     </Col>
   );
 }
