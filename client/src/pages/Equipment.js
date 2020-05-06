@@ -139,7 +139,10 @@ export default function Equipment() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat mr-5" style={{color: "#ffffff", fontSize: "1.6em" }}></i>
+          <i
+            className="fas fa-cat mr-5"
+            style={{ color: "#ffffff", fontSize: "1.6em" }}
+          ></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -152,11 +155,14 @@ export default function Equipment() {
               equipment.map((equipment) => (
                 <Accordion key={equipment._id} className="ml-2 mb-1">
                   <Card>
-                    <Accordion.Toggle
-                      as={Card.Header}
-                      eventKey="0"
-                    >
-                      <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <h6
+                        style={{
+                          color: "#1F2833",
+                          fontFamily: "Roboto, sans-serif",
+                          fontSize: "1.15em",
+                        }}
+                      >
                         <i className="fas fa-toolbox mr-3"></i>
                         {equipment.type + " " + equipment.model}
                         <i className="fas fa-caret-down float-right mt-1"></i>
@@ -166,16 +172,22 @@ export default function Equipment() {
                       <Card.Body>
                         <form>
                           <Row>
-                            {equipment._id === editState._id ?
+                            {equipment._id === editState._id ? (
                               <i className="fas fa-lock-open ml-3 "></i>
-                              : <i className="fas fa-lock ml-3 "></i>}
+                            ) : (
+                              <i className="fas fa-lock ml-3 "></i>
+                            )}
                             <SelectEmployee
                               label="Assigned Employee"
-                              onChange={(e) => handleSelectEmployeeChange(e, equipment)}
+                              onChange={(e) =>
+                                handleSelectEmployeeChange(e, equipment)
+                              }
                               options={employeeNameList}
                               value={equipment.employee_id}
                               width={12}
-                              disabled={equipment._id === editState._id ? false : true}
+                              disabled={
+                                equipment._id === editState._id ? false : true
+                              }
                             />
                             <Input
                               data-value={equipment._id}
@@ -259,7 +271,10 @@ export default function Equipment() {
                           </Row>
                           <Row className="mt-5">
                             <div className="col">
-                              <Button variant="outline-info" onClick={() => switchEditState(equipment._id)}>
+                              <Button
+                                variant="outline-info"
+                                onClick={() => switchEditState(equipment._id)}
+                              >
                                 {equipment._id === editState._id
                                   ? "Cancel Update"
                                   : "Update This Equipment"}
@@ -277,19 +292,19 @@ export default function Equipment() {
                                   Save and Update
                                 </Button>
                               ) : (
-                                  ""
-                                )}
+                                ""
+                              )}
                               {equipment._id === editState._id ? (
                                 ""
                               ) : (
-                                  <Button
-                                    variant="outline-danger"
-                                    className="float-right"
-                                    onClick={() => deleteEquipment(equipment._id)}
-                                  >
-                                    Delete
-                                  </Button>
-                                )}
+                                <Button
+                                  variant="outline-danger"
+                                  className="float-right"
+                                  onClick={() => deleteEquipment(equipment._id)}
+                                >
+                                  Delete
+                                </Button>
+                              )}
                             </div>
                           </Row>
                         </form>
@@ -299,15 +314,25 @@ export default function Equipment() {
                 </Accordion>
               ))
             ) : (
-                <div>
-                  <Loader />
-                </div>
-              )}
+              <div>
+                <Loader />
+              </div>
+            )}
             <Accordion className="ml-2">
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }} className="ml-1">
-                    Add Equipment <i className="fas fa-plus float-right mt-1"><i className="fas fa-toolbox float-right ml-1"></i></i>
+                  <h6
+                    style={{
+                      color: "#1F2833",
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "1.15em",
+                    }}
+                    className="ml-1"
+                  >
+                    Add Equipment{" "}
+                    <i className="fas fa-plus float-right mt-1">
+                      <i className="fas fa-toolbox float-right ml-1"></i>
+                    </i>
                   </h6>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
@@ -323,7 +348,6 @@ export default function Equipment() {
                           equipment._id === editState._id ? false : true
                         }
                       />
-
                       <Input
                         onChange={handleInputChange}
                         name="type"
@@ -345,7 +369,6 @@ export default function Equipment() {
                         name="condition"
                         placeholder="Condition (required)"
                       />
-
                       <PickDate
                         data-value={equipment._id}
                         label="Purchase Date"
@@ -357,12 +380,15 @@ export default function Equipment() {
                         }
                         name="purchaseDate"
                         width={2}
-                        value={!updatedEquipmentObject.purchaseDate ? new Date(equipment.purchaseDate) : updatedEquipmentObject.purchaseDate}
+                        value={
+                          !updatedEquipmentObject.purchaseDate
+                            ? new Date(equipment.purchaseDate)
+                            : updatedEquipmentObject.purchaseDate
+                        }
                         disabled={
                           equipment._id === editState._id ? false : true
                         }
                       />
-
                       <PickDate
                         data-value={equipment._id}
                         label="Date Issued"
@@ -375,7 +401,11 @@ export default function Equipment() {
                             "dateIssued"
                           )
                         }
-                        value={!updatedEquipmentObject.dateIssued ? new Date(equipment.dateIssued) : updatedEquipmentObject.purchaseDate}
+                        value={
+                          !updatedEquipmentObject.dateIssued
+                            ? new Date(equipment.dateIssued)
+                            : updatedEquipmentObject.purchaseDate
+                        }
                         disabled={
                           equipment._id === editState._id ? false : true
                         }
@@ -400,8 +430,7 @@ export default function Equipment() {
                         }
                         onClick={handleFormSubmit}
                       />
-                                              Add New Equipment
-
+                      Add New Equipment
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
