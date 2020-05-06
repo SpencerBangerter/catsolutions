@@ -182,8 +182,8 @@ export default function Employees() {
                         <form>
                           <Row>
                             {employee._id === editState._id ?
-                              <i className="fas fa-lock-open ml-3 mb-3 "></i>
-                              : <i className="fas fa-lock ml-3 mb-3 "></i>}
+                              <i className="fas fa-lock-open ml-4 mb-4"></i>
+                              : <i className="fas fa-lock ml-4 mb-4"></i>}
                             <SelectOffice
                               label="Current Office"
                               onChange={(e) => handleSelectOfficeChange(e, employee)}
@@ -264,11 +264,18 @@ export default function Employees() {
                             <div className="col">
                               <Button variant="outline-info" onClick={() => switchEditState(employee._id)}>
                                 {employee._id === editState._id
-                                  ? "Cancel Update"
-                                  : "Update This Employee"}
+                                  ? <span>
+                                    <i className="far fa-window-close mr-2"></i>
+                                    Cancel Update
+                                    </span>
+                                  : <span>
+                                  <i className="far fa-edit mr-2"></i>
+                                  Edit Employee
+                                  </span>}
                               </Button>
                               {employee._id === editState._id ? (
                                 <Button
+                                  className="ml-5"
                                   variant="outline-success"
                                   onClick={() =>
                                     updateEmployee(
@@ -277,12 +284,15 @@ export default function Employees() {
                                     )
                                   }
                                 >
-                                  Save and Update
+                                  <span>
+                                    <i className="far fa-save mr-2"></i>
+                                    Save and Update
+                                  </span>
                                 </Button>
                               ) : (
                                   ""
                                 )}
-                              {employee._id === editState._id ? (
+                              {employee._id !== editState._id ? (
                                 ""
                               ) : (
                                   <Button
@@ -290,7 +300,10 @@ export default function Employees() {
                                     className="float-right"
                                     onClick={() => deleteEmployee(employee._id)}
                                   >
-                                    Delete
+                                    <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Employee
+                                    </span>
                                   </Button>
                                 )}
                             </div>

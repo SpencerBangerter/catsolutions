@@ -155,8 +155,8 @@ export default function Equipment() {
                         <form>
                           <Row>
                             {equipment._id === editState._id ?
-                              <i className="fas fa-lock-open ml-3 "></i>
-                              : <i className="fas fa-lock ml-3 "></i>}
+                              <i className="fas fa-lock-open ml-4 mb-4"></i>
+                              : <i className="fas fa-lock ml-4 mb-4"></i>}
                             <SelectEmployee
                               label="Assigned Employee"
                               onChange={(e) => handleSelectEmployeeChange(e, equipment)}
@@ -249,11 +249,18 @@ export default function Equipment() {
                             <div className="col">
                               <Button variant="outline-info" onClick={() => switchEditState(equipment._id)}>
                                 {equipment._id === editState._id
-                                  ? "Cancel Update"
-                                  : "Update This Equipment"}
+                                  ? <span>
+                                  <i className="far fa-window-close mr-2"></i>
+                                  Cancel Update
+                                  </span>
+                                  : <span>
+                                  <i className="far fa-edit mr-2"></i>
+                                  Edit Equipment
+                                  </span>}
                               </Button>
                               {equipment._id === editState._id ? (
                                 <Button
+                                  className="ml-5"
                                   variant="outline-success"
                                   onClick={() =>
                                     updateEquipment(
@@ -262,12 +269,15 @@ export default function Equipment() {
                                     )
                                   }
                                 >
-                                  Save and Update
+                                  <span>
+                                    <i className="far fa-save mr-2"></i>
+                                    Save and Update
+                                  </span>
                                 </Button>
                               ) : (
                                   ""
                                 )}
-                              {equipment._id === editState._id ? (
+                              {equipment._id !== editState._id ? (
                                 ""
                               ) : (
                                   <Button
@@ -275,7 +285,10 @@ export default function Equipment() {
                                     className="float-right"
                                     onClick={() => deleteEquipment(equipment._id)}
                                   >
-                                    Delete
+                                    <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Equipment
+                                    </span>
                                   </Button>
                                 )}
                             </div>

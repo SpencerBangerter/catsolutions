@@ -156,8 +156,8 @@ export default function Offices() {
                           <form>
                             <Row>
                               {office._id === editState._id ?
-                                <i className="fas fa-lock-open ml-3 mb-3 "></i>
-                                : <i className="fas fa-lock ml-3 mb-3 "></i>}
+                                <i className="fas fa-lock-open ml-4 mb-4"></i>
+                                : <i className="fas fa-lock ml-4 mb-4"></i>}
                               <Input
                                 data-value={office._id}
                                 label="Office Name"
@@ -230,22 +230,32 @@ export default function Offices() {
                               <div className="col">
                                 <Button variant="outline-info" onClick={() => switchEditState(office._id)}>
                                   {office._id === editState._id
-                                    ? "Cancel Update"
-                                    : "Update This Office"}
+                                    ? <span>
+                                      <i className="far fa-window-close mr-2"></i>
+                                    Cancel Update
+                                    </span>
+                                    : <span>
+                                      <i className="far fa-edit mr-2"></i>
+                                    Edit Office
+                                    </span>}
                                 </Button>
                                 {office._id === editState._id ? (
                                   <Button
+                                    className="ml-5"
                                     variant="outline-success"
                                     onClick={() =>
                                       updateOffice(office._id, updatedOfficeObject)
                                     }
                                   >
-                                    Save and Update
+                                    <span>
+                                      <i className="far fa-save mr-2"></i>
+                                      Save and Update
+                                      </span>
                                   </Button>
                                 ) : (
                                     ""
                                   )}
-                                {office._id === editState._id ? (
+                                {office._id !== editState._id ? (
                                   ""
                                 ) : (
                                     <Button
@@ -253,7 +263,10 @@ export default function Offices() {
                                       className="float-right"
                                       onClick={() => deleteOffice(office._id)}
                                     >
-                                      Delete
+                                      <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Office
+                                    </span>
                                     </Button>
                                   )}
                               </div>
