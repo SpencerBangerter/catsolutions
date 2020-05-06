@@ -259,7 +259,6 @@ export default function Equipment() {
                             <PickDate
                               data-value={equipment._id}
                               label="Date Issued"
-                              onChange={handleInputChangeUpdateEquipment}
                               name="dateIssued"
                               width={2}
                               onChange={(date) =>
