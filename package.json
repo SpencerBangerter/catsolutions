@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "@trendmicro/react-sidenav": "^0.5.0",
     "browser-router": "^0.2.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
@@ -30,6 +31,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "react": "^16.13.1",
     "react-router-dom": "^5.1.2"
   }
 }

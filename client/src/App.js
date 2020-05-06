@@ -5,15 +5,14 @@ import Offices from "./pages/Offices";
 import Equipment from "./pages/Equipment";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
-// import Footer from "./components/Footer/Footer";
-import Nav from "./components/Nav/Nav";
 import "./App.css";
+import SideNavBar from "./components/SideNav/SideNav";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-          <Nav />
+            <SideNavBar />
           <Route path="/catsolutions" component={Home} />
           <Route path="/offices" component={Offices} />
           <Route path="/employees" component={Employees} />
