@@ -235,24 +235,44 @@ export default function Equipment() {
                                 equipment._id === editState._id ? false : true
                               }
                             />
-                            <Input
+                            <PickDate
                               data-value={equipment._id}
                               label="Purchase Date"
-                              onChange={handleInputChangeUpdateEquipment}
+                              onChange={(date) =>
+                                handleInputChangeUpdateDatesEquipment(
+                                  date,
+                                  "purchaseDate"
+                                )
+                              }
                               name="purchaseDate"
-                              placeholder={equipment.purchaseDate}
                               width={2}
+                              value={
+                                !updatedEquipmentObject.purchaseDate
+                                  ? new Date(equipment.purchaseDate)
+                                  : updatedEquipmentObject.purchaseDate
+                              }
                               disabled={
                                 equipment._id === editState._id ? false : true
                               }
                             />
-                            <Input
+
+                            <PickDate
                               data-value={equipment._id}
                               label="Date Issued"
                               onChange={handleInputChangeUpdateEquipment}
                               name="dateIssued"
-                              placeholder={equipment.dateIssued}
                               width={2}
+                              onChange={(date) =>
+                                handleInputChangeUpdateDatesEquipment(
+                                  date,
+                                  "dateIssued"
+                                )
+                              }
+                              value={
+                                !updatedEquipmentObject.dateIssued
+                                  ? new Date(equipment.dateIssued)
+                                  : updatedEquipmentObject.purchaseDate
+                              }
                               disabled={
                                 equipment._id === editState._id ? false : true
                               }
@@ -370,45 +390,20 @@ export default function Equipment() {
                         placeholder="Condition (required)"
                       />
                       <PickDate
-                        data-value={equipment._id}
                         label="Purchase Date"
                         onChange={(date) =>
-                          handleInputChangeUpdateDatesEquipment(
-                            date,
-                            "purchaseDate"
-                          )
+                          handleDateChange(date, "purchaseDate")
                         }
                         name="purchaseDate"
-                        width={2}
-                        value={
-                          !updatedEquipmentObject.purchaseDate
-                            ? new Date(equipment.purchaseDate)
-                            : updatedEquipmentObject.purchaseDate
-                        }
-                        disabled={
-                          equipment._id === editState._id ? false : true
-                        }
+                        value={formObject.purchaseDate}
                       />
                       <PickDate
-                        data-value={equipment._id}
                         label="Date Issued"
-                        onChange={handleInputChangeUpdateEquipment}
-                        name="dateIssued"
-                        width={2}
                         onChange={(date) =>
-                          handleInputChangeUpdateDatesEquipment(
-                            date,
-                            "dateIssued"
-                          )
+                          handleDateChange(date, "dateIssued")
                         }
-                        value={
-                          !updatedEquipmentObject.dateIssued
-                            ? new Date(equipment.dateIssued)
-                            : updatedEquipmentObject.purchaseDate
-                        }
-                        disabled={
-                          equipment._id === editState._id ? false : true
-                        }
+                        name="dateIssued"
+                        value={formObject.dateIssued}
                       />
                       <Input
                         onChange={handleInputChange}
