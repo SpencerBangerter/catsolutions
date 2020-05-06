@@ -14,6 +14,43 @@ export default function HomePage() {
     percent: {},
   });
 
+  useEffect(() => {
+    loadReports();
+  }, []);
+
+  useEffect(() => {
+    loadAverageGraph();
+  }, [officeReport]);
+
+  useEffect(() => {
+    loadPercentGraph();
+  }, [equipReport]);
+
+  function loadReports() {
+    API.getEquipmentCount()
+      .then((res) => {
+        let result = [];
+        result.push({
+          name: "Assigned",
+          count: res.data.assignedCount,
+          value: res.data.assignedValue,
+        });
+        result.push({
+          name: "Not assigned",
+          count: res.data.notAssignedCount,
+          value: res.data.notAssignedValue,
+        });
+        setEquipReport(result);
+      })
+      .catch((err) => console.log(err));
+
+    API.getOfficesCount()
+      .then((res) => {
+        setOfficeReport(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
   function loadAverageGraph() {
     const graph = {
       labels: [],
@@ -49,49 +86,8 @@ export default function HomePage() {
       labels: ["Assigned", "Not assigned"],
       data: [assignedPercent, notAssignedPercent],
     };
-    console.log(equipReport);
     setChartData({ ...chartData, percent: data });
   }
-
-  function loadReports() {
-    API.getEquipmentCount()
-      .then((res) => {
-        let result = [];
-        result.push({
-          name: "Assigned",
-          count: res.data.assignedCount,
-          value: res.data.assignedValue,
-        });
-        result.push({
-          name: "Not assigned",
-          count: res.data.notAssignedCount,
-          value: res.data.notAssignedValue,
-        });
-        setEquipReport(result);
-      })
-      .catch((err) => console.log(err));
-
-    API.getOfficesCount()
-      .then((res) => {
-        setOfficeReport(res.data);
-      })
-      .catch((err) => console.log(err));
-  }
-
-
-  useEffect(() => {
-    loadReports();
-  }, []);
-
-  useEffect(() => {
-    loadAverageGraph();
-  }, [officeReport]);
-
-  useEffect(() => {
-    loadPercentGraph();
-  }, [equipReport]);
-
-
 
   return (
     <div>

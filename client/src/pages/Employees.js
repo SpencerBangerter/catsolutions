@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn, SelectOffice } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable"
-import Loader from "../components/Loader/Loader";
+// import Loader from "../components/Loader/Loader";
 import { Navbar, Row, Col, Button, Accordion, Card } from "react-bootstrap"
 import "./page.css";
 
