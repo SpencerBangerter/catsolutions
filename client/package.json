@@ -6,9 +6,12 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
+    "d3-scale": "^3.2.1",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-table-next": "^4.0.1",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^2.1.1"
