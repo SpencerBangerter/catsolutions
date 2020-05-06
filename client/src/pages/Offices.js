@@ -222,7 +222,7 @@ export default function Offices() {
                                 onChange={handleInputChangeUpdateOffice}
                                 name="managementContactPhone"
                                 placeholder={office.managementContactPhone}
-                                width={4}
+                                width={3}
                                 disabled={office._id === editState._id ? false : true}
                               />
                             </Row>
@@ -301,7 +301,7 @@ export default function Offices() {
             <Accordion className="ml-2">
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }} className="ml-1">
                     Create Office <i className="fas fa-plus float-right mt-1"><i className="fas fa-building float-right ml-1"></i></i>
                   </h6>
                 </Accordion.Toggle>

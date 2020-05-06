@@ -46,12 +46,13 @@ i.fas {
     border-radius: 0px !important;
 }
 
-.input .form-control {
-    border: none !important;
+.form-control {
+    border-radius: 0px !important;
 }
 
 input {
     border: none !important;
+    border-bottom: 1px solid lightgray !important;
 }
 
 select {
@@ -60,4 +61,21 @@ select {
 
 textarea {
     border: none;
+}
+
+label {
+    font-family: "Roboto", "sans-serif";
+    font-size: .9em;
+    color: #1F2833;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #F2F2F2;
+    opacity: 1;
+}
+
+.form-control:focus {
+    
 }

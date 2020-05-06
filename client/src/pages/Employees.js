@@ -335,7 +335,7 @@ export default function Employees() {
             <Accordion className="ml-2">
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }} className="ml-1">
                     Add Employee <i className="fas fa-plus float-right mt-1"><i className="fas fa-user float-right ml-1"></i></i>
                   </h6>
                 </Accordion.Toggle>
