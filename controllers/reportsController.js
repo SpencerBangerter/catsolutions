@@ -21,6 +21,7 @@ function getRemoteOfficeEmployees(employees, equipment) {
             equipOfficeId = equip.employee_id.office_id ? true : false;
         }
         if (!equipOfficeId) {
+            const initialCost = equip.initialCost ? equip.initialCost : 0;
             remoteOffice.equipmentValue += parseFloat(equip.initialCost);
         }
     });
@@ -66,7 +67,8 @@ module.exports = {
                                         const equipOfficeId = equip.employee_id && equip.employee_id.office_id
                                             ? equip.employee_id.office_id.toString() : "";
                                         if (office._id.toString() === equipOfficeId) {
-                                            office.equipmentValue += parseFloat(equip.initialCost);
+                                            const initialCost = equip.initialCost ? equip.initialCost : 0;
+                                            office.equipmentValue += parseFloat(initialCost);
                                         }
                                     });
                                     officeResult.push(office);
@@ -97,7 +99,8 @@ module.exports = {
                         response.assignedValue += parseFloat(equip.initialCost);
                     } else {
                         response.notAssignedCount++;
-                        response.notAssignedValue += parseFloat(equip.initialCost);
+                        const initialCost = equip.initialCost ? equip.initialCost : 0;
+                        response.notAssignedValue += parseFloat(initialCost);
                     }
                 });
                 res.json(response);
