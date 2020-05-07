@@ -83,7 +83,7 @@ export default function HomePage() {
       }
     }
     const data = {
-      labels: ["Assigned", "Not assigned"],
+      labels: ["Assigned", "Unassigned"],
       data: [assignedPercent, notAssignedPercent],
     };
     setChartData({ ...chartData, percent: data });
@@ -108,6 +108,21 @@ export default function HomePage() {
           </Col>
         </Row>
         <Row className="ml-2 mb-5">
+          <Col md={6}>
+            <BarChart
+              chart={chartData.average}
+              title={"Equipment costs of employees per office"}
+              label={"Average costs by office"}
+            />
+          </Col>
+          <Col md={6}>
+            <PieChart
+              chart={chartData.percent}
+              title={"Assigned Equipment(%)"}
+            />
+          </Col>
+        </Row>
+        <Row className="ml-2 mb-5">
           <Col>
             <Table
               header={["Office", "Employees", "Equipment Value"]}
@@ -122,21 +137,6 @@ export default function HomePage() {
               keys={["name", "count", "value"]}
               elements={equipReport}
               title={"Equipment"}
-            />
-          </Col>
-        </Row>
-        <Row className="ml-2 mb-5">
-          <Col md={6}>
-            <BarChart
-              chart={chartData.average}
-              title={"Equipment costs by employee/office"}
-              label={"Average costs by office"}
-            />
-          </Col>
-          <Col md={6}>
-            <PieChart
-              chart={chartData.percent}
-              title={"Assigned Equipment(%)"}
             />
           </Col>
         </Row>

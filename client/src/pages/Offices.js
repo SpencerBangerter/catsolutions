@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Card, Button, Row, Col, Navbar, Accordion, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Input, FormBtn, SelectState } from "../components/Form";
-import Loader from "../components/Loader/Loader";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable";
 import "./page.css";
 export default function Offices() {
@@ -296,7 +295,7 @@ export default function Offices() {
                                 ""
                               ) : (
                                 <OverlayTrigger
-                                    overlay={<Tooltip id="tooltip-disabled">This equipment will be permanently deleted!</Tooltip>}>
+                                    overlay={<Tooltip id="tooltip-disabled">This office will be permanently deleted!</Tooltip>}>
                                 <Button
                                   variant="outline-danger"
                                   className="float-right"
@@ -304,7 +303,7 @@ export default function Offices() {
                                 >
                                   <span>
                                         <i className="far fa-trash-alt mr-2"></i>
-                                        Delete Equipment
+                                        Delete Office
                                     </span>
                                 </Button>
                                  </OverlayTrigger>
@@ -362,7 +361,6 @@ export default function Offices() {
               ))
             ) : (
               <div>
-                <Loader />
               </div>
             )}
             <Accordion className="ml-2">
@@ -401,7 +399,6 @@ export default function Offices() {
                         placeholder="City (required)"
                       />
                       <SelectState
-                        label="State"
                         onChange={handleSelectStateChange}
                         name="state"
                       />

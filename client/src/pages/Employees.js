@@ -3,7 +3,6 @@ import API from "../utils/API";
 import { Navbar, Row, Col, Button, Accordion, Card, Tooltip, OverlayTrigger } from "react-bootstrap"
 import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
-// import Loader from "../components/Loader/Loader";
 import "./page.css";
 
 export default function Employees() {
@@ -415,7 +414,8 @@ export default function Employees() {
                 </Accordion>
               ))
             ) : (
-              <div>{}</div>
+              <div>
+              </div>
             )}
             <Accordion className="ml-2">
               <Card>
@@ -461,7 +461,6 @@ export default function Employees() {
                         placeholder="City (required)"
                       />
                       <SelectState
-                        label="State"
                         onChange={handleSelectStateChange}
                         name="state"
                       />
@@ -498,7 +497,7 @@ export default function Employees() {
                         onClick={handleFormSubmit}
                       >
                         Add New Employee
-                      </FormBtn>
+                        </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>

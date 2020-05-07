@@ -98,3 +98,12 @@ label {
     box-shadow: none;
     border: 1px solid lightgray !important;
 }
+
+th {
+    background: #1F2833;
+    color: #F2F2F2;
+}
+
+.react-date-picker__wrapper {
+    border: none !important;
+}

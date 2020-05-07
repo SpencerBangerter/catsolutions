@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
 import { Navbar, Row, Col, Card, Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
-import Loader from "../components/Loader/Loader";
 import PickDate from "../components/DatePicker/DatePicker";
 
 export default function Equipment() {
@@ -348,7 +347,6 @@ export default function Equipment() {
               ))
             ) : (
               <div>
-                <Loader />
               </div>
             )}
             <Accordion className="ml-2">
@@ -437,8 +435,9 @@ export default function Equipment() {
                           )
                         }
                         onClick={handleFormSubmit}
-                      />
+                      >
                       Add New Equipment
+                      </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
