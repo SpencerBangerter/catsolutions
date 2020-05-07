@@ -12,12 +12,14 @@ export default function ContactPage() {
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
-            className="fas fa-cat"
+            className="fas fa-cat mr-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>
       </Navbar>
-      <div className="container shadow-sm">
+      <div className="container-fluid shadow-sm">
+      <div className="mainbodycontainer">
+
         <Row>
           <Col>
             <div className="page-header">
@@ -26,6 +28,7 @@ export default function ContactPage() {
           </Col>
         </Row>
       </div>
+    </div>
     </div>
   );
 }

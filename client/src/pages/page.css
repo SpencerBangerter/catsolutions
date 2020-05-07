@@ -9,13 +9,14 @@ HTML {
     padding-top: 10px;
 }
 
-.container {
-    padding: 0px;
-    margin-left: 60px;
+.container-fluid {
     padding-bottom: 300px !important;
     overflow: hidden !important;
 }
 
+.mainbodycontainer{
+    padding-left: 50px;
+}
 
 .page-header {
     background: #F2F2F2;

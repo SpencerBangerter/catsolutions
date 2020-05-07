@@ -20,7 +20,14 @@ export function BarChart(props) {
   };
   return (
     <div>
-      <h4 className="text-center">{props.title}</h4>
+      <h2
+        style={{
+          fontFamily: "Arvo, serif",
+        }}
+        className="text-center"
+      >
+        {props.title}
+      </h2>
       <Bar data={data}/>
     </div>
   )
@@ -44,7 +51,14 @@ export function PieChart(props) {
 
   return (
     <div>
-      <h4 className="text-center">{props.title}</h4>
+      <h2
+        style={{
+          fontFamily: "Arvo, serif",
+        }}
+        className="text-center"
+      >
+        {props.title}
+      </h2>
       <Pie data={data}/>
     </div>
   )

@@ -37,7 +37,7 @@ export default function HomePage() {
           value: res.data.assignedValue,
         });
         result.push({
-          name: "Not assigned",
+          name: "Unassigned",
           count: res.data.notAssignedCount,
           value: res.data.notAssignedValue,
         });
@@ -93,7 +93,6 @@ export default function HomePage() {
   return (
     <div>
       <SideNavBar />
-
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
@@ -102,47 +101,49 @@ export default function HomePage() {
           ></i>
         </Navbar.Brand>
       </Navbar>
-      <div className="container shadow-sm">
-        <Row>
-          <Col>
-            <div className="page-header">
-              <h1 className=" mb-5 pb-3 page-headerText">Dashboard</h1>
-            </div>
-          </Col>
-        </Row>
-        <Row className="ml-2 mb-5">
-          <Col md={6}>
-            <BarChart
-              chart={chartData.average}
-              title={"Equipment costs of employees per office"}
-              label={"Average costs by office"}
-            />
-          </Col>
-          <Col md={6}>
-            <PieChart
-              chart={chartData.percent}
-              title={"Assigned Equipment(%)"}
-            />
-          </Col>
-        </Row>
-        <Row className="ml-2 mb-5">
-          <Col>
-            <Table
-              header={["Office", "Employees", "Equipment Value(US$)"]}
-              keys={["name", "employees", "equipmentValue"]}
-              elements={officeReport}
-              title={"Office"}
-            />
-          </Col>
-          <Col>
-            <Table
-              header={["Status", "Quantity", "Value(US$)"]}
-              keys={["name", "count", "value"]}
-              elements={equipReport}
-              title={"Equipment"}
-            />
-          </Col>
-        </Row>
+      <div className="container-fluid shadow-sm">
+        <div className="mainbodycontainer">
+          <Row>
+            <Col>
+              <div className="page-header">
+                <h1 className=" mb-5 pb-3 page-headerText">Dashboard</h1>
+              </div>
+            </Col>
+          </Row>
+          <Row className="ml-2 mb-5">
+            <Col md={6}>
+              <BarChart
+                chart={chartData.average}
+                title={"Equipment Costs Per Employees Per Office"}
+                label={"Average costs by office"}
+              />
+            </Col>
+            <Col md={6}>
+              <PieChart
+                chart={chartData.percent}
+                title={"Assigned Equipment(%)"}
+              />
+            </Col>
+          </Row>
+          <Row className="ml-2 mb-5">
+            <Col>
+              <Table
+                header={["Office", "Employees", "Equipment Value(US$)"]}
+                keys={["name", "employees", "equipmentValue"]}
+                elements={officeReport}
+                title={"Offices"}
+              />
+            </Col>
+            <Col>
+              <Table
+                header={["Status", "Quantity", "Value(US$)"]}
+                keys={["name", "count", "value"]}
+                elements={equipReport}
+                title={"Equipment"}
+              />
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
   );
