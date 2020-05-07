@@ -20,7 +20,7 @@ export function BarChart(props) {
   };
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h4 className="text-center">{props.title}</h4>
       <Bar data={data}/>
     </div>
   )
@@ -44,7 +44,7 @@ export function PieChart(props) {
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h4 className="text-center">{props.title}</h4>
       <Pie data={data}/>
     </div>
   )

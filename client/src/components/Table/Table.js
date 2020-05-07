@@ -6,7 +6,7 @@ export default function TableComponent(props) {
   let rowKey = 0;
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h4 className="text-center">{props.title}</h4>
     <Table striped bordered hover>
     
       <thead>

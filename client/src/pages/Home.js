@@ -107,7 +107,7 @@ export default function HomePage() {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row className="ml-2 mb-5">
           <Col>
             <Table
               header={["Office", "Employees", "Equipment Value"]}
@@ -125,7 +125,7 @@ export default function HomePage() {
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="ml-2 mb-5">
           <Col md={6}>
             <BarChart
               chart={chartData.average}
