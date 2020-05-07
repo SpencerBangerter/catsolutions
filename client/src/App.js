@@ -8,17 +8,25 @@ import Contact from "./pages/Contact";
 // import Footer from "./components/Footer/Footer";
 import Nav from "./components/Nav/Nav";
 import "./App.css";
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import PrivateRoute from './hocs/PrivateRoute';
+import UnPrivateRoute from './hocs/UnPrivateRoute';
+import Admin  from './pages/Admin';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
           <Nav />
-          <Route path="/catsolutions" component={Home} />
-          <Route path="/offices" component={Offices} />
-          <Route path="/employees" component={Employees} />
-          <Route path="/equipment" component={Equipment} />
-          <Route path="/contact" component={Contact} />
+          <Route exact path="/" component={Login}/>
+          <Route path="/register" component={Register}/>
+          <UnPrivateRoute path="/admin" roles={["admin"]} component={Admin}/>
+          <UnPrivateRoute path="/catsolutions" component={Home} />
+          <UnPrivateRoute path="/offices" component={Offices} />
+          <UnPrivateRoute path="/employees" component={Employees} />
+          <UnPrivateRoute path="/equipment" component={Equipment} />
+          <UnPrivateRoute path="/contact" component={Contact} />
       </BrowserRouter>      
     );
   }
