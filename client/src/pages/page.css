@@ -9,13 +9,14 @@ HTML {
     padding-top: 10px;
 }
 
-.container {
-    padding: 0px;
-    margin-left: 60px;
+.container-fluid {
     padding-bottom: 300px !important;
     overflow: hidden !important;
 }
 
+.mainbodycontainer{
+    padding-left: 50px;
+}
 
 .page-header {
     background: #F2F2F2;
@@ -57,10 +58,12 @@ input {
 
 select {
     border: none !important;
+    border-bottom: 1px solid lightgray !important;
 }
 
 textarea {
     border: none;
+    border-bottom: 1px solid lightgray !important;
 }
 
 label {
@@ -76,6 +79,32 @@ label {
     opacity: 1;
 }
 
+.btn-primary{
+    background: #1F2833 !important;
+}
+
+.btn-outline-info.focus, .btn-outline-info:focus {
+    box-shadow: none;
+}
+
+.btn-outline-success.focus, .btn-outline-success:focus {
+    box-shadow: none;
+}
+
+.btn-outline-danger.focus, .btn-outline-danger:focus {
+    box-shadow: none;
+}
+
 .form-control:focus {
-    
+    box-shadow: none;
+    border: 1px solid lightgray !important;
+}
+
+th {
+    background: #1F2833;
+    color: #F2F2F2;
+}
+
+.react-date-picker__wrapper {
+    border: none !important;
 }

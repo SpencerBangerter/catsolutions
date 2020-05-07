@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
+import {
+  Navbar,
+  Row,
+  Col,
+  Button,
+  Accordion,
+  Card,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
-// import Loader from "../components/Loader/Loader";
-import { Navbar, Row, Col, Button, Accordion, Card } from "react-bootstrap";
 import "./page.css";
+import SideNavBar from "../components/SideNav/SideNav";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -166,6 +175,7 @@ export default function Employees() {
 
   return (
     <div>
+      <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
@@ -174,324 +184,352 @@ export default function Employees() {
           ></i>
         </Navbar.Brand>
       </Navbar>
-      <div className="container shadow-sm">
-        <Row>
-          <Col>
-            <div className="page-header shadow-sm">
-              <h1 className="mb-5 pb-3 page-headerText">Employees</h1>
-            </div>
-            {employees.length ? (
-              employees.map((employee) => (
-                <Accordion key={employee._id} className="ml-2 mb-1">
-                  <Card>
-                    <Accordion.Toggle
-                      as={Card.Header}
-                      eventKey="0"
-                      onClick={() => {
-                        toggleArrow(employee.name);
-                      }}
-                    >
-                      {" "}
-                      <h6
-                        style={{
-                          color: "#1F2833",
-                          fontFamily: "Roboto, sans-serif",
-                          fontSize: "1.15em",
+      <div className="container-fluid shadow-sm">
+        <div className="mainbodycontainer">
+          <Row>
+            <Col>
+              <div className="page-header shadow-sm">
+                <h1 className="mb-5 pb-3 page-headerText">Employees</h1>
+              </div>
+              {employees.length ? (
+                employees.map((employee) => (
+                  <Accordion key={employee._id} className="ml-2 mb-1">
+                    <Card>
+                      <Accordion.Toggle
+                        as={Card.Header}
+                        eventKey="0"
+                        onClick={() => {
+                          toggleArrow(employee.name);
                         }}
                       >
-                        <i className="fas fa-user mr-3"></i>
-                        {employee.name}
-                        {toggleArrowState[employee.name] === false ? (
-                          <i className="fas fa-caret-up float-right mt-1"></i>
-                        ) : (
-                          <i className="fas fa-caret-down float-right mt-1"></i>
-                        )}
-                      </h6>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                      <Card.Body>
-                        <form>
-                          <Row>
-                            {employee._id === editState._id ? (
-                              <i className="fas fa-lock-open ml-3 mb-3 "></i>
-                            ) : (
-                              <i className="fas fa-lock ml-3 mb-3 "></i>
-                            )}
-                            <SelectOffice
-                              label="Current Office"
-                              onChange={(e) =>
-                                handleSelectOfficeChange(e, employee)
-                              }
-                              options={officeNameList}
-                              value={employee.office_id}
-                              width={12}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                          </Row>
-                          <Row>
-                            <Input
-                              data-value={employee._id}
-                              label="Employee Name"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="name"
-                              placeholder={employee.name}
-                              width={12}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                          </Row>
-                          <Row>
-                            <Input
-                              data-value={employee._id}
-                              label="Address"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="address"
-                              placeholder={employee.address}
-                              width={5}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                            <Input
-                              data-value={employee._id}
-                              label="City"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="city"
-                              placeholder={employee.city}
-                              width={3}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                            <SelectState
-                              label="State"
-                              value={employee.state}
-                              onChange={(e) =>
-                                handleSelectStateChange(e, employee)
-                              }
-                              name="state"
-                              placeholder={employee.state}
-                              width={2}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
+                        {" "}
+                        <h6
+                          style={{
+                            color: "#1F2833",
+                            fontFamily: "Roboto, sans-serif",
+                            fontSize: "1.15em",
+                          }}
+                        >
+                          <i className="fas fa-user mr-3"></i>
+                          {employee.name}
+                          {toggleArrowState[employee.name] === false ? (
+                            <i className="fas fa-caret-up float-right mt-1"></i>
+                          ) : (
+                            <i className="fas fa-caret-down float-right mt-1"></i>
+                          )}
+                        </h6>
+                      </Accordion.Toggle>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                          <form>
+                            <Row>
+                              {employee._id === editState._id ? (
+                                <i className="fas fa-lock-open ml-4 mb-4"></i>
+                              ) : (
+                                <i className="fas fa-lock ml-4 mb-4"></i>
+                              )}
+                              <SelectOffice
+                                label="Current Office"
+                                onChange={(e) =>
+                                  handleSelectOfficeChange(e, employee)
+                                }
+                                options={officeNameList}
+                                value={employee.office_id}
+                                width={12}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                            </Row>
+                            <Row>
+                              <Input
+                                data-value={employee._id}
+                                label="Employee Name"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="name"
+                                placeholder={employee.name}
+                                width={12}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                            </Row>
+                            <Row>
+                              <Input
+                                data-value={employee._id}
+                                label="Address"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="address"
+                                placeholder={employee.address}
+                                width={5}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                              <Input
+                                data-value={employee._id}
+                                label="City"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="city"
+                                placeholder={employee.city}
+                                width={3}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                              <SelectState
+                                label="State"
+                                value={employee.state}
+                                onChange={(e) =>
+                                  handleSelectStateChange(e, employee)
+                                }
+                                name="state"
+                                placeholder={employee.state}
+                                width={2}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
 
-                            <Input
-                              data-value={employee._id}
-                              label="Zip"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="zip"
-                              placeholder={employee.zip}
-                              width={2}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                            <Input
-                              data-value={employee._id}
-                              label="Phone"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="phone"
-                              placeholder={employee.phone}
-                              width={2}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                            <Input
-                              data-value={employee._id}
-                              label="Email"
-                              onChange={handleInputChangeUpdateEmployee}
-                              name="email"
-                              placeholder={employee.email}
-                              width={3}
-                              disabled={
-                                employee._id === editState._id ? false : true
-                              }
-                            />
-                          </Row>
-                          <Row className="mt-5">
-                            <div className="col">
-                              <Button
-                                variant="outline-info"
-                                onClick={() => switchEditState(employee._id)}
-                              >
-                                {employee._id === editState._id
-                                  ? "Cancel Update"
-                                  : "Update This Employee"}
-                              </Button>
-                              {employee._id === editState._id ? (
+                              <Input
+                                data-value={employee._id}
+                                label="Zip"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="zip"
+                                placeholder={employee.zip}
+                                width={2}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                              <Input
+                                data-value={employee._id}
+                                label="Phone"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="phone"
+                                placeholder={employee.phone}
+                                width={2}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                              <Input
+                                data-value={employee._id}
+                                label="Email"
+                                onChange={handleInputChangeUpdateEmployee}
+                                name="email"
+                                placeholder={employee.email}
+                                width={3}
+                                disabled={
+                                  employee._id === editState._id ? false : true
+                                }
+                              />
+                            </Row>
+                            <Row className="mt-5">
+                              <div className="col">
                                 <Button
-                                  variant="outline-success"
-                                  onClick={() =>
-                                    updateEmployee(
-                                      employee._id,
-                                      updatedEmployeeObject
-                                    )
-                                  }
+                                  variant="outline-info"
+                                  onClick={() => switchEditState(employee._id)}
                                 >
-                                  Save and Update
+                                  {employee._id === editState._id ? (
+                                    <span>
+                                      <i className="far fa-window-close mr-2"></i>
+                                      Cancel Update
+                                    </span>
+                                  ) : (
+                                    <span>
+                                      <i className="far fa-edit mr-2"></i>
+                                      Edit Employee
+                                    </span>
+                                  )}
                                 </Button>
-                              ) : (
-                                ""
-                              )}
-                              {employee._id === editState._id ? (
-                                ""
-                              ) : (
-                                <Button
-                                  variant="outline-danger"
-                                  className="float-right"
-                                  onClick={() => deleteEmployee(employee._id)}
-                                >
-                                  Delete
-                                </Button>
-                              )}
-                            </div>
-                          </Row>
-                        </form>
-                        <br />
-                        <Row>
-                          <Col>
-                            <Accordion>
-                              <Card>
-                                <Accordion.Toggle
-                                  as={Card.Header}
-                                  eventKey="0"
-                                  onClick={() => {
-                                    toggleArrowList(employee.name);
-                                  }}
-                                >
-                                  <h6
-                                    style={{
-                                      color: "#1F2833",
-                                      fontFamily: "Roboto, sans-serif",
-                                      fontSize: "1.15em",
+                                {employee._id === editState._id ? (
+                                  <Button
+                                    className="ml-5"
+                                    variant="outline-success"
+                                    onClick={() =>
+                                      updateEmployee(
+                                        employee._id,
+                                        updatedEmployeeObject
+                                      )
+                                    }
+                                  >
+                                    <span>
+                                      <i className="far fa-save mr-2"></i>
+                                      Save and Update
+                                    </span>
+                                  </Button>
+                                ) : (
+                                  ""
+                                )}
+                                {employee._id !== editState._id ? (
+                                  ""
+                                ) : (
+                                  <OverlayTrigger
+                                    overlay={
+                                      <Tooltip id="tooltip-disabled">
+                                        This employee will be permanently
+                                        deleted!
+                                      </Tooltip>
+                                    }
+                                  >
+                                    <Button
+                                      variant="outline-danger"
+                                      className="float-right"
+                                      onClick={() =>
+                                        deleteEmployee(employee._id)
+                                      }
+                                    >
+                                      <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Employee
+                                      </span>
+                                    </Button>
+                                  </OverlayTrigger>
+                                )}
+                              </div>
+                            </Row>
+                          </form>
+                          <br />
+                          <Row>
+                            <Col>
+                              <Accordion>
+                                <Card>
+                                  <Accordion.Toggle
+                                    as={Card.Header}
+                                    eventKey="0"
+                                    onClick={() => {
+                                      toggleArrowList(employee.name);
                                     }}
                                   >
-                                    <i className="fas fa-list mr-3"></i>
-                                    Show Equipment List
-                                    {toggleArrowListState[employee.name] ===
-                                    false ? (
-                                      <i className="fas fa-caret-up float-right mt-1"></i>
-                                    ) : (
-                                      <i className="fas fa-caret-down float-right mt-1"></i>
-                                    )}
-                                  </h6>
-                                </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="0">
-                                  <Card.Body>
-                                    <EquipmentTable
-                                      equipment={equipment.filter(
-                                        (eq) => eq.employee_id === employee._id
+                                    <h6
+                                      style={{
+                                        color: "#1F2833",
+                                        fontFamily: "Roboto, sans-serif",
+                                        fontSize: "1.15em",
+                                      }}
+                                    >
+                                      <i className="fas fa-list mr-3"></i>
+                                      Show Equipment List
+                                      {toggleArrowListState[employee.name] ===
+                                      false ? (
+                                        <i className="fas fa-caret-up float-right mt-1"></i>
+                                      ) : (
+                                        <i className="fas fa-caret-down float-right mt-1"></i>
                                       )}
-                                    />
-                                  </Card.Body>
-                                </Accordion.Collapse>
-                              </Card>
-                            </Accordion>
-                          </Col>
-                        </Row>
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
-                </Accordion>
-              ))
-            ) : (
-              <div>{}</div>
-            )}
-            <Accordion className="ml-2">
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6
-                    style={{
-                      color: "#1F2833",
-                      fontFamily: "Roboto, sans-serif",
-                      fontSize: "1.15em",
-                    }}
-                    className="ml-1"
-                  >
-                    Add Employee{" "}
-                    <i className="fas fa-plus float-right mt-1">
-                      <i className="fas fa-user float-right ml-1"></i>
-                    </i>
-                  </h6>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                    <form id="create-course-form">
-                      <SelectOffice
-                        label="Select Office"
-                        name="office_id"
-                        onChange={handleSelectOfficeChange}
-                        options={officeNameList}
-                        width={12}
-                      />
+                                    </h6>
+                                  </Accordion.Toggle>
+                                  <Accordion.Collapse eventKey="0">
+                                    <Card.Body>
+                                      <EquipmentTable
+                                        equipment={equipment.filter(
+                                          (eq) =>
+                                            eq.employee_id === employee._id
+                                        )}
+                                      />
+                                    </Card.Body>
+                                  </Accordion.Collapse>
+                                </Card>
+                              </Accordion>
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                  </Accordion>
+                ))
+              ) : (
+                <div></div>
+              )}
+              <Accordion className="ml-2">
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    <h6
+                      style={{
+                        color: "#1F2833",
+                        fontFamily: "Roboto, sans-serif",
+                        fontSize: "1.15em",
+                      }}
+                      className="ml-1"
+                    >
+                      Add Employee{" "}
+                      <i className="fas fa-plus float-right mt-1">
+                        <i className="fas fa-user float-right ml-1"></i>
+                      </i>
+                    </h6>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <form id="create-course-form">
+                        <SelectOffice
+                          label="Select Office"
+                          name="office_id"
+                          onChange={handleSelectOfficeChange}
+                          options={officeNameList}
+                          width={12}
+                        />
 
-                      <Input
-                        onChange={handleInputChange}
-                        name="name"
-                        placeholder="Name (required)"
-                      />
-                      <Input
-                        onChange={handleInputChange}
-                        name="address"
-                        placeholder="Address (required)"
-                      />
-                      <Input
-                        onChange={handleInputChange}
-                        name="city"
-                        placeholder="City (required)"
-                      />
-                      <SelectState
-                        label="State"
-                        onChange={handleSelectStateChange}
-                        name="state"
-                      />
+                        <Input
+                          onChange={handleInputChange}
+                          name="name"
+                          placeholder="Name (required)"
+                        />
+                        <Input
+                          onChange={handleInputChange}
+                          name="address"
+                          placeholder="Address (required)"
+                        />
+                        <Input
+                          onChange={handleInputChange}
+                          name="city"
+                          placeholder="City (required)"
+                        />
+                        <SelectState
+                          onChange={handleSelectStateChange}
+                          name="state"
+                          defaultValue="0"
+                        />
+                        <Input
+                          onChange={handleInputChange}
+                          name="zip"
+                          placeholder="Zip (required)"
+                        />
+                        <Input
+                          onChange={handleInputChange}
+                          name="phone"
+                          placeholder="Phone (required)"
+                        />
+                        <Input
+                          onChange={handleInputChange}
+                          name="email"
+                          placeholder="Email (required)"
+                        />
 
-                      <Input
-                        onChange={handleInputChange}
-                        name="zip"
-                        placeholder="Zip (required)"
-                      />
-                      <Input
-                        onChange={handleInputChange}
-                        name="phone"
-                        placeholder="Phone (required)"
-                      />
-                      <Input
-                        onChange={handleInputChange}
-                        name="email"
-                        placeholder="Email (required)"
-                      />
-
-                      {/*NEEDS TO ADD THE Employee FIELD*/}
-                      <FormBtn
-                        disabled={
-                          !(
-                            formObject.name &&
-                            formObject.address &&
-                            formObject.city &&
-                            formObject.state &&
-                            formObject.zip &&
-                            formObject.phone &&
-                            formObject.email
-                          )
-                        }
-                        onClick={handleFormSubmit}
-                      >
-                        Add New Employee
-                      </FormBtn>
-                    </form>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
-          </Col>
-        </Row>
+                        {/*NEEDS TO ADD THE Employee FIELD*/}
+                        <FormBtn
+                          disabled={
+                            !(
+                              formObject.name &&
+                              formObject.address &&
+                              formObject.city &&
+                              formObject.state &&
+                              formObject.zip &&
+                              formObject.phone &&
+                              formObject.email
+                            )
+                          }
+                          onClick={handleFormSubmit}
+                        >
+                          Add New Employee
+                        </FormBtn>
+                      </form>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
   );

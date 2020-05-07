@@ -39,7 +39,7 @@ export function FormBtn(props) {
 
 export function SelectOffice(props) {
   return (
-    <Col>
+    <Col md={props.width}>
       <div className="form-group">
         <label htmlFor="selectOffice">{props.label}</label>
         <select className="form-control" {...props} id="selectOffice">
@@ -61,7 +61,7 @@ export function SelectOffice(props) {
 
 export function SelectEmployee(props) {
   return (
-    <Col>
+    <Col md={props.width}>
       <div className="form-group">
         <label htmlFor="selectEmployee">{props.label}</label>
         <select className="form-control" {...props} id="selectEmployee">
@@ -87,10 +87,9 @@ export function SelectState(props) {
       <div className="form-group">
         <label htmlFor="selectState">{props.label}</label>
         <select className="form-control" {...props} id="selectState">
-          <option disabled  selected value="0" >Select State</option>
+          <option disabled value="0" >Select State</option>
           <option value="AL">Alabama</option>
-          <option value="AL">Alabama</option>
-          <option value="AK">Alaska</option>
+\          <option value="AK">Alaska</option>
           <option value="AS">American Samoa</option>
           <option value="AZ">Arizona</option>
           <option value="AR">Arkansas</option>
