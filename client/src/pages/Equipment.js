@@ -363,9 +363,6 @@ export default function Equipment() {
                         onChange={handleSelectEmployeeChange}
                         options={employeeNameList}
                         width={12}
-                        disabled={
-                          equipment._id === editState._id ? false : true
-                        }
                       />
                       <Input
                         onChange={handleInputChange}
@@ -382,7 +379,6 @@ export default function Equipment() {
                         name="serialNum"
                         placeholder="Serial # (required)"
                       />
-                      {/*NEEDS TO BE A DROPDOWN. WILL DO LATER*/}
                       <TextArea
                         onChange={handleInputChange}
                         name="condition"
@@ -409,7 +405,7 @@ export default function Equipment() {
                         name="initialCost"
                         placeholder="Initial Cost (required)"
                       />
-                      {/*NEEDS TO ADD THE Equipment FIELD*/}
+                   
                       <FormBtn
                         disabled={
                           !(
@@ -423,8 +419,9 @@ export default function Equipment() {
                           )
                         }
                         onClick={handleFormSubmit}
-                      />
+                      >
                       Add New Equipment
+                     </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
