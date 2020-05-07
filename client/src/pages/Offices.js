@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Input, FormBtn } from "../components/Form";
 import { Card, Button, Row, Col, Navbar, Accordion, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Input, FormBtn, SelectState } from "../components/Form";
 import Loader from "../components/Loader/Loader";
@@ -296,13 +295,19 @@ export default function Offices() {
                               {office._id === editState._id ? (
                                 ""
                               ) : (
+                                <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This equipment will be permanently deleted!</Tooltip>}>
                                 <Button
                                   variant="outline-danger"
                                   className="float-right"
                                   onClick={() => deleteOffice(office._id)}
                                 >
-                                  Delete
+                                  <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Equipment
+                                    </span>
                                 </Button>
+                                 </OverlayTrigger>
                               )}
                             </div>
                           </Row>
