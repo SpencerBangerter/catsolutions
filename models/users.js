@@ -21,7 +21,7 @@ var userSchema = new Schema({
     required: true
   },
   //This array for what ever we are pushing input data into
-  card: []
+  //card: []
 })
 
 userSchema.pre('save', function (next) {
