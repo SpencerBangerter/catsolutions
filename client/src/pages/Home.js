@@ -110,7 +110,7 @@ export default function HomePage() {
         <Row className="ml-2 mb-5">
           <Col>
             <Table
-              header={["Office", "Employees", "Equipment Value"]}
+              header={["Office", "Employees", "Equipment Value(US$)"]}
               keys={["name", "employees", "equipmentValue"]}
               elements={officeReport}
               title={"Office"}
@@ -118,7 +118,7 @@ export default function HomePage() {
           </Col>
           <Col>
             <Table
-              header={["Status", "Quantity", "Value"]}
+              header={["Status", "Quantity", "Value(US$)"]}
               keys={["name", "count", "value"]}
               elements={equipReport}
               title={"Equipment"}
