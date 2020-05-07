@@ -18,7 +18,7 @@ class App extends Component {
           <Route path="/employees" component={Employees} />
           <Route path="/equipment" component={Equipment} />
           <Route path="/contact" component={Contact} />
-      </BrowserRouter>
+      </BrowserRouter>      
     );
   }
 }

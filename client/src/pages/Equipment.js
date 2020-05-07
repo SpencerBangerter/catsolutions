@@ -3,14 +3,13 @@ import API from "../utils/API";
 import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
 import { Navbar, Row, Col, Card, Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import Loader from "../components/Loader/Loader";
+import PickDate from "../components/DatePicker/DatePicker";
 
 export default function Equipment() {
   const [equipment, setEquipment] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
   const [employeeNameList, setEmployeeeNameList] = useState([]);
-
-
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -21,6 +20,9 @@ export default function Equipment() {
     loadEmployeeNames();
   }, []);
 
+  // function setPurchaseDate() {}
+
+  // function setIssuedDate() {}
   //Get employee
   function loadEmployeeNames() {
     API.getEmployees()
@@ -56,15 +58,25 @@ export default function Equipment() {
     setFormObject({ ...formObject, [name]: value });
   }
 
+  function handleDateChange(date, name) {
+    setFormObject({ ...formObject, [name]: date });
+  }
+
   function handleInputChangeUpdateEquipment(event) {
     const { name, value } = event.target;
     setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: value });
+  }
+  function handleInputChangeUpdateDatesEquipment(date, name) {
+    setUpdateEquipmentObject({ ...updatedEquipmentObject, [name]: date });
   }
 
   const handleSelectEmployeeChange = (event, eq) => {
     const employee = { _id: event.target.value };
     setFormObject({ ...formObject, employee_id: employee });
-    setUpdateEquipmentObject({ ...updatedEquipmentObject, employee_id: employee });
+    setUpdateEquipmentObject({
+      ...updatedEquipmentObject,
+      employee_id: employee,
+    });
     if (eq) {
       setEquipment(
         equipment.map((item) => {
@@ -127,7 +139,10 @@ export default function Equipment() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat mr-5" style={{ color: "#ffffff", fontSize: "1.6em" }}></i>
+          <i
+            className="fas fa-cat mr-5"
+            style={{ color: "#ffffff", fontSize: "1.6em" }}
+          ></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -140,11 +155,14 @@ export default function Equipment() {
               equipment.map((equipment) => (
                 <Accordion key={equipment._id} className="ml-2 mb-1">
                   <Card>
-                    <Accordion.Toggle
-                      as={Card.Header}
-                      eventKey="0"
-                    >
-                      <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <h6
+                        style={{
+                          color: "#1F2833",
+                          fontFamily: "Roboto, sans-serif",
+                          fontSize: "1.15em",
+                        }}
+                      >
                         <i className="fas fa-toolbox mr-3"></i>
                         {equipment.type + " " + equipment.model}
                         <i className="fas fa-caret-down float-right mt-1"></i>
@@ -159,11 +177,15 @@ export default function Equipment() {
                               : <i className="fas fa-lock ml-4 mb-4"></i>}
                             <SelectEmployee
                               label="Assigned Employee"
-                              onChange={(e) => handleSelectEmployeeChange(e, equipment)}
+                              onChange={(e) =>
+                                handleSelectEmployeeChange(e, equipment)
+                              }
                               options={employeeNameList}
                               value={equipment.employee_id}
                               width={12}
-                              disabled={equipment._id === editState._id ? false : true}
+                              disabled={
+                                equipment._id === editState._id ? false : true
+                              }
                             />
                             <Input
                               data-value={equipment._id}
@@ -211,24 +233,43 @@ export default function Equipment() {
                                 equipment._id === editState._id ? false : true
                               }
                             />
-                            <Input
+                            <PickDate
                               data-value={equipment._id}
                               label="Purchase Date"
-                              onChange={handleInputChangeUpdateEquipment}
+                              onChange={(date) =>
+                                handleInputChangeUpdateDatesEquipment(
+                                  date,
+                                  "purchaseDate"
+                                )
+                              }
                               name="purchaseDate"
-                              placeholder={equipment.purchaseDate}
                               width={2}
+                              value={
+                                !updatedEquipmentObject.purchaseDate
+                                  ? new Date(equipment.purchaseDate)
+                                  : updatedEquipmentObject.purchaseDate
+                              }
                               disabled={
                                 equipment._id === editState._id ? false : true
                               }
                             />
-                            <Input
+
+                            <PickDate
                               data-value={equipment._id}
                               label="Date Issued"
-                              onChange={handleInputChangeUpdateEquipment}
                               name="dateIssued"
-                              placeholder={equipment.dateIssued}
                               width={2}
+                              onChange={(date) =>
+                                handleInputChangeUpdateDatesEquipment(
+                                  date,
+                                  "dateIssued"
+                                )
+                              }
+                              value={
+                                !updatedEquipmentObject.dateIssued
+                                  ? new Date(equipment.dateIssued)
+                                  : updatedEquipmentObject.purchaseDate
+                              }
                               disabled={
                                 equipment._id === editState._id ? false : true
                               }
@@ -247,7 +288,10 @@ export default function Equipment() {
                           </Row>
                           <Row className="mt-5">
                             <div className="col">
-                              <Button variant="outline-info" onClick={() => switchEditState(equipment._id)}>
+                              <Button
+                                variant="outline-info"
+                                onClick={() => switchEditState(equipment._id)}
+                              >
                                 {equipment._id === editState._id
                                   ? <span>
                                     <i className="far fa-window-close mr-2"></i>
@@ -303,15 +347,25 @@ export default function Equipment() {
                 </Accordion>
               ))
             ) : (
-                <div>
-                  <Loader />
-                </div>
-              )}
+              <div>
+                <Loader />
+              </div>
+            )}
             <Accordion className="ml-2">
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }} className="ml-1">
-                    Add Equipment <i className="fas fa-plus float-right mt-1"><i className="fas fa-toolbox float-right ml-1"></i></i>
+                  <h6
+                    style={{
+                      color: "#1F2833",
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "1.15em",
+                    }}
+                    className="ml-1"
+                  >
+                    Add Equipment{" "}
+                    <i className="fas fa-plus float-right mt-1">
+                      <i className="fas fa-toolbox float-right ml-1"></i>
+                    </i>
                   </h6>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
@@ -323,8 +377,10 @@ export default function Equipment() {
                         onChange={handleSelectEmployeeChange}
                         options={employeeNameList}
                         width={12}
+                        disabled={
+                          equipment._id === editState._id ? false : true
+                        }
                       />
-
                       <Input
                         onChange={handleInputChange}
                         name="type"
@@ -346,15 +402,21 @@ export default function Equipment() {
                         name="condition"
                         placeholder="Condition (required)"
                       />
-                      <Input
-                        onChange={handleInputChange}
+                      <PickDate
+                        label="Purchase Date"
+                        onChange={(date) =>
+                          handleDateChange(date, "purchaseDate")
+                        }
                         name="purchaseDate"
-                        placeholder="Purchase Date (required)"
+                        value={formObject.purchaseDate}
                       />
-                      <Input
-                        onChange={handleInputChange}
+                      <PickDate
+                        label="Date Issued"
+                        onChange={(date) =>
+                          handleDateChange(date, "dateIssued")
+                        }
                         name="dateIssued"
-                        placeholder="Date Issued (required)"
+                        value={formObject.dateIssued}
                       />
                       <Input
                         onChange={handleInputChange}
@@ -375,9 +437,8 @@ export default function Equipment() {
                           )
                         }
                         onClick={handleFormSubmit}
-                      >
-                        Add New Equipment
-                    </FormBtn>
+                      />
+                      Add New Equipment
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
