@@ -242,7 +242,7 @@ export default function Equipment() {
                                 )
                               }
                               name="purchaseDate"
-                              width={2}
+                              width={3}
                               value={
                                 !updatedEquipmentObject.purchaseDate
                                   ? new Date(equipment.purchaseDate)
@@ -257,7 +257,7 @@ export default function Equipment() {
                               data-value={equipment._id}
                               label="Date Issued"
                               name="dateIssued"
-                              width={2}
+                              width={3}
                               onChange={(date) =>
                                 handleInputChangeUpdateDatesEquipment(
                                   date,
