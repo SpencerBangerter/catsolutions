@@ -87,6 +87,8 @@ export function SelectState(props) {
       <div className="form-group">
         <label htmlFor="selectState">{props.label}</label>
         <select className="form-control" {...props} id="selectState">
+          <option disabled  selected value="0" >Select State</option>
+          <option value="AL">Alabama</option>
           <option value="AL">Alabama</option>
           <option value="AK">Alaska</option>
           <option value="AS">American Samoa</option>
