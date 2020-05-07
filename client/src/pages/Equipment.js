@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
-import { Navbar, Row, Col, Card, Accordion, Button } from "react-bootstrap";
-import Loader from "../components/Loader/Loader";
+import { Navbar, Row, Col, Card, Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import PickDate from "../components/DatePicker/DatePicker";
 
 export default function Equipment() {
@@ -172,11 +171,9 @@ export default function Equipment() {
                       <Card.Body>
                         <form>
                           <Row>
-                            {equipment._id === editState._id ? (
-                              <i className="fas fa-lock-open ml-3 "></i>
-                            ) : (
-                              <i className="fas fa-lock ml-3 "></i>
-                            )}
+                            {equipment._id === editState._id ?
+                              <i className="fas fa-lock-open ml-4 mb-4"></i>
+                              : <i className="fas fa-lock ml-4 mb-4"></i>}
                             <SelectEmployee
                               label="Assigned Employee"
                               onChange={(e) =>
@@ -245,7 +242,7 @@ export default function Equipment() {
                                 )
                               }
                               name="purchaseDate"
-                              width={2}
+                              width={3}
                               value={
                                 !updatedEquipmentObject.purchaseDate
                                   ? new Date(equipment.purchaseDate)
@@ -260,7 +257,7 @@ export default function Equipment() {
                               data-value={equipment._id}
                               label="Date Issued"
                               name="dateIssued"
-                              width={2}
+                              width={3}
                               onChange={(date) =>
                                 handleInputChangeUpdateDatesEquipment(
                                   date,
@@ -295,11 +292,18 @@ export default function Equipment() {
                                 onClick={() => switchEditState(equipment._id)}
                               >
                                 {equipment._id === editState._id
-                                  ? "Cancel Update"
-                                  : "Update This Equipment"}
+                                  ? <span>
+                                    <i className="far fa-window-close mr-2"></i>
+                                  Cancel Update
+                                  </span>
+                                  : <span>
+                                    <i className="far fa-edit mr-2"></i>
+                                  Edit Equipment
+                                  </span>}
                               </Button>
                               {equipment._id === editState._id ? (
                                 <Button
+                                  className="ml-5"
                                   variant="outline-success"
                                   onClick={() =>
                                     updateEquipment(
@@ -308,22 +312,31 @@ export default function Equipment() {
                                     )
                                   }
                                 >
-                                  Save and Update
+                                  <span>
+                                    <i className="far fa-save mr-2"></i>
+                                    Save and Update
+                                  </span>
                                 </Button>
                               ) : (
-                                ""
-                              )}
-                              {equipment._id === editState._id ? (
+                                  ""
+                                )}
+                              {equipment._id !== editState._id ? (
                                 ""
                               ) : (
-                                <Button
-                                  variant="outline-danger"
-                                  className="float-right"
-                                  onClick={() => deleteEquipment(equipment._id)}
-                                >
-                                  Delete
-                                </Button>
-                              )}
+                                  <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This equipment will be permanently deleted!</Tooltip>}>
+                                    <Button
+                                      variant="outline-danger"
+                                      className="float-right"
+                                      onClick={() => deleteEquipment(equipment._id)}
+                                    >
+                                      <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Equipment
+                                    </span>
+                                    </Button>
+                                  </OverlayTrigger>
+                                )}
                             </div>
                           </Row>
                         </form>
@@ -334,7 +347,6 @@ export default function Equipment() {
               ))
             ) : (
               <div>
-                <Loader />
               </div>
             )}
             <Accordion className="ml-2">

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
+import { Navbar, Row, Col, Button, Accordion, Card, Tooltip, OverlayTrigger } from "react-bootstrap"
 import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
-// import Loader from "../components/Loader/Loader";
-import { Navbar, Row, Col, Button, Accordion, Card } from "react-bootstrap";
 import "./page.css";
 
 export default function Employees() {
@@ -212,11 +211,9 @@ export default function Employees() {
                       <Card.Body>
                         <form>
                           <Row>
-                            {employee._id === editState._id ? (
-                              <i className="fas fa-lock-open ml-3 mb-3 "></i>
-                            ) : (
-                              <i className="fas fa-lock ml-3 mb-3 "></i>
-                            )}
+                            {employee._id === editState._id ?
+                              <i className="fas fa-lock-open ml-4 mb-4"></i>
+                              : <i className="fas fa-lock ml-4 mb-4"></i>}
                             <SelectOffice
                               label="Current Office"
                               onChange={(e) =>
@@ -321,11 +318,18 @@ export default function Employees() {
                                 onClick={() => switchEditState(employee._id)}
                               >
                                 {employee._id === editState._id
-                                  ? "Cancel Update"
-                                  : "Update This Employee"}
+                                  ? <span>
+                                    <i className="far fa-window-close mr-2"></i>
+                                    Cancel Update
+                                    </span>
+                                  : <span>
+                                    <i className="far fa-edit mr-2"></i>
+                                  Edit Employee
+                                  </span>}
                               </Button>
                               {employee._id === editState._id ? (
                                 <Button
+                                  className="ml-5"
                                   variant="outline-success"
                                   onClick={() =>
                                     updateEmployee(
@@ -334,22 +338,31 @@ export default function Employees() {
                                     )
                                   }
                                 >
-                                  Save and Update
+                                  <span>
+                                    <i className="far fa-save mr-2"></i>
+                                    Save and Update
+                                  </span>
                                 </Button>
                               ) : (
-                                ""
-                              )}
-                              {employee._id === editState._id ? (
+                                  ""
+                                )}
+                              {employee._id !== editState._id ? (
                                 ""
                               ) : (
-                                <Button
-                                  variant="outline-danger"
-                                  className="float-right"
-                                  onClick={() => deleteEmployee(employee._id)}
-                                >
-                                  Delete
-                                </Button>
-                              )}
+                                  <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This employee will be permanently deleted!</Tooltip>}>
+                                    <Button
+                                      variant="outline-danger"
+                                      className="float-right"
+                                      onClick={() => deleteEmployee(employee._id)}
+                                    >
+                                      <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Employee
+                                    </span>
+                                    </Button>
+                                  </OverlayTrigger>
+                                )}
                             </div>
                           </Row>
                         </form>
@@ -401,7 +414,8 @@ export default function Employees() {
                 </Accordion>
               ))
             ) : (
-              <div>{}</div>
+              <div>
+              </div>
             )}
             <Accordion className="ml-2">
               <Card>
@@ -447,7 +461,6 @@ export default function Employees() {
                         placeholder="City (required)"
                       />
                       <SelectState
-                        label="State"
                         onChange={handleSelectStateChange}
                         name="state"
                       />
@@ -484,7 +497,7 @@ export default function Employees() {
                         onClick={handleFormSubmit}
                       >
                         Add New Employee
-                      </FormBtn>
+                        </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>

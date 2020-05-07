@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
+import { Card, Button, Row, Col, Navbar, Accordion, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Input, FormBtn, SelectState } from "../components/Form";
-import { Card, Button, Row, Col, Navbar, Accordion } from "react-bootstrap";
-import Loader from "../components/Loader/Loader";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable";
 import "./page.css";
 export default function Offices() {
@@ -16,6 +15,7 @@ export default function Offices() {
     locked: true,
     _id: "",
   });
+
   useEffect(() => {
     loadOffices();
     loadEmployees();
@@ -164,25 +164,17 @@ export default function Offices() {
                       as={Card.Header}
                       eventKey="0"
                     >
-                      <h6
-                        style={{
-                          color: "#1F2833",
-                          fontFamily: "Roboto, sans-serif",
-                          fontSize: "1.15em",
-                        }}
-                      >
-                        <i className="fas fa-building mr-3"></i>
-                        {office.name}
-                        {toggleArrowState[office.name] === false ? (
-                          <i className="fas fa-caret-up float-right mt-1"></i>
-                        ) : (
-                          <i className="fas fa-caret-down float-right mt-1"></i>
-                        )}
-                      </h6>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                      <Card.Body>
-                        <form>
+                        <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
+                          <i className="fas fa-building mr-3"></i>
+                          {office.name}
+                          {toggleArrowState[office.name] === false ?
+                            <i className="fas fa-caret-up float-right mt-1"></i> :
+                            <i className="fas fa-caret-down float-right mt-1"></i>}
+                        </h6>
+                      </Accordion.Toggle>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                          <form>
                           <Row>
                             {office._id === editState._id ? (
                               <i className="fas fa-lock-open ml-3 mb-3 "></i>
@@ -302,13 +294,19 @@ export default function Offices() {
                               {office._id === editState._id ? (
                                 ""
                               ) : (
+                                <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This office will be permanently deleted!</Tooltip>}>
                                 <Button
                                   variant="outline-danger"
                                   className="float-right"
                                   onClick={() => deleteOffice(office._id)}
                                 >
-                                  Delete
+                                  <span>
+                                        <i className="far fa-trash-alt mr-2"></i>
+                                        Delete Office
+                                    </span>
                                 </Button>
+                                 </OverlayTrigger>
                               )}
                             </div>
                           </Row>
@@ -363,7 +361,6 @@ export default function Offices() {
               ))
             ) : (
               <div>
-                <Loader />
               </div>
             )}
             <Accordion className="ml-2">
@@ -402,7 +399,6 @@ export default function Offices() {
                         placeholder="City (required)"
                       />
                       <SelectState
-                        label="State"
                         onChange={handleSelectStateChange}
                         name="state"
                       />
