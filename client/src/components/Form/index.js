@@ -43,7 +43,7 @@ export function SelectOffice(props) {
       <div className="form-group">
         <label htmlFor="selectOffice">{props.label}</label>
         <select className="form-control" {...props} id="selectOffice">
-          <option value={0}>None</option>
+          <option value={0}>Remote</option>
           {props.options.length ? (
             props.options.map((opt) => (
               <option key={opt._id} value={opt._id}>
@@ -63,7 +63,7 @@ export function SelectEmployee(props) {
   return (
     <Col>
       <div className="form-group">
-        <label htmlFor="selectOffice">{props.label}</label>
+        <label htmlFor="selectEmployee">{props.label}</label>
         <select className="form-control" {...props} id="selectEmployee">
           <option value={0}>None</option>
           {props.options.length ? (
