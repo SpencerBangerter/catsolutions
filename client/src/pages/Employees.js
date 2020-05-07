@@ -3,7 +3,7 @@ import API from "../utils/API";
 import { Input, FormBtn, SelectOffice } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable"
 import Loader from "../components/Loader/Loader";
-import { Navbar, Row, Col, Button, Accordion, Card } from "react-bootstrap"
+import { Navbar, Row, Col, Button, Accordion, Card, Tooltip, OverlayTrigger } from "react-bootstrap"
 import "./page.css";
 
 export default function Employees() {
@@ -269,7 +269,7 @@ export default function Employees() {
                                     Cancel Update
                                     </span>
                                   : <span>
-                                  <i className="far fa-edit mr-2"></i>
+                                    <i className="far fa-edit mr-2"></i>
                                   Edit Employee
                                   </span>}
                               </Button>
@@ -295,16 +295,19 @@ export default function Employees() {
                               {employee._id !== editState._id ? (
                                 ""
                               ) : (
-                                  <Button
-                                    variant="outline-danger"
-                                    className="float-right"
-                                    onClick={() => deleteEmployee(employee._id)}
-                                  >
-                                    <span>
+                                  <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This employee will be permanently deleted!</Tooltip>}>
+                                    <Button
+                                      variant="outline-danger"
+                                      className="float-right"
+                                      onClick={() => deleteEmployee(employee._id)}
+                                    >
+                                      <span>
                                         <i className="far fa-trash-alt mr-2"></i>
                                         Delete Employee
                                     </span>
-                                  </Button>
+                                    </Button>
+                                  </OverlayTrigger>
                                 )}
                             </div>
                           </Row>

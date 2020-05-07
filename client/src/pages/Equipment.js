@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
-import { Navbar, Row, Col, Card, Accordion, Button } from "react-bootstrap";
+import { Navbar, Row, Col, Card, Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import Loader from "../components/Loader/Loader";
 
 export default function Equipment() {
@@ -127,7 +127,7 @@ export default function Equipment() {
     <div>
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
-          <i className="fas fa-cat mr-5" style={{color: "#ffffff", fontSize: "1.6em" }}></i>
+          <i className="fas fa-cat mr-5" style={{ color: "#ffffff", fontSize: "1.6em" }}></i>
         </Navbar.Brand>
       </Navbar>
       <div className="container shadow-sm">
@@ -250,11 +250,11 @@ export default function Equipment() {
                               <Button variant="outline-info" onClick={() => switchEditState(equipment._id)}>
                                 {equipment._id === editState._id
                                   ? <span>
-                                  <i className="far fa-window-close mr-2"></i>
+                                    <i className="far fa-window-close mr-2"></i>
                                   Cancel Update
                                   </span>
                                   : <span>
-                                  <i className="far fa-edit mr-2"></i>
+                                    <i className="far fa-edit mr-2"></i>
                                   Edit Equipment
                                   </span>}
                               </Button>
@@ -280,16 +280,19 @@ export default function Equipment() {
                               {equipment._id !== editState._id ? (
                                 ""
                               ) : (
-                                  <Button
-                                    variant="outline-danger"
-                                    className="float-right"
-                                    onClick={() => deleteEquipment(equipment._id)}
-                                  >
-                                    <span>
+                                  <OverlayTrigger
+                                    overlay={<Tooltip id="tooltip-disabled">This equipment will be permanently deleted!</Tooltip>}>
+                                    <Button
+                                      variant="outline-danger"
+                                      className="float-right"
+                                      onClick={() => deleteEquipment(equipment._id)}
+                                    >
+                                      <span>
                                         <i className="far fa-trash-alt mr-2"></i>
                                         Delete Equipment
                                     </span>
-                                  </Button>
+                                    </Button>
+                                  </OverlayTrigger>
                                 )}
                             </div>
                           </Row>

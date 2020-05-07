@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn } from "../components/Form";
-import { Card, Button, Row, Col, Navbar, Accordion } from "react-bootstrap";
+import { Card, Button, Row, Col, Navbar, Accordion, Tooltip, OverlayTrigger } from "react-bootstrap";
 import Loader from "../components/Loader/Loader";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable"
 import "./page.css"
@@ -16,6 +16,7 @@ export default function Offices() {
     locked: true,
     _id: "",
   });
+
   useEffect(() => {
     loadOffices();
     loadEmployees();
@@ -248,8 +249,10 @@ export default function Offices() {
                                     }
                                   >
                                     <span>
+
                                       <i className="far fa-save mr-2"></i>
                                       Save and Update
+
                                       </span>
                                   </Button>
                                 ) : (
@@ -258,16 +261,19 @@ export default function Offices() {
                                 {office._id !== editState._id ? (
                                   ""
                                 ) : (
-                                    <Button
-                                      variant="outline-danger"
-                                      className="float-right"
-                                      onClick={() => deleteOffice(office._id)}
-                                    >
-                                      <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
+                                    <OverlayTrigger
+                                      overlay={<Tooltip id="tooltip-disabled">This office will be permanently deleted!</Tooltip>}>
+                                      <Button
+                                        variant="outline-danger"
+                                        className="float-right"
+                                        onClick={() => deleteOffice(office._id)}
+                                      >
+                                        <span>
+                                          <i className="far fa-trash-alt mr-2"></i>
                                         Delete Office
                                     </span>
-                                    </Button>
+                                      </Button>
+                                    </OverlayTrigger>
                                   )}
                               </div>
                             </Row>
