@@ -6,7 +6,6 @@ import Equipment from "./pages/Equipment";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import "./App.css";
-import SideNavBar from "./components/SideNav/SideNav";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import PrivateRoute from './hocs/PrivateRoute';
@@ -19,7 +18,6 @@ class App extends Component {
       <BrowserRouter>
           <Route exact path="/" component={Login}/>
           <Route path="/register" component={Register}/>
-          <SideNavBar />
           <UnPrivateRoute path="/admin" roles={["admin"]} component={Admin}/>
           <UnPrivateRoute path="/catsolutions" component={Home} />
           <UnPrivateRoute path="/offices" component={Offices} />

@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
 import { Input, FormBtn, TextArea, SelectEmployee } from "../components/Form";
-import { Navbar, Row, Col, Card, Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
+import {
+  Navbar,
+  Row,
+  Col,
+  Card,
+  Accordion,
+  Button,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import PickDate from "../components/DatePicker/DatePicker";
+import SideNavBar from "../components/SideNav/SideNav";
 
 export default function Equipment() {
   const [equipment, setEquipment] = useState([]);
@@ -136,6 +146,8 @@ export default function Equipment() {
 
   return (
     <div>
+      <SideNavBar />
+
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
@@ -171,9 +183,11 @@ export default function Equipment() {
                       <Card.Body>
                         <form>
                           <Row>
-                            {equipment._id === editState._id ?
+                            {equipment._id === editState._id ? (
                               <i className="fas fa-lock-open ml-4 mb-4"></i>
-                              : <i className="fas fa-lock ml-4 mb-4"></i>}
+                            ) : (
+                              <i className="fas fa-lock ml-4 mb-4"></i>
+                            )}
                             <SelectEmployee
                               label="Assigned Employee"
                               onChange={(e) =>
@@ -291,15 +305,17 @@ export default function Equipment() {
                                 variant="outline-info"
                                 onClick={() => switchEditState(equipment._id)}
                               >
-                                {equipment._id === editState._id
-                                  ? <span>
+                                {equipment._id === editState._id ? (
+                                  <span>
                                     <i className="far fa-window-close mr-2"></i>
-                                  Cancel Update
+                                    Cancel Update
                                   </span>
-                                  : <span>
+                                ) : (
+                                  <span>
                                     <i className="far fa-edit mr-2"></i>
-                                  Edit Equipment
-                                  </span>}
+                                    Edit Equipment
+                                  </span>
+                                )}
                               </Button>
                               {equipment._id === editState._id ? (
                                 <Button
@@ -318,25 +334,33 @@ export default function Equipment() {
                                   </span>
                                 </Button>
                               ) : (
-                                  ""
-                                )}
+                                ""
+                              )}
                               {equipment._id !== editState._id ? (
                                 ""
                               ) : (
-                                  <OverlayTrigger
-                                    overlay={<Tooltip id="tooltip-disabled">This equipment will be permanently deleted!</Tooltip>}>
-                                    <Button
-                                      variant="outline-danger"
-                                      className="float-right"
-                                      onClick={() => deleteEquipment(equipment._id)}
-                                    >
-                                      <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
-                                        Delete Equipment
+                                <OverlayTrigger
+                                  overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                      This equipment will be permanently
+                                      deleted!
+                                    </Tooltip>
+                                  }
+                                >
+                                  <Button
+                                    variant="outline-danger"
+                                    className="float-right"
+                                    onClick={() =>
+                                      deleteEquipment(equipment._id)
+                                    }
+                                  >
+                                    <span>
+                                      <i className="far fa-trash-alt mr-2"></i>
+                                      Delete Equipment
                                     </span>
-                                    </Button>
-                                  </OverlayTrigger>
-                                )}
+                                  </Button>
+                                </OverlayTrigger>
+                              )}
                             </div>
                           </Row>
                         </form>
@@ -346,8 +370,7 @@ export default function Equipment() {
                 </Accordion>
               ))
             ) : (
-              <div>
-              </div>
+              <div></div>
             )}
             <Accordion className="ml-2">
               <Card>
@@ -417,7 +440,7 @@ export default function Equipment() {
                         name="initialCost"
                         placeholder="Initial Cost (required)"
                       />
-                   
+
                       <FormBtn
                         disabled={
                           !(
@@ -432,8 +455,8 @@ export default function Equipment() {
                         }
                         onClick={handleFormSubmit}
                       >
-                      Add New Equipment
-                     </FormBtn>
+                        Add New Equipment
+                      </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>

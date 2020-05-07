@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import "./page.css";
 import { BarChart, PieChart } from "../components/Chart/Chart";
+import SideNavBar from "../components/SideNav/SideNav";
 
 export default function HomePage() {
   const [officeReport, setOfficeReport] = useState([]);
@@ -91,6 +92,8 @@ export default function HomePage() {
 
   return (
     <div>
+      <SideNavBar />
+
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i

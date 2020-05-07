@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Navbar, Row, Col, Button, Accordion, Card, Tooltip, OverlayTrigger } from "react-bootstrap"
+import {
+  Navbar,
+  Row,
+  Col,
+  Button,
+  Accordion,
+  Card,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
 import "./page.css";
+import SideNavBar from "../components/SideNav/SideNav";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -165,6 +175,8 @@ export default function Employees() {
 
   return (
     <div>
+      <SideNavBar />
+
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
@@ -211,9 +223,11 @@ export default function Employees() {
                       <Card.Body>
                         <form>
                           <Row>
-                            {employee._id === editState._id ?
+                            {employee._id === editState._id ? (
                               <i className="fas fa-lock-open ml-4 mb-4"></i>
-                              : <i className="fas fa-lock ml-4 mb-4"></i>}
+                            ) : (
+                              <i className="fas fa-lock ml-4 mb-4"></i>
+                            )}
                             <SelectOffice
                               label="Current Office"
                               onChange={(e) =>
@@ -317,15 +331,17 @@ export default function Employees() {
                                 variant="outline-info"
                                 onClick={() => switchEditState(employee._id)}
                               >
-                                {employee._id === editState._id
-                                  ? <span>
+                                {employee._id === editState._id ? (
+                                  <span>
                                     <i className="far fa-window-close mr-2"></i>
                                     Cancel Update
-                                    </span>
-                                  : <span>
+                                  </span>
+                                ) : (
+                                  <span>
                                     <i className="far fa-edit mr-2"></i>
-                                  Edit Employee
-                                  </span>}
+                                    Edit Employee
+                                  </span>
+                                )}
                               </Button>
                               {employee._id === editState._id ? (
                                 <Button
@@ -344,25 +360,30 @@ export default function Employees() {
                                   </span>
                                 </Button>
                               ) : (
-                                  ""
-                                )}
+                                ""
+                              )}
                               {employee._id !== editState._id ? (
                                 ""
                               ) : (
-                                  <OverlayTrigger
-                                    overlay={<Tooltip id="tooltip-disabled">This employee will be permanently deleted!</Tooltip>}>
-                                    <Button
-                                      variant="outline-danger"
-                                      className="float-right"
-                                      onClick={() => deleteEmployee(employee._id)}
-                                    >
-                                      <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
-                                        Delete Employee
+                                <OverlayTrigger
+                                  overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                      This employee will be permanently deleted!
+                                    </Tooltip>
+                                  }
+                                >
+                                  <Button
+                                    variant="outline-danger"
+                                    className="float-right"
+                                    onClick={() => deleteEmployee(employee._id)}
+                                  >
+                                    <span>
+                                      <i className="far fa-trash-alt mr-2"></i>
+                                      Delete Employee
                                     </span>
-                                    </Button>
-                                  </OverlayTrigger>
-                                )}
+                                  </Button>
+                                </OverlayTrigger>
+                              )}
                             </div>
                           </Row>
                         </form>
@@ -414,8 +435,7 @@ export default function Employees() {
                 </Accordion>
               ))
             ) : (
-              <div>
-              </div>
+              <div></div>
             )}
             <Accordion className="ml-2">
               <Card>
@@ -497,7 +517,7 @@ export default function Employees() {
                         onClick={handleFormSubmit}
                       >
                         Add New Employee
-                        </FormBtn>
+                      </FormBtn>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>

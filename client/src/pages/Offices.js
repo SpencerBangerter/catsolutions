@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import { Card, Button, Row, Col, Navbar, Accordion, Tooltip, OverlayTrigger } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Row,
+  Col,
+  Navbar,
+  Accordion,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import { Input, FormBtn, SelectState } from "../components/Form";
 import EmployeeTable from "../components/EmployeeTable/EmployeeTable";
 import "./page.css";
+import SideNavBar from "../components/SideNav/SideNav";
+
 export default function Offices() {
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -139,6 +150,8 @@ export default function Offices() {
 
   return (
     <div>
+      <SideNavBar />
+
       <Navbar className="mr-5 pt-3 shadow">
         <Navbar.Brand className="ml-auto">
           <i
@@ -164,17 +177,25 @@ export default function Offices() {
                       as={Card.Header}
                       eventKey="0"
                     >
-                        <h6 style={{ color: "#1F2833", fontFamily: "Roboto, sans-serif", fontSize: "1.15em" }}>
-                          <i className="fas fa-building mr-3"></i>
-                          {office.name}
-                          {toggleArrowState[office.name] === false ?
-                            <i className="fas fa-caret-up float-right mt-1"></i> :
-                            <i className="fas fa-caret-down float-right mt-1"></i>}
-                        </h6>
-                      </Accordion.Toggle>
-                      <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-                          <form>
+                      <h6
+                        style={{
+                          color: "#1F2833",
+                          fontFamily: "Roboto, sans-serif",
+                          fontSize: "1.15em",
+                        }}
+                      >
+                        <i className="fas fa-building mr-3"></i>
+                        {office.name}
+                        {toggleArrowState[office.name] === false ? (
+                          <i className="fas fa-caret-up float-right mt-1"></i>
+                        ) : (
+                          <i className="fas fa-caret-down float-right mt-1"></i>
+                        )}
+                      </h6>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+                        <form>
                           <Row>
                             {office._id === editState._id ? (
                               <i className="fas fa-lock-open ml-3 mb-3 "></i>
@@ -295,18 +316,23 @@ export default function Offices() {
                                 ""
                               ) : (
                                 <OverlayTrigger
-                                    overlay={<Tooltip id="tooltip-disabled">This office will be permanently deleted!</Tooltip>}>
-                                <Button
-                                  variant="outline-danger"
-                                  className="float-right"
-                                  onClick={() => deleteOffice(office._id)}
+                                  overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                      This office will be permanently deleted!
+                                    </Tooltip>
+                                  }
                                 >
-                                  <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
-                                        Delete Office
+                                  <Button
+                                    variant="outline-danger"
+                                    className="float-right"
+                                    onClick={() => deleteOffice(office._id)}
+                                  >
+                                    <span>
+                                      <i className="far fa-trash-alt mr-2"></i>
+                                      Delete Office
                                     </span>
-                                </Button>
-                                 </OverlayTrigger>
+                                  </Button>
+                                </OverlayTrigger>
                               )}
                             </div>
                           </Row>
@@ -360,8 +386,7 @@ export default function Offices() {
                 </Accordion>
               ))
             ) : (
-              <div>
-              </div>
+              <div></div>
             )}
             <Accordion className="ml-2">
               <Card>
