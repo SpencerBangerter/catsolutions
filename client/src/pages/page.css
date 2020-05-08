@@ -56,6 +56,11 @@ input {
     border-bottom: 1px solid lightgray !important;
 }
 
+.input-error {
+    border: none !important;
+    border-bottom: 1px solid red !important;
+}
+
 select {
     border: none !important;
     border-bottom: 1px solid lightgray !important;

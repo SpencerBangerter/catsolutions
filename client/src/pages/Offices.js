@@ -26,6 +26,7 @@ export default function Offices() {
     locked: true,
     _id: "",
   });
+  const [isValid, setIsValid] = useState({phone: true});
 
   useEffect(() => {
     loadOffices();
@@ -52,6 +53,7 @@ export default function Offices() {
       .then(loadOffices)
       .then(switchEditState)
       .catch((err) => console.log(err));
+      setIsValid({phone: true});
   };
 
   //delete office
@@ -81,6 +83,7 @@ export default function Offices() {
       setEditState({
         _id: "",
       });
+      setIsValid({phone: true});
     } else {
       setEditState({
         _id: id,
@@ -101,6 +104,15 @@ export default function Offices() {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: true });
     } else {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: false });
+    }
+  }
+
+  
+  function phoneNumberValidator(phoneField) {
+    var expression = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const phoneNumber = phoneField.target.value;
+    if(phoneNumber) {
+      setIsValid({...isValid, phone : phoneNumber.match(expression)});
     }
   }
 
@@ -286,6 +298,11 @@ export default function Offices() {
                                 disabled={
                                   office._id === editState._id ? false : true
                                 }
+                                onBlur={phoneNumberValidator}
+                                valid={{
+                                  managementContactPhone : office._id === editState._id ? isValid.phone : true ,
+                                  message: "Please insert a valid phone number!"
+                                }}
                               />
                             </Row>
                             <Row className="mt-5">
@@ -301,6 +318,7 @@ export default function Offices() {
                                 {office._id === editState._id ? (
                                   <Button
                                     variant="outline-success"
+                                    disabled= {!isValid.phone}
                                     onClick={() =>
                                       updateOffice(
                                         office._id,
@@ -443,6 +461,11 @@ export default function Offices() {
                           onChange={handleInputChange}
                           name="managementContactPhone"
                           placeholder="Managment Contact Phone (required)"
+                          onBlur={phoneNumberValidator}
+                          valid={{
+                            managementContactPhone : isValid.phone,
+                            message: "Please insert a valid phone number!"
+                          }}
                         />
 
                         <FormBtn
@@ -454,7 +477,9 @@ export default function Offices() {
                               formObject.state &&
                               formObject.zip &&
                               formObject.managementContact &&
-                              formObject.managementContactPhone
+                              formObject.managementContactPhone &&
+                              isValid.phone
+
                             )
                           }
                           onClick={handleFormSubmit}
