@@ -123,3 +123,8 @@ th {
 h6 {
     margin-bottom: .05em !important;
 }
+
+.contact-header {
+    background: #1F2833;
+    color: #ffffff;
+}
