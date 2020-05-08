@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 import API from "../utils/API";
 import {
   Card,
@@ -16,6 +18,7 @@ import "./page.css";
 import SideNavBar from "../components/SideNav/SideNav";
 
 export default function Offices() {
+  let history = useHistory();
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedOfficeObject, setUpdateOfficeObject] = useState({});
@@ -146,15 +149,24 @@ export default function Offices() {
         .then(clearForm())
         .catch((err) => console.log(err));
     }
+
+  }
+
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
   }
 
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>

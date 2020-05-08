@@ -128,3 +128,12 @@ h6 {
     background: #1F2833;
     color: #ffffff;
 }
+
+.navbar-text {
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+.navbar-text:hover {
+    text-decoration: underline;
+}

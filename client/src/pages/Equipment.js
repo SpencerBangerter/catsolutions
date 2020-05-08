@@ -13,8 +13,11 @@ import {
 } from "react-bootstrap";
 import PickDate from "../components/DatePicker/DatePicker";
 import SideNavBar from "../components/SideNav/SideNav";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 
 export default function Equipment() {
+  let history = useHistory();
   const [equipment, setEquipment] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
@@ -145,18 +148,25 @@ export default function Equipment() {
     }
   }
 
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
+  }
+
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>
       </Navbar>
-
       <div className="container-fluid shadow-sm">
         <div className="mainbodycontainer">
           <Row>

@@ -3,16 +3,27 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import "./page.css";
 import SideNavBar from "../components/SideNav/SideNav";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 
 export default function ContactPage() {
+  let history = useHistory();
+
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
+  }
+  
   return (
     <div>
       <SideNavBar />
-
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>

@@ -3,11 +3,16 @@ import SideNav, {NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import "./SideNav.css";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { useHistory, useLocation } from "react-router-dom";
+import AuthService from "../../Services/AuthService";
 
 export default function SideNavBar() {
 
     let location = useLocation();
     let history = useHistory();
+
+    function logout(){
+        AuthService.logout().then(history.push("/"));
+    }
 
     return (
         <div className="sidenavWrapper">
@@ -48,10 +53,18 @@ export default function SideNavBar() {
                     </NavItem>
                     <NavItem eventKey="/contact" active={location.pathname === "/contact" ? true : false}>
                         <NavIcon>
-                            <i className="fas fa-envelope-open-text" style={{ fontSize: '1.5em' }} />
+                            <i className="far fa-envelope" style={{ fontSize: '1.5em' }} />
                         </NavIcon>
                         <NavText>
                             Contact
+                        </NavText>
+                    </NavItem>
+                    <NavItem onClick={logout} className="mt-4">
+                        <NavIcon>
+                            <i className="fas fa-sign-out-alt" style={{ fontSize: '1.5em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Logout
                         </NavText>
                     </NavItem>
                 </SideNav.Nav>
