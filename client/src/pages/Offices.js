@@ -315,7 +315,10 @@ export default function Offices() {
                                       )
                                     }
                                   >
-                                    Save and Update
+                                    <span>
+                                      <i className="far fa-save mr-2"></i>
+                                      Save and Update
+                                    </span>
                                   </Button>
                                 ) : (
                                     ""
