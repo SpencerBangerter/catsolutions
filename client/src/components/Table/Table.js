@@ -25,8 +25,18 @@ export default function TableComponent(props) {
           {props.elements ? (
             props.elements.map((elm) => (
               <tr key={elm._id ? elm._id : rowKey++}>
-                {props.keys.map((key) => (
-                  <td key={key}>{elm[key]}</td>
+                {props.keys.map((key) =>       
+                (               
+                  <td key={key}>
+                    { (key.toLowerCase().includes("value")) ?
+                     new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2
+                    }).format(elm[key]) 
+                    : elm[key]}
+                  </td>
                 ))}
               </tr>
             ))

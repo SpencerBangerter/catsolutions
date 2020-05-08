@@ -8,7 +8,13 @@ export function Input(props) {
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor={props.name}>{props.label}</label>
-        <input className={"form-control"} {...props}/>  
+        <input className={(props.valid && !props.valid[props.name]) ? "form-control input-error" : "form-control"} {...props}/>
+        {props.valid && !props.valid[props.name] ? 
+          <span  style={{color: "red"}}>
+            {props.valid.message}
+          </span> :""
+        } 
+
       </div>
     </Col>
   );

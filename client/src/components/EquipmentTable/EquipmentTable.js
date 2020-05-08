@@ -21,10 +21,21 @@ export default function TableComponent(props) {
           <tr key={item._id}>
             <td>{item.type}</td>
             <td>{item.model}</td>
-            <td>{item.dateIssued}</td>
-            <td>{item.purchaseDate}</td>
+            <td>
+              {new Intl.DateTimeFormat('en-US').format(new Date(item.dateIssued))}
+            </td>
+            <td>
+              {new Intl.DateTimeFormat('en-US').format(new Date(item.purchaseDate))}
+            </td>
             <td>{item.condition}</td>
-            <td>{item.initialCost}</td>
+            <td> 
+              {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+              }).format(item.initialCost)}
+            </td>
             <td>{item.serialNum}</td>
           </tr>
         ))}

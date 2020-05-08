@@ -23,7 +23,7 @@ export default function Employees() {
   const [toggleArrowListState, setToggleArrowListState] = useState("");
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState({email: true, phone: true});
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -61,6 +61,7 @@ export default function Employees() {
       .then(loadEmployees)
       .then(switchEditState)
       .catch((err) => console.log(err));
+      setIsValid({email: true, phone: true});
   };
 
   //delete employee
@@ -122,6 +123,7 @@ export default function Employees() {
       setEditState({
         _id: "",
       });
+      setIsValid({email: true, phone: true});
     } else {
       setEditState({
         _id: id,
@@ -174,11 +176,19 @@ export default function Employees() {
     }
   }
 
-  function emailValidate(emailField) {
+  function emailValidator(emailField) {
     const expression = /\S+@\S+\.\S+/;
     const email = emailField.target.value
     if(email !== "") {
-      setIsValid(expression.test(String(email).toLowerCase()));
+      setIsValid({...isValid, email : expression.test(String(email).toLowerCase())});
+    }
+  }
+
+  function phoneNumberValidator(phoneField) {
+    var expression = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const phoneNumber = phoneField.target.value;
+    if(phoneNumber) {
+      setIsValid({...isValid, phone : phoneNumber.match(expression)});
     }
   }
 
@@ -321,6 +331,11 @@ export default function Employees() {
                                 disabled={
                                   employee._id === editState._id ? false : true
                                 }
+                                onBlur={phoneNumberValidator}
+                                valid={{
+                                  phone : employee._id === editState._id ? isValid.phone : true ,
+                                  message: "Please insert a valid phone number!"
+                                }}
                               />
                               <Input
                                 data-value={employee._id}
@@ -332,6 +347,11 @@ export default function Employees() {
                                 disabled={
                                   employee._id === editState._id ? false : true
                                 }
+                                onBlur={emailValidator}
+                                valid={{
+                                  email : employee._id === editState._id ? isValid.email : true ,
+                                  message: "Please insert a valid e-mail address!"
+                                }}
                               />
                             </Row>
                             <Row className="mt-5">
@@ -356,6 +376,11 @@ export default function Employees() {
                                   <Button
                                     className="ml-5"
                                     variant="outline-success"
+                                    disabled={
+                                      !(                               
+                                        isValid.phone && isValid.email
+                                      )
+                                    }
                                     onClick={() =>
                                       updateEmployee(
                                         employee._id,
@@ -507,15 +532,22 @@ export default function Employees() {
                           onChange={handleInputChange}
                           name="phone"
                           placeholder="Phone (required)"
+                          onBlur={phoneNumberValidator}
+                          valid={{
+                            phone : isValid.phone,
+                            message: "Please insert a valid phone number!"
+                          }}
                         />
                          <Input
                         onChange={handleInputChange}
                         name="email"
                         placeholder="Email (required)"
-                        onBlur={emailValidate}
-                                    
-                      />
-                      <span className={ isValid ?"d-none" : ""} style={{color: "red"}}>Please insert a valid e-mail address.</span>
+                        onBlur={emailValidator}
+                        valid={{
+                          email : isValid.email,
+                          message: "Please insert a valid e-mail address!"
+                        }}            
+                        />
                         <FormBtn
                           disabled={
                             !(
@@ -526,7 +558,7 @@ export default function Employees() {
                               formObject.zip &&
                               formObject.phone &&
                               formObject.email &&
-                              isValid
+                              isValid.phone && isValid.email
                             )
                           }
                           onClick={handleFormSubmit}
