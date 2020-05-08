@@ -190,8 +190,8 @@ export default function Offices() {
                           {toggleArrowState[office.name] === false ? (
                             <i className="fas fa-caret-up float-right mt-1"></i>
                           ) : (
-                            <i className="fas fa-caret-down float-right mt-1"></i>
-                          )}
+                              <i className="fas fa-caret-down float-right mt-1"></i>
+                            )}
                         </h6>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
@@ -201,8 +201,8 @@ export default function Offices() {
                               {office._id === editState._id ? (
                                 <i className="fas fa-lock-open ml-3 mb-3 "></i>
                               ) : (
-                                <i className="fas fa-lock ml-3 mb-3 "></i>
-                              )}
+                                  <i className="fas fa-lock ml-3 mb-3 "></i>
+                                )}
                               <Input
                                 data-value={office._id}
                                 label="Office Name"
@@ -295,11 +295,18 @@ export default function Offices() {
                                   onClick={() => switchEditState(office._id)}
                                 >
                                   {office._id === editState._id
-                                    ? "Cancel Update"
-                                    : "Update This Office"}
+                                    ? <span>
+                                      <i className="far fa-window-close mr-2"></i>
+                                    Cancel Update
+                                  </span>
+                                    : <span>
+                                      <i className="far fa-edit mr-2"></i>
+                                    Edit Office
+                                  </span>}
                                 </Button>
                                 {office._id === editState._id ? (
                                   <Button
+                                    className="ml-5"
                                     variant="outline-success"
                                     onClick={() =>
                                       updateOffice(
@@ -311,30 +318,30 @@ export default function Offices() {
                                     Save and Update
                                   </Button>
                                 ) : (
-                                  ""
-                                )}
-                                {office._id === editState._id ? (
+                                    ""
+                                  )}
+                                {office._id !== editState._id ? (
                                   ""
                                 ) : (
-                                  <OverlayTrigger
-                                    overlay={
-                                      <Tooltip id="tooltip-disabled">
-                                        This office will be permanently deleted!
+                                    <OverlayTrigger
+                                      overlay={
+                                        <Tooltip id="tooltip-disabled">
+                                          This office will be permanently deleted!
                                       </Tooltip>
-                                    }
-                                  >
-                                    <Button
-                                      variant="outline-danger"
-                                      className="float-right"
-                                      onClick={() => deleteOffice(office._id)}
+                                      }
                                     >
-                                      <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
+                                      <Button
+                                        variant="outline-danger"
+                                        className="float-right"
+                                        onClick={() => deleteOffice(office._id)}
+                                      >
+                                        <span>
+                                          <i className="far fa-trash-alt mr-2"></i>
                                         Delete Office
                                       </span>
-                                    </Button>
-                                  </OverlayTrigger>
-                                )}
+                                      </Button>
+                                    </OverlayTrigger>
+                                  )}
                               </div>
                             </Row>
                           </form>
@@ -360,11 +367,11 @@ export default function Offices() {
                                       <i className="fas fa-list mr-3"></i>
                                       Show Employee List
                                       {toggleArrowListState[office.name] ===
-                                      false ? (
-                                        <i className="fas fa-caret-up float-right mt-1"></i>
-                                      ) : (
-                                        <i className="fas fa-caret-down float-right mt-1"></i>
-                                      )}
+                                        false ? (
+                                          <i className="fas fa-caret-up float-right mt-1"></i>
+                                        ) : (
+                                          <i className="fas fa-caret-down float-right mt-1"></i>
+                                        )}
                                     </h6>
                                   </Accordion.Toggle>
                                   <Accordion.Collapse eventKey="0">
@@ -387,8 +394,8 @@ export default function Offices() {
                   </Accordion>
                 ))
               ) : (
-                <div></div>
-              )}
+                  <div></div>
+                )}
               <Accordion className="ml-2">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
