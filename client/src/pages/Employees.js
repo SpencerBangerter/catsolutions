@@ -115,6 +115,7 @@ export default function Employees() {
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
+    setFormObject({});
   }
 
   function switchEditState(id) {

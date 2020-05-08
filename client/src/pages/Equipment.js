@@ -100,6 +100,7 @@ export default function Equipment() {
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
+    setFormObject({});
   }
 
   function switchEditState(id) {
