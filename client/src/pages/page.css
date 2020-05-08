@@ -84,10 +84,6 @@ label {
     opacity: 1;
 }
 
-.btn-primary{
-    background: #1F2833 !important;
-}
-
 .btn-outline-info.focus, .btn-outline-info:focus {
     box-shadow: none;
 }
@@ -112,4 +108,37 @@ th {
 
 .react-date-picker__wrapper {
     border: none !important;
+}
+
+.alert {
+    padding: none !important;
+    margin: none !important;
+    border: none !important;
+}
+
+.alert-danger {
+    color: red !important;
+    background: none !important;
+}
+
+.alert-primary {
+    background: none;
+}
+
+h6 {
+    margin-bottom: .05em !important;
+}
+
+.contact-header {
+    background: #1F2833;
+    color: #ffffff;
+}
+
+.navbar-text {
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+.navbar-text:hover {
+    text-decoration: underline;
 }

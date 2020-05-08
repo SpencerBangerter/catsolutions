@@ -14,8 +14,11 @@ import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
 import "./page.css";
 import SideNavBar from "../components/SideNav/SideNav";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 
 export default function Employees() {
+  let history = useHistory();
   const [employees, setEmployees] = useState([]);
   const [equipment, setEquipment] = useState([]);
   const [officeNameList, setOfficeNameList] = useState([]);
@@ -116,6 +119,7 @@ export default function Employees() {
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
+    setFormObject({});
   }
 
   function switchEditState(id) {
@@ -192,13 +196,21 @@ export default function Employees() {
     }
   }
 
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
+  }
+
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>
