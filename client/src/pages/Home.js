@@ -6,8 +6,11 @@ import Navbar from "react-bootstrap/Navbar";
 import "./page.css";
 import { BarChart, PieChart } from "../components/Chart/Chart";
 import SideNavBar from "../components/SideNav/SideNav";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 
 export default function HomePage() {
+  let history = useHistory();
   const [officeReport, setOfficeReport] = useState([]);
   const [equipReport, setEquipReport] = useState([]);
   const [chartData, setChartData] = useState({
@@ -90,13 +93,21 @@ export default function HomePage() {
     setChartData({ ...chartData, percent: data });
   }
 
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
+  }
+
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>

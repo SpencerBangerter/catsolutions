@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 import API from "../utils/API";
 import {
   Card,
@@ -16,6 +18,7 @@ import "./page.css";
 import SideNavBar from "../components/SideNav/SideNav";
 
 export default function Offices() {
+  let history = useHistory();
   const [offices, setOffices] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [updatedOfficeObject, setUpdateOfficeObject] = useState({});
@@ -26,6 +29,7 @@ export default function Offices() {
     locked: true,
     _id: "",
   });
+  const [isValid, setIsValid] = useState({phone: true});
 
   useEffect(() => {
     loadOffices();
@@ -52,6 +56,7 @@ export default function Offices() {
       .then(loadOffices)
       .then(switchEditState)
       .catch((err) => console.log(err));
+      setIsValid({phone: true});
   };
 
   //delete office
@@ -81,6 +86,7 @@ export default function Offices() {
       setEditState({
         _id: "",
       });
+      setIsValid({phone: true});
     } else {
       setEditState({
         _id: id,
@@ -101,6 +107,15 @@ export default function Offices() {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: true });
     } else {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: false });
+    }
+  }
+
+  
+  function phoneNumberValidator(phoneField) {
+    var expression = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const phoneNumber = phoneField.target.value;
+    if(phoneNumber) {
+      setIsValid({...isValid, phone : phoneNumber.match(expression)});
     }
   }
 
@@ -146,15 +161,24 @@ export default function Offices() {
         .then(clearForm())
         .catch((err) => console.log(err));
     }
+
+  }
+
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
   }
 
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>
@@ -190,8 +214,8 @@ export default function Offices() {
                           {toggleArrowState[office.name] === false ? (
                             <i className="fas fa-caret-up float-right mt-1"></i>
                           ) : (
-                            <i className="fas fa-caret-down float-right mt-1"></i>
-                          )}
+                              <i className="fas fa-caret-down float-right mt-1"></i>
+                            )}
                         </h6>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
@@ -201,8 +225,8 @@ export default function Offices() {
                               {office._id === editState._id ? (
                                 <i className="fas fa-lock-open ml-3 mb-3 "></i>
                               ) : (
-                                <i className="fas fa-lock ml-3 mb-3 "></i>
-                              )}
+                                  <i className="fas fa-lock ml-3 mb-3 "></i>
+                                )}
                               <Input
                                 data-value={office._id}
                                 label="Office Name"
@@ -286,6 +310,11 @@ export default function Offices() {
                                 disabled={
                                   office._id === editState._id ? false : true
                                 }
+                                onBlur={phoneNumberValidator}
+                                valid={{
+                                  managementContactPhone : office._id === editState._id ? isValid.phone : true ,
+                                  message: "Please insert a valid phone number!"
+                                }}
                               />
                             </Row>
                             <Row className="mt-5">
@@ -295,12 +324,20 @@ export default function Offices() {
                                   onClick={() => switchEditState(office._id)}
                                 >
                                   {office._id === editState._id
-                                    ? "Cancel Update"
-                                    : "Update This Office"}
+                                    ? <span>
+                                      <i className="far fa-window-close mr-2"></i>
+                                    Cancel Update
+                                  </span>
+                                    : <span>
+                                      <i className="far fa-edit mr-2"></i>
+                                    Edit Office
+                                  </span>}
                                 </Button>
                                 {office._id === editState._id ? (
                                   <Button
+                                    className="ml-5"
                                     variant="outline-success"
+                                    disabled= {!isValid.phone}
                                     onClick={() =>
                                       updateOffice(
                                         office._id,
@@ -308,33 +345,36 @@ export default function Offices() {
                                       )
                                     }
                                   >
-                                    Save and Update
+                                    <span>
+                                      <i className="far fa-save mr-2"></i>
+                                      Save and Update
+                                    </span>
                                   </Button>
                                 ) : (
-                                  ""
-                                )}
-                                {office._id === editState._id ? (
+                                    ""
+                                  )}
+                                {office._id !== editState._id ? (
                                   ""
                                 ) : (
-                                  <OverlayTrigger
-                                    overlay={
-                                      <Tooltip id="tooltip-disabled">
-                                        This office will be permanently deleted!
+                                    <OverlayTrigger
+                                      overlay={
+                                        <Tooltip id="tooltip-disabled">
+                                          This office will be permanently deleted!
                                       </Tooltip>
-                                    }
-                                  >
-                                    <Button
-                                      variant="outline-danger"
-                                      className="float-right"
-                                      onClick={() => deleteOffice(office._id)}
+                                      }
                                     >
-                                      <span>
-                                        <i className="far fa-trash-alt mr-2"></i>
+                                      <Button
+                                        variant="outline-danger"
+                                        className="float-right"
+                                        onClick={() => deleteOffice(office._id)}
+                                      >
+                                        <span>
+                                          <i className="far fa-trash-alt mr-2"></i>
                                         Delete Office
                                       </span>
-                                    </Button>
-                                  </OverlayTrigger>
-                                )}
+                                      </Button>
+                                    </OverlayTrigger>
+                                  )}
                               </div>
                             </Row>
                           </form>
@@ -360,11 +400,11 @@ export default function Offices() {
                                       <i className="fas fa-list mr-3"></i>
                                       Show Employee List
                                       {toggleArrowListState[office.name] ===
-                                      false ? (
-                                        <i className="fas fa-caret-up float-right mt-1"></i>
-                                      ) : (
-                                        <i className="fas fa-caret-down float-right mt-1"></i>
-                                      )}
+                                        false ? (
+                                          <i className="fas fa-caret-up float-right mt-1"></i>
+                                        ) : (
+                                          <i className="fas fa-caret-down float-right mt-1"></i>
+                                        )}
                                     </h6>
                                   </Accordion.Toggle>
                                   <Accordion.Collapse eventKey="0">
@@ -387,8 +427,8 @@ export default function Offices() {
                   </Accordion>
                 ))
               ) : (
-                <div></div>
-              )}
+                  <div></div>
+                )}
               <Accordion className="ml-2">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -443,6 +483,11 @@ export default function Offices() {
                           onChange={handleInputChange}
                           name="managementContactPhone"
                           placeholder="Managment Contact Phone (required)"
+                          onBlur={phoneNumberValidator}
+                          valid={{
+                            managementContactPhone : isValid.phone,
+                            message: "Please insert a valid phone number!"
+                          }}
                         />
 
                         <FormBtn
@@ -454,7 +499,9 @@ export default function Offices() {
                               formObject.state &&
                               formObject.zip &&
                               formObject.managementContact &&
-                              formObject.managementContactPhone
+                              formObject.managementContactPhone &&
+                              isValid.phone
+
                             )
                           }
                           onClick={handleFormSubmit}

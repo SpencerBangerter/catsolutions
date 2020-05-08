@@ -1,4 +1,5 @@
 import React from 'react'
+import "../pages/page.css";
 
 
 const getStyle = (props)=>{

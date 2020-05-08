@@ -14,8 +14,11 @@ import { Input, FormBtn, SelectOffice, SelectState } from "../components/Form";
 import EquipmentTable from "../components/EquipmentTable/EquipmentTable";
 import "./page.css";
 import SideNavBar from "../components/SideNav/SideNav";
+import {useHistory} from "react-router-dom";
+import AuthService from '../Services/AuthService';
 
 export default function Employees() {
+  let history = useHistory();
   const [employees, setEmployees] = useState([]);
   const [equipment, setEquipment] = useState([]);
   const [officeNameList, setOfficeNameList] = useState([]);
@@ -23,6 +26,7 @@ export default function Employees() {
   const [toggleArrowListState, setToggleArrowListState] = useState("");
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
+  const [isValid, setIsValid] = useState({email: true, phone: true});
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -60,6 +64,7 @@ export default function Employees() {
       .then(loadEmployees)
       .then(switchEditState)
       .catch((err) => console.log(err));
+      setIsValid({email: true, phone: true});
   };
 
   //delete employee
@@ -114,6 +119,7 @@ export default function Employees() {
 
   function clearForm() {
     document.getElementById("create-course-form").reset();
+    setFormObject({});
   }
 
   function switchEditState(id) {
@@ -121,6 +127,7 @@ export default function Employees() {
       setEditState({
         _id: "",
       });
+      setIsValid({email: true, phone: true});
     } else {
       setEditState({
         _id: id,
@@ -173,13 +180,37 @@ export default function Employees() {
     }
   }
 
+  function emailValidator(emailField) {
+    const expression = /\S+@\S+\.\S+/;
+    const email = emailField.target.value
+    if(email !== "") {
+      setIsValid({...isValid, email : expression.test(String(email).toLowerCase())});
+    }
+  }
+
+  function phoneNumberValidator(phoneField) {
+    var expression = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const phoneNumber = phoneField.target.value;
+    if(phoneNumber) {
+      setIsValid({...isValid, phone : phoneNumber.match(expression)});
+    }
+  }
+
+  function handleLogout(){
+    AuthService.logout().then(history.push("/"));
+  }
+
   return (
     <div>
       <SideNavBar />
       <Navbar className="mr-5 pt-3 shadow">
-        <Navbar.Brand className="ml-auto">
+        <Navbar.Text onClick={handleLogout} className="ml-auto">
+        <i className="fas fa-sign-out-alt mr-1" style={{ color: "#ffffff" }} />
+          logout
+        </Navbar.Text>
+        <Navbar.Brand>
           <i
-            className="fas fa-cat mr-5"
+            className="fas fa-cat mr-5 ml-5"
             style={{ color: "#ffffff", fontSize: "1.6em" }}
           ></i>
         </Navbar.Brand>
@@ -312,6 +343,11 @@ export default function Employees() {
                                 disabled={
                                   employee._id === editState._id ? false : true
                                 }
+                                onBlur={phoneNumberValidator}
+                                valid={{
+                                  phone : employee._id === editState._id ? isValid.phone : true ,
+                                  message: "Please insert a valid phone number!"
+                                }}
                               />
                               <Input
                                 data-value={employee._id}
@@ -323,6 +359,11 @@ export default function Employees() {
                                 disabled={
                                   employee._id === editState._id ? false : true
                                 }
+                                onBlur={emailValidator}
+                                valid={{
+                                  email : employee._id === editState._id ? isValid.email : true ,
+                                  message: "Please insert a valid e-mail address!"
+                                }}
                               />
                             </Row>
                             <Row className="mt-5">
@@ -347,6 +388,11 @@ export default function Employees() {
                                   <Button
                                     className="ml-5"
                                     variant="outline-success"
+                                    disabled={
+                                      !(                               
+                                        isValid.phone && isValid.email
+                                      )
+                                    }
                                     onClick={() =>
                                       updateEmployee(
                                         employee._id,
@@ -498,14 +544,22 @@ export default function Employees() {
                           onChange={handleInputChange}
                           name="phone"
                           placeholder="Phone (required)"
+                          onBlur={phoneNumberValidator}
+                          valid={{
+                            phone : isValid.phone,
+                            message: "Please insert a valid phone number!"
+                          }}
                         />
-                        <Input
-                          onChange={handleInputChange}
-                          name="email"
-                          placeholder="Email (required)"
+                         <Input
+                        onChange={handleInputChange}
+                        name="email"
+                        placeholder="Email (required)"
+                        onBlur={emailValidator}
+                        valid={{
+                          email : isValid.email,
+                          message: "Please insert a valid e-mail address!"
+                        }}            
                         />
-
-                        {/*NEEDS TO ADD THE Employee FIELD*/}
                         <FormBtn
                           disabled={
                             !(
@@ -515,7 +569,8 @@ export default function Employees() {
                               formObject.state &&
                               formObject.zip &&
                               formObject.phone &&
-                              formObject.email
+                              formObject.email &&
+                              isValid.phone && isValid.email
                             )
                           }
                           onClick={handleFormSubmit}

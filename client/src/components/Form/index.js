@@ -8,7 +8,13 @@ export function Input(props) {
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor={props.name}>{props.label}</label>
-        <input className={`form-control`} {...props} />
+        <input className={(props.valid && !props.valid[props.name]) ? "form-control input-error" : "form-control"} {...props}/>
+        {props.valid && !props.valid[props.name] ? 
+          <span  style={{color: "red"}}>
+            {props.valid.message}
+          </span> :""
+        } 
+
       </div>
     </Col>
   );
@@ -38,12 +44,13 @@ export function FormBtn(props) {
 }
 
 export function SelectOffice(props) {
+  var fakeId = require('mongoose').Types.ObjectId();
   return (
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor="selectOffice">{props.label}</label>
         <select className="form-control" {...props} id="selectOffice">
-          <option value={0}>Remote</option>
+          <option value={fakeId}>Remote</option>
           {props.options.length ? (
             props.options.map((opt) => (
               <option key={opt._id} value={opt._id}>
@@ -60,12 +67,13 @@ export function SelectOffice(props) {
 }
 
 export function SelectEmployee(props) {
+  var fakeId = require('mongoose').Types.ObjectId();
   return (
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor="selectEmployee">{props.label}</label>
         <select className="form-control" {...props} id="selectEmployee">
-          <option value={0}>None</option>
+          <option value={fakeId}>None</option>
           {props.options.length ? (
             props.options.map((opt) => (
               <option key={opt._id} value={opt._id}>
