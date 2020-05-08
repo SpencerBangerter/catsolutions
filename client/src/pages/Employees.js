@@ -23,6 +23,7 @@ export default function Employees() {
   const [toggleArrowListState, setToggleArrowListState] = useState("");
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
+  const [isValid, setIsValid] = useState(true);
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -170,6 +171,14 @@ export default function Employees() {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: true });
     } else {
       setToggleArrowListState({ ...toggleArrowListState, [officeName]: false });
+    }
+  }
+
+  function emailValidate(emailField) {
+    const expression = /\S+@\S+\.\S+/;
+    const email = emailField.target.value
+    if(email !== "") {
+      setIsValid(expression.test(String(email).toLowerCase()));
     }
   }
 
@@ -499,13 +508,14 @@ export default function Employees() {
                           name="phone"
                           placeholder="Phone (required)"
                         />
-                        <Input
-                          onChange={handleInputChange}
-                          name="email"
-                          placeholder="Email (required)"
-                        />
-
-                        {/*NEEDS TO ADD THE Employee FIELD*/}
+                         <Input
+                        onChange={handleInputChange}
+                        name="email"
+                        placeholder="Email (required)"
+                        onBlur={emailValidate}
+                                    
+                      />
+                      <span className={ isValid ?"d-none" : ""} style={{color: "red"}}>Please insert a valid e-mail address.</span>
                         <FormBtn
                           disabled={
                             !(
@@ -515,7 +525,8 @@ export default function Employees() {
                               formObject.state &&
                               formObject.zip &&
                               formObject.phone &&
-                              formObject.email
+                              formObject.email &&
+                              isValid
                             )
                           }
                           onClick={handleFormSubmit}

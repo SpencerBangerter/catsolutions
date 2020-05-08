@@ -8,7 +8,7 @@ export function Input(props) {
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor={props.name}>{props.label}</label>
-        <input className={`form-control`} {...props} />
+        <input className={"form-control"} {...props}/>  
       </div>
     </Col>
   );
