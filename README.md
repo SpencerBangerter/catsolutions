@@ -8,7 +8,13 @@ CAT Solutions is a MERN stack application built to solve any businesses needs to
 
  ![Register](client/public/assets/register.PNG)
 
- ![admin](https://github.com/tvolpatto/salt./blob/master/public/screenshots/screenshot2.png)
+ ![Dashboard](client/public/assets/dashboard.PNG)
+
+ ![Menu](client/public/assets/menu.PNG)
+
+ ![Form](client/public/assets/form.PNG)
+
+ ![Contact](client/public/assets/contact.PNG)
 
  ## Running 
 
