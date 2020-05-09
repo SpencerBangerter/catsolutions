@@ -1,6 +1,6 @@
 const db = require("../models");
 
-function getRemoteOfficeEmployees(employees, equipment) {
+function getRemoteOfficeEmployees(employees, equipment, offices) {
     let remoteOffice = {
         _id: "0",
         name: "Remote",
@@ -9,7 +9,7 @@ function getRemoteOfficeEmployees(employees, equipment) {
     }
 
     employees.forEach(emp => {
-        const empOfficeId = emp.office_id ? true : false;
+        const empOfficeId = offices.includes(emp.office_id) ? false : emp.office_id;                                                
         if (!empOfficeId) {
             remoteOffice.employees++;
         }
@@ -18,7 +18,8 @@ function getRemoteOfficeEmployees(employees, equipment) {
     equipment.forEach(equip => {
         let equipOfficeId = true;
         if (equip.employee_id) {
-            equipOfficeId = equip.employee_id.office_id ? true : false;
+            equipOfficeId =  offices.includes(equip.employee_id.office_id.toString()) ? 
+                true : false;
         }
         if (!equipOfficeId) {
             const initialCost = equip.initialCost ? equip.initialCost : 0;
@@ -40,6 +41,7 @@ module.exports = {
             .sort({ date: -1 })
             .then(dbEquip => {
                 const officeResult = [];
+                const offices=[];
                 db.Employee
                     .find({})
                     .select({ _id: 1, office_id: 1 })
@@ -60,6 +62,7 @@ module.exports = {
                                         const empOfficeId = emp.office_id ? emp.office_id.toString() : false;
                                         if (office._id.toString() === empOfficeId) {
                                             office.employees++;
+                                            offices.push(office._id.toString());
                                         }
                                     });
 
@@ -73,7 +76,7 @@ module.exports = {
                                     });
                                     officeResult.push(office);
                                 }
-                                officeResult.push(getRemoteOfficeEmployees(dbEmployee, dbEquip));
+                                officeResult.push(getRemoteOfficeEmployees(dbEmployee, dbEquip,offices));
                                 res.json(officeResult);
                             });
                     });
@@ -84,6 +87,7 @@ module.exports = {
         db.Equipment
             .find(req.query)
             .select({ _id: 1, initialCost: 1, employee_id: 1 })
+            .populate("employee_id")
             .sort({ date: -1 })
             .then(dbEquip => {
                 let response = {
@@ -94,13 +98,15 @@ module.exports = {
                 }
                 dbEquip.forEach(equip => {
                     //TODO: check this later
-                    if (equip.employee_id !== undefined) {
-                        response.assignedCount++;
-                        response.assignedValue += parseFloat(equip.initialCost);
-                    } else {
+                    if (equip.employee_id === null) {
                         response.notAssignedCount++;
                         const initialCost = equip.initialCost ? equip.initialCost : 0;
                         response.notAssignedValue += parseFloat(initialCost);
+                        
+                    } else {
+                        response.assignedCount++;
+                        const initialCost = equip.initialCost ? equip.initialCost : 0;
+                        response.assignedValue += parseFloat(initialCost); 
                     }
                 });
                 res.json(response);
