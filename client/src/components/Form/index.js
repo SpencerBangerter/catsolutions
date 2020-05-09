@@ -44,13 +44,11 @@ export function FormBtn(props) {
 }
 
 export function SelectOffice(props) {
-  var fakeId = require('mongoose').Types.ObjectId();
   return (
     <Col md={props.width}>
       <div className="form-group">
         <label htmlFor="selectOffice">{props.label}</label>
         <select className="form-control" {...props} id="selectOffice">
-          <option value={fakeId}>Remote</option>
           {props.options.length ? (
             props.options.map((opt) => (
               <option key={opt._id} value={opt._id}>
@@ -97,7 +95,7 @@ export function SelectState(props) {
         <select className="form-control" {...props} id="selectState">
           <option disabled value="0" >Select State</option>
           <option value="AL">Alabama</option>
-\          <option value="AK">Alaska</option>
+          <option value="AK">Alaska</option>
           <option value="AS">American Samoa</option>
           <option value="AZ">Arizona</option>
           <option value="AR">Arkansas</option>
