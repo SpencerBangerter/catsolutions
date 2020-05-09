@@ -315,7 +315,10 @@ export default function Equipment() {
                               <div className="col">
                                 <Button
                                   variant="outline-info"
-                                  onClick={() => switchEditState(equipment._id)}
+                                  onClick={() => {
+                                    switchEditState(equipment._id)
+                                    setUpdateEquipmentObject({});
+                                  }}
                                 >
                                   {equipment._id === editState._id ? (
                                     <span>
