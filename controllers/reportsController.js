@@ -98,7 +98,7 @@ module.exports = {
                 }
                 dbEquip.forEach(equip => {
                     //TODO: check this later
-                    if (equip.employee_id === null) {
+                    if (!equip.employee_id  || equip.employee_id === null) {
                         response.notAssignedCount++;
                         const initialCost = equip.initialCost ? equip.initialCost : 0;
                         response.notAssignedValue += parseFloat(initialCost);
