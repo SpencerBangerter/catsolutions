@@ -1,29 +1,40 @@
-# Create React Express App
+# CAT-Solutions.
 
-## About This Boilerplate
+## A central system to track physical business assets
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+CAT Solutions is a MERN stack application built to solve any businesses needs to track their physical assets for each office location and each piece of equipment assigned to each employee of the company. With the ability to add custom reporting for accounting, administrative, and general purposes our system is guaranteed to ease your burden of tracking spreadsheets manually. 
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+ ![Login](client/public/assets/login.PNG)
 
-## Starting the app locally
+ ![Register](client/public/assets/register.PNG)
 
-Start by installing front and backend dependencies. While in this directory, run the following command:
+ ![admin](https://github.com/tvolpatto/salt./blob/master/public/screenshots/screenshot2.png)
 
-```
-npm install
-```
+ ## Running 
 
-This should install node modules within the server and the client folder.
+ The application is deployed on [Heroku](https://www.heroku.com/home).
 
-After both installations complete, run the following command in your terminal:
+ [Click here(https://cat-solutions.herokuapp.com/) to access it.
 
-```
-npm start
-```
+ ## Running locally
 
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+ 1. Install the dependencies: ```npm install```;
+ 2. Run: ```npm start```;
+ 3. The default  port is *3000*, so to access you must go to **http://localhost:3000**
 
-## Deployment (Heroku)
 
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
+## Technology Used
+
+* Front End: react, react-bootstrap, chart.js, CSS, axios, react-date-picker, react-router
+* Database: MongoDB, Mongoose
+* Back End: Express, passport.js, bcrypt.js, browser-router, cookie-parser, JWT
+* DevOps: GitHub, Heroku
+
+## Developers 
+
+   * [Matthew Grimes](https://github.com/Matthewlgrimes94)
+   * [Spencer Bangerter](https://github.com/SpencerBangerter)
+   * [Thyago Volpatto](https://github.com/tvolpatto)
+   * [Weston Meier](https://github.com/westonbmeier)
+
+
