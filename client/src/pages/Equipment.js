@@ -22,6 +22,7 @@ export default function Equipment() {
   const [formObject, setFormObject] = useState({});
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
   const [employeeNameList, setEmployeeeNameList] = useState([]);
+  const [toggleArrowState, setToggleArrowState] = useState("");
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -32,6 +33,13 @@ export default function Equipment() {
     loadEmployeeNames();
   }, []);
 
+  function toggleArrow(equipmentName) {
+    if (toggleArrowState[equipmentName] === false) {
+      setToggleArrowState({ ...toggleArrowState, [equipmentName]: true });
+    } else {
+      setToggleArrowState({ ...toggleArrowState, [equipmentName]: false });
+    }
+  }
   // function setPurchaseDate() {}
 
   // function setIssuedDate() {}
@@ -178,7 +186,13 @@ export default function Equipment() {
                 equipment.map((equipment) => (
                   <Accordion key={equipment._id} className="ml-2 mb-1">
                     <Card>
-                      <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <Accordion.Toggle 
+                      as={Card.Header} 
+                      eventKey="0"
+                      onClick={() => {
+                        toggleArrow(equipment._id);
+                      }}
+                      >
                         <h6
                           style={{
                             color: "#1F2833",
@@ -188,7 +202,11 @@ export default function Equipment() {
                         >
                           <i className="fas fa-toolbox mr-3"></i>
                           {equipment.type + " " + equipment.model}
-                          <i className="fas fa-caret-down float-right mt-1"></i>
+                          {toggleArrowState[equipment._id] === false ? (
+                            <i className="fas fa-caret-up float-right mt-1"></i>
+                          ) : (
+                            <i className="fas fa-caret-down float-right mt-1"></i>
+                          )}
                         </h6>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
