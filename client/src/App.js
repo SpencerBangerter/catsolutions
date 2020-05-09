@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import "./App.css";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import PrivateRoute from './hocs/PrivateRoute';
+// import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
 import Admin  from './pages/Admin';
 
