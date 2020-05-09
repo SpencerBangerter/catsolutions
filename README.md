@@ -20,7 +20,7 @@ CAT Solutions is a MERN stack application built to solve any businesses needs to
 
  The application is deployed on [Heroku](https://www.heroku.com/home).
 
- [Click here(https://cat-solutions.herokuapp.com/) to access it.
+ [Click here](https://cat-solutions.herokuapp.com/) to access it.
 
  ## Running locally
 
