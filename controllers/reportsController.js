@@ -17,7 +17,7 @@ function getRemoteOfficeEmployees(employees, equipment, offices) {
 
     equipment.forEach(equip => {
         let equipOfficeId = true;
-        if (equip.employee_id) {
+        if (equip.employee_id && equip.employee_id.office_id) {
             equipOfficeId =  offices.includes(equip.employee_id.office_id.toString()) ? 
                 true : false;
         }
