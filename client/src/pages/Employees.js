@@ -370,7 +370,10 @@ export default function Employees() {
                               <div className="col">
                                 <Button
                                   variant="outline-info"
-                                  onClick={() => switchEditState(employee._id)}
+                                  onClick={() => {
+                                    switchEditState(employee._id)
+                                    setUpdateEmployeeObject({});
+                                  }}
                                 >
                                   {employee._id === editState._id ? (
                                     <span>
