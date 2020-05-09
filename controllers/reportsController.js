@@ -87,6 +87,7 @@ module.exports = {
         db.Equipment
             .find(req.query)
             .select({ _id: 1, initialCost: 1, employee_id: 1 })
+            .populate("employee_id")
             .sort({ date: -1 })
             .then(dbEquip => {
                 let response = {
@@ -97,13 +98,15 @@ module.exports = {
                 }
                 dbEquip.forEach(equip => {
                     //TODO: check this later
-                    if (equip.employee_id !== undefined) {
-                        response.assignedCount++;
-                        response.assignedValue += parseFloat(equip.initialCost);
-                    } else {
+                    if (equip.employee_id === null) {
                         response.notAssignedCount++;
                         const initialCost = equip.initialCost ? equip.initialCost : 0;
                         response.notAssignedValue += parseFloat(initialCost);
+                        
+                    } else {
+                        response.assignedCount++;
+                        const initialCost = equip.initialCost ? equip.initialCost : 0;
+                        response.assignedValue += parseFloat(initialCost); 
                     }
                 });
                 res.json(response);
