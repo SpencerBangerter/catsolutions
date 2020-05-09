@@ -321,7 +321,10 @@ export default function Offices() {
                               <div className="col">
                                 <Button
                                   variant="outline-info"
-                                  onClick={() => switchEditState(office._id)}
+                                  onClick={() => {
+                                    switchEditState(office._id)
+                                    setUpdateOfficeObject({});
+                                  }}
                                 >
                                   {office._id === editState._id
                                     ? <span>
