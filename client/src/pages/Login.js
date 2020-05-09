@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import AuthService from '../Services/AuthService';
-import Message from '../components/Message';
+import {MessageLogin} from '../components/Message';
 import { Container, Row, Col, Button, Navbar } from "react-bootstrap";
 import { AuthContext } from '../Context/AuthContext';
 
@@ -23,6 +23,7 @@ const Login = props => {
                 props.history.push('/catsolutions');
             }
             else
+                console.log(message);
                 setMessage(message);
         });
     }
@@ -81,7 +82,7 @@ const Login = props => {
                                     <i className="far fa-arrow-alt-circle-right mr-2"></i>
                                     Create Account
                                     </Button>
-                                    {message ? <Message message={message} /> : null}
+                                    {message ? <MessageLogin message={message} /> : null}
                             </div>
                         </form>
                     </Col>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AuthService from '../Services/AuthService';
-import Message from '../components/Message';
+import {MessageRegister} from '../components/Message';
 import { Container, Row, Col, Button, Navbar } from "react-bootstrap";
 import "./page.css";
 
@@ -91,7 +91,7 @@ const Register = props => {
                                     <i className="far fa-arrow-alt-circle-left mr-2"></i>
                                     Go to Login
                                     </Button>
-                                {message ? <Message message={message} /> : null}
+                                {message ? <MessageRegister message={message} /> : null}
                             </div>
                         </form>
                     </Col>
