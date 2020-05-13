@@ -63,7 +63,7 @@ export default function HomePage() {
 
     officeReport.forEach((office) => {
       graph.labels.push(office.name);
-      graph.data.push(office.equipmentValue / office.employees);
+      graph.data.push((office.equipmentValue / office.employees).toFixed(2));
     });
 
     setChartData({ ...chartData, average: graph });
@@ -77,8 +77,7 @@ export default function HomePage() {
 
       if (equipReport[0].name === "Assigned") {
         assignedPercent = Math.round(
-          (equipReport[0].count * 100) / totalCount,
-          2
+          (equipReport[0].count * 100) / totalCount
         );
         notAssignedPercent = 100 - assignedPercent;
       } else {
