@@ -1,35 +1,5 @@
 const db = require("../models");
 
-// function getRemoteOfficeEmployees(employees, equipment, offices) {
-//     let remoteOffice = {
-//         _id: "0",
-//         name: "Remote",
-//         equipmentValue: 0,
-//         employees: 0
-//     }
-
-//     employees.forEach(emp => {
-//         const empOfficeId = offices.includes(emp.office_id) ? false : emp.office_id;                                                
-//         if (!empOfficeId) {
-//             remoteOffice.employees++;
-//         }
-//     });
-
-//     equipment.forEach(equip => {
-//         let equipOfficeId = true;
-//         if (equip.employee_id) {
-//             equipOfficeId =  offices.includes(equip.employee_id.office_id.toString()) ? 
-//                 true : false;
-//         }
-//         if (!equipOfficeId) {
-//             const initialCost = equip.initialCost ? equip.initialCost : 0;
-//             remoteOffice.equipmentValue += parseFloat(equip.initialCost);
-//         }
-//     });
-
-//     return remoteOffice;
-// }
-
 // Defining methods for the reportsController
 module.exports = {
     countOffice: function (req, res) {
@@ -76,7 +46,6 @@ module.exports = {
                                     });
                                     officeResult.push(office);
                                 }
-                                // officeResult.push(getRemoteOfficeEmployees(dbEmployee, dbEquip,offices));
                                 res.json(officeResult);
                             });
                     });
