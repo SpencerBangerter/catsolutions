@@ -1,5 +1,5 @@
-import React from 'react'
-import SideNav, {NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import React, { useEffect, useState } from 'react'
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import "./SideNav.css";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { useHistory, useLocation } from "react-router-dom";
@@ -9,19 +9,36 @@ export default function SideNavBar() {
 
     let location = useLocation();
     let history = useHistory();
+    const [authenticatedState, setAuthenticatedState] = useState("user");
 
-    function logout(){
+    function logout() {
         AuthService.logout().then(history.push("/"));
     }
+
+    function checkAuthentication() {
+        AuthService.isAuthenticated().then(res => setAuthenticatedState(res.user.role));
+    }
+
+    useEffect(() => {
+        checkAuthentication();
+    }, [])
 
     return (
         <div className="sidenavWrapper">
             <SideNav onSelect={(selected) => { history.push(selected) }} className="shadow">
                 <SideNav.Toggle />
                 <SideNav.Nav>
+                    {authenticatedState === "admin" ? <NavItem eventKey="/admin" active={location.pathname === "/admin" ? true : false}>
+                        <NavIcon>
+                            <i className="fas fa-user-shield" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Dashboard
+                    </NavText>
+                    </NavItem> : null}
                     <NavItem eventKey="/catsolutions" active={location.pathname === "/catsolutions" ? true : false}>
                         <NavIcon>
-                            <i className="fa fa-fw fa-chart-bar" style={{ fontSize: '1.75em'}} />
+                            <i className="fa fa-fw fa-chart-bar" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
                         <NavText>
                             Dashboard
