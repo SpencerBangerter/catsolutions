@@ -23,6 +23,7 @@ export default function Equipment() {
   const [updatedEquipmentObject, setUpdateEquipmentObject] = useState({});
   const [employeeNameList, setEmployeeeNameList] = useState([]);
   const [toggleArrowState, setToggleArrowState] = useState("");
+  const [authenticatedState, setAuthenticatedState] = useState("user");
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -31,7 +32,12 @@ export default function Equipment() {
   useEffect(() => {
     loadEquipment();
     loadEmployeeNames();
+    checkAuthentication();
   }, []);
+
+  function checkAuthentication() {
+    AuthService.isAuthenticated().then(res => setAuthenticatedState(res.user.role));
+  }
 
   function toggleArrow(equipmentName) {
     if (toggleArrowState[equipmentName] === false) {
@@ -330,6 +336,7 @@ export default function Equipment() {
                               />
                             </Row>
                             <Row className="mt-5">
+                              {authenticatedState === "admin" ?
                               <div className="col">
                                 <Button
                                   variant="outline-info"
@@ -395,6 +402,7 @@ export default function Equipment() {
                                   </OverlayTrigger>
                                 )}
                               </div>
+                              : <div></div>}
                             </Row>
                           </form>
                         </Card.Body>
@@ -405,7 +413,7 @@ export default function Equipment() {
               ) : (
                 <div></div>
               )}
-              <Accordion className="ml-2">
+              {authenticatedState === "admin" ? <Accordion className="ml-2">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
                     <h6
@@ -494,7 +502,7 @@ export default function Equipment() {
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-              </Accordion>
+              </Accordion> : <div></div>}
             </Col>
           </Row>
         </div>

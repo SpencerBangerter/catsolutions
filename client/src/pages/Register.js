@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import AuthService from '../Services/AuthService';
 import {MessageRegister} from '../components/Message';
 import { Container, Row, Col, Button, Navbar } from "react-bootstrap";
@@ -28,6 +28,9 @@ const Register = props => {
         AuthService.register(user).then(data => {
             const { message } = data;
             setMessage(message);
+            if (message.msgBody === "Account successfully created") {
+                window.location.replace("/");
+            }
             resetForm();
         });
     }

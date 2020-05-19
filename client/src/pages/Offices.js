@@ -30,11 +30,18 @@ export default function Offices() {
     _id: "",
   });
   const [isValid, setIsValid] = useState({phone: true});
+  const [authenticatedState, setAuthenticatedState] = useState("user");
 
   useEffect(() => {
     loadOffices();
     loadEmployees();
+    checkAuthentication();
   }, []);
+
+  function checkAuthentication() {
+    AuthService.isAuthenticated().then(res => setAuthenticatedState(res.user.role));
+  }
+
 
   //Get office
   function loadOffices() {
@@ -318,6 +325,7 @@ export default function Offices() {
                               />
                             </Row>
                             <Row className="mt-5">
+                              {authenticatedState === "admin" ? 
                               <div className="col">
                                 <Button
                                   variant="outline-info"
@@ -379,6 +387,7 @@ export default function Offices() {
                                     </OverlayTrigger>
                                   )}
                               </div>
+                              : <div></div>}
                             </Row>
                           </form>
                           <br />
@@ -432,7 +441,7 @@ export default function Offices() {
               ) : (
                   <div></div>
                 )}
-              <Accordion className="ml-2">
+              {authenticatedState === "admin" ? <Accordion className="ml-2">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
                     <h6
@@ -515,7 +524,7 @@ export default function Offices() {
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-              </Accordion>
+              </Accordion> : <div></div>}
             </Col>
           </Row>
         </div>
