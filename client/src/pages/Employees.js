@@ -27,6 +27,7 @@ export default function Employees() {
   const [formObject, setFormObject] = useState({});
   const [updatedEmployeeObject, setUpdateEmployeeObject] = useState({});
   const [isValid, setIsValid] = useState({email: true, phone: true});
+  const [authenticatedState, setAuthenticatedState] = useState("user");
 
   const [editState, setEditState] = useState({
     locked: true,
@@ -36,7 +37,12 @@ export default function Employees() {
     loadEmployees();
     getOfficeNames();
     loadEquipment();
+    checkAuthentication();
   }, []);
+
+  function checkAuthentication() {
+    AuthService.isAuthenticated().then(res => setAuthenticatedState(res.user.role));
+  }
 
   //Get equipment
   function loadEquipment() {
@@ -367,6 +373,7 @@ export default function Employees() {
                               />
                             </Row>
                             <Row className="mt-5">
+                              {authenticatedState === "admin" ? 
                               <div className="col">
                                 <Button
                                   variant="outline-info"
@@ -437,6 +444,7 @@ export default function Employees() {
                                   </OverlayTrigger>
                                 )}
                               </div>
+                              : <div></div>}
                             </Row>
                           </form>
                           <br />
@@ -490,7 +498,7 @@ export default function Employees() {
               ) : (
                 <div></div>
               )}
-              <Accordion className="ml-2">
+              {authenticatedState === "admin" ? <Accordion className="ml-2">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
                     <h6
@@ -584,7 +592,7 @@ export default function Employees() {
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-              </Accordion>
+              </Accordion> : <div></div>}
             </Col>
           </Row>
         </div>

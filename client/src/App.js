@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import "./App.css";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-// import PrivateRoute from './hocs/PrivateRoute';
+import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
 import Admin  from './pages/Admin';
 
@@ -18,7 +18,7 @@ class App extends Component {
       <BrowserRouter>
           <Route exact path="/" component={Login}/>
           <Route path="/register" component={Register}/>
-          <UnPrivateRoute path="/admin" roles={["admin"]} component={Admin}/>
+          <PrivateRoute path="/admin" roles={["admin"]} component={Admin}/>
           <UnPrivateRoute path="/catsolutions" component={Home} />
           <UnPrivateRoute path="/offices" component={Offices} />
           <UnPrivateRoute path="/employees" component={Employees} />
