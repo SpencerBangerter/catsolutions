@@ -142,3 +142,11 @@ h6 {
 .navbar-text:hover {
     text-decoration: underline;
 }
+
+.userBox{
+    border: 1px solid lightgray;
+}
+
+.userBox span {
+    padding: 5px !important;
+}

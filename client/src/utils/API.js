@@ -66,6 +66,15 @@ export default {
 
   getOfficesCount: function() {
     return axios.get("/api/reports/offices");
-  }
+  },
+
+  getUsers: function() {
+    return axios.get("/api/user");
+  },
+
+  updateUsers: function(id, userData) {
+    return axios.put("api/user/" + id, userData);
+},
+
 
 };
