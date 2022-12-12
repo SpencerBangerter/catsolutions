@@ -25,7 +25,7 @@
     "bcryptjs": "^2.4.3",
     "browser-router": "^0.2.0",
     "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
     "mini-create-react-context": "^0.4.0",
